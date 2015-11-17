@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>简单实现ButterKnife中的injectView的方案 | Xiaofeng&#39;s Blog | 无与伦比</title>
+    <title>解决Android Studio中Terminal无法输入的问题 | Xiaofeng&#39;s Blog | 无与伦比</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="xiaofeng">
     
-    <meta name="description" content="首先说这里面用的知识点，注解、反射。
-Android中findViewById(int resId)接受一个int的id参数，即通过资源id就可以找到对应的View。通过注解(annotation),我们可以资源id声明在对应的field上面，通过Java的反射，遍历每个field，找到对应的id，就可以初始化这个field（即view）。">
+    <meta name="description" content="问题描述：1Windows系统下Android Studio中的Terminal无法获取焦点，不能输入文字。
+问题原因：这个是因为系统升级造成的不兼容问题，在Windows环境开发的朋友们估计早早的就升级Win10了吧，UI非常的炫酷。然而AS中的Terminal使用的还是Windows中的cmd控">
     
     
     
@@ -72,15 +72,15 @@ Android中findViewById(int resId)接受一个int的id参数，即通过资源id�
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/11/13/hello-world/undefined/" title="简单实现ButterKnife中的injectView的方案" itemprop="url">简单实现ButterKnife中的injectView的方案</a>
+      <a href="/2015/11/16/解决Android-Studio中Terminal无法输入的问题/undefined/" title="解决Android Studio中Terminal无法输入的问题" itemprop="url">解决Android Studio中Terminal无法输入的问题</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://plus.google.com/111664499118438320000?rel=author" title="xiaofeng" target="_blank" itemprop="author">xiaofeng</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-11-13T01:37:14.000Z" itemprop="datePublished">2015-11-13</time>
-    更新日期:<time datetime="2015-11-17T08:01:13.815Z" itemprop="dateModified">2015-11-17</time>
+    <time datetime="2015-11-16T02:14:09.000Z" itemprop="datePublished">2015-11-16</time>
+    更新日期:<time datetime="2015-11-17T07:57:03.712Z" itemprop="dateModified">2015-11-17</time>
     
   </p>
 </header>
@@ -89,23 +89,24 @@ Android中findViewById(int resId)接受一个int的id参数，即通过资源id�
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、注解声明"><span class="toc-number">1.</span> <span class="toc-text">1、注解声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、反射注入"><span class="toc-number">2.</span> <span class="toc-text">2、反射注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、测试"><span class="toc-number">3.</span> <span class="toc-text">3、测试</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题描述："><span class="toc-number">1.</span> <span class="toc-text">问题描述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题原因："><span class="toc-number">2.</span> <span class="toc-text">问题原因：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案："><span class="toc-number">3.</span> <span class="toc-text">解决方案：</span></a></li></ol>
 		</div>
 		
-		<p>首先说这里面用的知识点，注解、反射。</p>
-<p>Android中findViewById(int resId)接受一个int的id参数，即通过资源id就可以找到对应的View。通过注解(annotation),我们可以资源id声明在对应的field上面，通过Java的反射，遍历每个field，找到对应的id，就可以初始化这个field（即view）。</p>
-<a id="more"></a>
-<h2 id="1、注解声明">1、注解声明</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 表示用在字段上</span><br><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">// 表示在生命周期是运行时</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">//注解类，实现findViewById功能</span><br><span class="line">public @interface FindView &#123;</span><br><span class="line">	int findViewByResId() default <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2、反射注入">2、反射注入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Class&lt;?&gt; clazz = this.getClass();</span><br><span class="line">// 获得Activity中声明的字段</span><br><span class="line">Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">//遍历所有字段</span><br><span class="line"><span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">// 是否有我们自定义的注解类标志</span><br><span class="line">  <span class="keyword">if</span> (field.isAnnotationPresent(FindView.class)) &#123;</span><br><span class="line">  	   FindView inject = field.getAnnotation(FindView.class);</span><br><span class="line">      int mId = inject.findViewByResId();</span><br><span class="line">      View view;</span><br><span class="line">      <span class="keyword">if</span> (mId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          view = findViewById(mId);</span><br><span class="line">          field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">          field.set(this, view);// 给我们要找的字段设置值</span><br><span class="line">      &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3、测试">3、测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@FindView(findViewByResId = R.id.id_text)</span><br><span class="line">private TextView mText;</span><br></pre></td></tr></table></figure>
-<p>总结：<br>是不是很简单，这算是一个入门，接下来大家可以好好利用这种原理，实现不一样的功能了。<br>个人觉得这个不是特别好，每次都要通过反射来初始化，大家还是结合自己的开发环境酌情使用。</p>
+		<h3 id="问题描述：">问题描述：</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Windows</span>系统下<span class="keyword">Android </span>Studio中的Terminal无法获取焦点，不能输入文字。</span><br></pre></td></tr></table></figure>
+<h3 id="问题原因：">问题原因：</h3><p>这个是因为系统升级造成的不兼容问题，在Windows环境开发的朋友们估计早早的就升级Win10了吧，UI非<br>常的炫酷。然而AS中的Terminal使用的还是Windows中的cmd控制台，也就是位于<br>C:\Windows\System32\目录下的cmd.exe。Win10下的cmd相对于早期版本的cmd做了一些改进，导<br>致了这里描述的问题。</p>
+<h3 id="解决方案：">解决方案：</h3><p>下面给出具体的操作步骤，有图有真相：</p>
+<p>1、win+R组合键打开运行窗口，输入cmd ，点击OK</p>
+<p><img src="http://7xod2d.com1.z0.glb.clouddn.com/cmd.png" alt="cmd窗口"></p>
+<p>2、在出现的cmd窗口中，右键点击标题栏-&gt;Properties，出现如下窗口：</p>
+<p><img src="http://7xod2d.com1.z0.glb.clouddn.com/settings.png" alt="Properties窗口"></p>
+<p>3、勾选 Use legacy console（requires relaunch）即使用旧版控制台（需要重启生效），就这么简单的操作就可以解决问题了，赶快试试吧！</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/ButterKnife/">ButterKnife</a><a href="/tags/InjectView/">InjectView</a><a href="/tags/annotation/">annotation</a>
+  <span></span> <a href="/tags/Android-Studio/">Android Studio</a><a href="/tags/Terminal/">Terminal</a>
   </div>
 
 
@@ -113,7 +114,7 @@ Android中findViewById(int resId)接受一个int的id参数，即通过资源id�
 
 <div class="article-share" id="share">
 
-  <div data-url="http://goghtsui.github.io/2015/11/13/hello-world/undefined/" data-title="简单实现ButterKnife中的injectView的方案 | Xiaofeng&#39;s Blog | 无与伦比" data-tsina="码农一哥" class="share clearfix">
+  <div data-url="http://goghtsui.github.io/2015/11/16/解决Android-Studio中Terminal无法输入的问题/undefined/" data-title="解决Android Studio中Terminal无法输入的问题 | Xiaofeng&#39;s Blog | 无与伦比" data-tsina="码农一哥" class="share clearfix">
   </div>
 
 </div>
@@ -122,14 +123,14 @@ Android中findViewById(int resId)接受一个int的id参数，即通过资源id�
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/11/16/解决Android-Studio中Terminal无法输入的问题/undefined/" title="解决Android Studio中Terminal无法输入的问题">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  解决Android Studio中Terminal无法输入的问题</span>
+
+<div class="next">
+<a href="/2015/11/13/hello-world/undefined/"  title="简单实现ButterKnife中的injectView的方案">
+ <strong>NEXT:</strong><br/> 
+ <span>简单实现ButterKnife中的injectView的方案
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -143,7 +144,7 @@ Android中findViewById(int resId)接受一个int的id参数，即通过资源id�
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、注解声明"><span class="toc-number">1.</span> <span class="toc-text">1、注解声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、反射注入"><span class="toc-number">2.</span> <span class="toc-text">2、反射注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、测试"><span class="toc-number">3.</span> <span class="toc-text">3、测试</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题描述："><span class="toc-number">1.</span> <span class="toc-text">问题描述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题原因："><span class="toc-number">2.</span> <span class="toc-text">问题原因：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案："><span class="toc-number">3.</span> <span class="toc-text">解决方案：</span></a></li></ol>
   </div>
 
 <div id="asidepart">

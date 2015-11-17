@@ -3,16 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: GoghTsui
+title: Xiaofeng's Blog | 无与伦比
 subtitle: Learning programming, i enjoy it.
-description:
-author: xiaofeng.gao
+description: hexo static blog with github for me to write some coding issue.
+author: xiaofeng
+email: xiaofeng355@sina.com
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://goghtsui.github.io/
+url: http://goghtsui.github.io
 root: /
 permalink: :year/:month/:day/:title/:author/
 permalink_defaults:

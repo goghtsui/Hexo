@@ -1,4 +1,5 @@
 title: 简单实现ButterKnife中的injectView的方案
+tags: [ButterKnife, InjectView, annotation]
 date: 2015-11-13 09:37:14
 ---
 首先说这里面用的知识点，注解、反射。
