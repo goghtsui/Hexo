@@ -1,3 +1,3 @@
-layout: tags (»òcategories)
-title: tags (»òcategories)
+layout: tags
+title: tags
 ---

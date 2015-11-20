@@ -1758,7 +1758,7 @@ footer {
   width: 6.875em;
   height: 6.875em;
   margin: 0 auto;
-  background: no-repeat url("img/author.jpg") left top;
+  background: no-repeat url("../img/author.png") left top;
   -webkit-background-size: 6.875em 6.875em;
   -moz-background-size: 6.875em 6.875em;
   background-size: 6.875em 6.875em;
@@ -1979,4 +1979,53 @@ img
 .article-gallery-img .loaded {
   position: absolute;
   display: block;
+}
+.search,
+padding 1em 0 0 2.5em,
+input {
+  line-height: 1.7;
+  border: 1px solid #fff;
+  color: #fff;
+  background: transparent;
+  padding-left: 4em;
+}
+@media only screen and (min-width: 1024px) {
+  .search,
+  padding 1em 0 0 2.5em,
+  input {
+    width: 4em;
+    -webkit-transition: 0.5s width;
+    -moz-transition: 0.5s width;
+    -o-transition: 0.5s width;
+    -ms-transition: 0.5s width;
+    transition: 0.5s width;
+  }
+  .search:focus,
+  padding 1em 0 0 2.5em:focus,
+  input:focus {
+    width: 8em;
+  }
+}
+label {
+  display: none;
+}
+form input.st-search-input_my {
+  font-size: 12px;
+  padding: 4px 9px 4px 27px;
+  height: 20px;
+  width: 190px;
+  color: #666;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+  -moz-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+  -webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+  box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+  outline: none;
+  background: #fcfcfc url("/img/search.png") no-repeat 7px 7px;
 }

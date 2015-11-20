@@ -5,7 +5,7 @@
 # Site
 title: Xiaofeng's Blog | 无与伦比
 subtitle: Learning programming, i enjoy it.
-description: hexo static blog with github for me to write some coding issue.
+description: xiaofeng.site, hexo static blog with github for me to write some coding issues.
 author: xiaofeng
 email: xiaofeng355@sina.com
 language:
@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://goghtsui.github.io
+url: http://xiaofeng.site
 root: /
 permalink: :year/:month/:day/:title/:author/
 permalink_defaults:
@@ -51,6 +51,14 @@ highlight:
 default_category: uncategorized
 category_map:
 tag_map:
+
+# 归档设置
+## 2: Enable pagination
+## 1: Disable pagination
+## 0: Fully Disable
+archive: 2
+category: 2
+tag: 2
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

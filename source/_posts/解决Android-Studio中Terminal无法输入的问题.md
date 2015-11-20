@@ -1,7 +1,7 @@
 title: 解决Android Studio中Terminal无法输入的问题
 tags: [Android Studio, Terminal]
 date: 2015-11-16 10:14:09
-categories:
+categories: [Android]
 ---
 ### 问题描述：
 ```
