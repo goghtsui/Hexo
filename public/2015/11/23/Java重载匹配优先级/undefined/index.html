@@ -1,0 +1,471 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java重载匹配优先级 | Xiaofeng&#39;s Blog | Beyond Compare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiaofeng">
+    
+    <meta name="description" content="前情提要Java面向对象的三个基本特征：继承、封装和多态；多态主要体现在重载和重写；
+示例代码无意间看到这样一个问题，为了方便直观，就用代码来描述问题，有这样一个类：1234567891011121314151617181920212223242526272829303132333435363738">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Xiaofeng&#39;s Blog | Beyond Compare" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Xiaofeng&#39;s Blog | Beyond Compare" title="Xiaofeng&#39;s Blog | Beyond Compare"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Xiaofeng&#39;s Blog | Beyond Compare">Xiaofeng&#39;s Blog | Beyond Compare</a></h1>
+				<h2 class="blog-motto">Learning programming, i enjoy it.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+				
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/23/Java重载匹配优先级/undefined/" title="Java重载匹配优先级" itemprop="url">Java重载匹配优先级</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/111664499118438311534/posts?rel=author" title="xiaofeng" target="_blank" itemprop="author">xiaofeng</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-11-23T08:31:05.000Z" itemprop="datePublished">2015-11-23</time>
+    更新日期:<time datetime="2015-11-24T09:59:07.532Z" itemprop="dateModified">2015-11-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前情提要"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例代码"><span class="toc-number">2.</span> <span class="toc-text">示例代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li></ol>
+		</div>
+		
+		<h4 id="前情提要">前情提要</h4><p>Java面向对象的三个基本特征：继承、封装和多态；多态主要体现在重载和重写；</p>
+<h4 id="示例代码">示例代码</h4><p>无意间看到这样一个问题，为了方便直观，就用代码来描述问题，有这样一个类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OverloadPriority</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Object arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = Object"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = int"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">long</span> arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = long"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">double</span> arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = double"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">float</span> arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = float"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">char</span> arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = char"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Character arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = Character"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">char</span>... arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = char..."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Serializable arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = Serializable"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Comparable&lt;?&gt; arg)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"parameter type = Comparable"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// int</span></span><br><span class="line">		print(<span class="string">'g'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到我们这里重载了print(xxx)这个方法，不同类型的参数，那么在调用上会出现什么问题呢？这里就以char类型为例来分析一下。</p>
+<p>main方法执行print(‘g’)，输出结果毫无疑问就是：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">parameter</span> <span class="keyword">type</span> = <span class="built_in">char</span></span><br></pre></td></tr></table></figure></p>
+<p>那么注释掉print(char arg)这个方法，会输出什么结果呢？<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">parameter</span> <span class="keyword">type</span> = <span class="built_in">int</span></span><br></pre></td></tr></table></figure></p>
+<p>那么注释掉print(int arg)这个方法，会输出什么结果呢？<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">parameter</span> <span class="typedef"><span class="keyword">type</span> = long</span></span><br></pre></td></tr></table></figure></p>
+<p>这是为什么呢？ 这就是重载当中参数类型的优先级问题。我们都知道’g’除了表示字符g之外，还能表示数字103（g的ASCII码是103），所以会输出为int，发生了类型转换，类型自动提升，结果依次是char -&gt; int -&gt; long -&gt; double -&gt; float -&gt; Character -&gt; Serializable or Comparable -&gt; Object -&gt; char…(变长参数，即char元素数组)</p>
+<h4 id="总结">总结</h4><p>遇上重载时，会查找类型最匹配的参数，然后提升类型、封装类型、匹配接口、继承关系型、变长参数类型</p>
+<h4 id="注意">注意</h4><ul>
+<li>变长参数的重载优先级最低</li>
+<li>char到byte或short之间的转换是不安全的</li>
+<li>在Serializable和Comparable同时存在的情况下会报异常：<br>  The method print(Object) is ambiguous for the type OverloadPriority （意思是无法确定应该使用哪一个重载方法，<br>  因为Character实现了Serializable和Comparable这两个接口，<br>  而接口匹配的优先级是一样的，编译器无法判断转型为哪种类型，<br>  提示类型模糊，无法正常编译）</li>
+<li>接口无法匹配之后，就会开始查找匹配的父类，优先级是顺着继承链，由下往上进行匹配</li>
+</ul>
+<p>所以在重载方法的时候大家一定要注意这些细节问题，这样可能导致最后输出的结果不是你想要的结果，大家可以编写这样的一段代码测试一下</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/重载/">重载</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://xiaofeng.site/2015/11/23/Java重载匹配优先级/undefined/" data-title="Java重载匹配优先级 | Xiaofeng&#39;s Blog | Beyond Compare" data-tsina="xiaofeng117" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/11/24/Java中静态绑定和动态绑定/undefined/" title="Java中静态绑定和动态绑定">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Java中静态绑定和动态绑定</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/11/18/关于Android-Log小记/undefined/"  title="关于Android Log小记">
+ <strong>NEXT:</strong><br/> 
+ <span>关于Android Log小记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前情提要"><span class="toc-number">1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例代码"><span class="toc-number">2.</span> <span class="toc-text">示例代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ButterKnife/" title="ButterKnife">ButterKnife<sup>1</sup></a></li>
+		
+			<li><a href="/tags/InjectView/" title="InjectView">InjectView<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Log/" title="Log">Log<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownPad/" title="MarkdownPad">MarkdownPad<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownX/" title="MarkdownX">MarkdownX<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Terminal/" title="Terminal">Terminal<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>1</sup></a></li>
+		
+			<li><a href="/tags/pacman/" title="pacman">pacman<sup>1</sup></a></li>
+		
+			<li><a href="/tags/swiftype/" title="swiftype">swiftype<sup>1</sup></a></li>
+		
+			<li><a href="/tags/动态绑定/" title="动态绑定">动态绑定<sup>1</sup></a></li>
+		
+			<li><a href="/tags/快捷键/" title="快捷键">快捷键<sup>1</sup></a></li>
+		
+			<li><a href="/tags/重写/" title="重写">重写<sup>1</sup></a></li>
+		
+			<li><a href="/tags/重载/" title="重载">重载<sup>2</sup></a></li>
+		
+			<li><a href="/tags/静态绑定/" title="静态绑定">静态绑定<sup>1</sup></a></li>
+		
+			<li><a href="/tags/马克飞象/" title="马克飞象">马克飞象<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1660762900&verifier=346b7a09&dpc=1"></iframe>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	<div class="ds-recent-visitors" data-num-items="12" data-avatar-size="54" id="ds-recent-visitors"></div>
+	
+	<section class="info">
+		<p> Programing is an interesting thing.  <br/>
+			If you have some other better issues or blogs, recommend me please. </p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/xiaofeng117" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/goghtsui" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+	
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','w7ca3xWstLkz2UvAeyAJ','2.0.0');
+</script>
+
+</script>
+
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<script language=JavaScript>
+		today=new Date();
+		function initArray(){
+			this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+				this[i+1]=initArray.arguments[i] 
+			}
+		
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		
+		document.write("<marquee scrollAmount=2 width=screen.width-200 onmouseover=stop() onmouseout=start()><font color=#ffffff style='font-size:14pt;font-family: 黑体'> ",
+			today.getFullYear(),"年",
+			today.getMonth()+1,"月",
+			today.getDate(),"日   ",
+			d[today.getDay()+1],
+			"</font></marquee>" ); 
+	</script>
+	<br />
+
+	<span style="width:260px;"></span>
+	<span id="busuanzi_container_site_pv" >
+		<font color="#ffffff" size="4" >Wow，i got </font >
+		<font color="#ff6600" size="4" > <span id="busuanzi_value_site_pv"></span> </font >
+		<font color="#ffffff" size="4" > hits! </font >
+	</span>
+	<span style="width:100px;"></span>
+	<span id="busuanzi_container_site_uv">
+		<font color="#ffffff" size="4" >  You are the </font >
+		<font color="#ff6600" size="4" > <span id="busuanzi_value_site_uv"></span>th </font >
+		<font color="#ffffff" size="4" > visitor！ </font >
+	</span>
+	<br />
+	
+	
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://xiaofeng.site" target="_blank" title="xiaofeng">xiaofeng</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-70168817-1', 'xiaofeng.site');  
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+</html>
