@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[Xiaofeng's Blog | Beyond Compare]]></title>
+  <title><![CDATA[晓峰的博客 | Beyond Compare]]></title>
   <subtitle><![CDATA[Learning programming, i enjoy it.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://xiaofeng.site/"/>
@@ -56,7 +56,7 @@
     <link href="http://xiaofeng.site/2015/11/25/Win10-%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B9%8BWin%E7%BB%84%E5%90%88%E9%94%AE/undefined/"/>
     <id>http://xiaofeng.site/2015/11/25/Win10-快捷键之Win组合键/undefined/</id>
     <published>2015-11-25T01:27:42.000Z</published>
-    <updated>2015-11-26T02:15:44.090Z</updated>
+    <updated>2015-12-02T06:39:35.675Z</updated>
     <content type="html"><![CDATA[<h4 id="Win组合键">Win组合键</h4><table>
 <thead>
 <tr>

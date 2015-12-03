@@ -3,9 +3,7 @@ date: 2015-11-25 09:27:42
 categories: [Win10]
 tags: [Win10, 快捷键]
 ---
-
 #### Win组合键
-
 |  Shortcut           |    Description |
 | :-------------                  | :--------------             |
 | Windows Key ![WindowsKey][1] | Open and close the Start menu.  |
