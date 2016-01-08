@@ -1,0 +1,576 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Android Material Design - Tabs | 晓峰的博客 | Beyond Compare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiaofeng">
+    
+    <meta name="description" content="原作者：Ravi Tamada原文地址：http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/
+
+Android Design支持库 提供了很好的向后兼容性，在Material Design支持库中">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="晓峰的博客 | Beyond Compare" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.gif" alt="晓峰的博客 | Beyond Compare" title="晓峰的博客 | Beyond Compare"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="晓峰的博客 | Beyond Compare">晓峰的博客 | Beyond Compare</a></h1>
+				<h2 class="blog-motto">Learning programming, i enjoy it.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+				
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/28/Android-Material-Design-Tabs/undefined/" title="Android Material Design - Tabs" itemprop="url">Android Material Design - Tabs</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/111664499118438311534/posts?rel=author" title="xiaofeng" target="_blank" itemprop="author">xiaofeng</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-12-28T03:51:06.000Z" itemprop="datePublished">2015-12-28</time>
+    更新日期:<time datetime="2015-12-30T02:09:31.406Z" itemprop="dateModified">2015-12-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Material"><span class="toc-number">1.</span> <span class="toc-text">使用Material</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#固定标签"><span class="toc-number">2.</span> <span class="toc-text">固定标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚动标签"><span class="toc-number">3.</span> <span class="toc-text">滚动标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图文标签"><span class="toc-number">4.</span> <span class="toc-text">图文标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图标标签"><span class="toc-number">5.</span> <span class="toc-text">图标标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义图文选项卡"><span class="toc-number">6.</span> <span class="toc-text">自定义图文选项卡</span></a></li></ol>
+		</div>
+		
+		<blockquote>
+<p>原作者：Ravi Tamada<br>原文地址：<a href="http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/" target="_blank" rel="external">http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/</a></p>
+</blockquote>
+<p><a href="http://android-developers.blogspot.in/2015/05/android-design-support-library.html" target="_blank" rel="external">Android Design支持库</a> 提供了很好的向后兼容性，在Material Design支持库中的组件中，像Navigation Drawer, FloatingAction Button, Snackbar, Tabs, Floating labels ， animation frameworks。在这里我们将学习怎样实现tabs。</p>
+<p>在进一步深入了解之前，我建议先看一下<a href="https://www.google.co.in/design/spec/components/tabs.html#" target="_blank" rel="external">tabs的文档</a>，它可以告诉你在实现tabs的时候，什么该做什么不该做。</p>
+<p>这里还有yutube的视频：<a href="https://youtu.be/6sGhDYYUoBM" target="_blank" rel="external">到墙外看一看</a></p>
+<h3 id="使用Material">使用Material</h3><p>首先我们创建一个新的项目并且应用Material主题，如果你不知道Material Design，那么可以看看文章<a href="http://www.androidhive.info/2015/04/android-getting-started-with-material-design/" target="_blank" rel="external">Material Design入门</a></p>
+<p><strong>1</strong>.在Android Studio中，<strong>File =&gt; New Project</strong>并且填好其它信息去创建一个新项目。</p>
+<p><strong>2</strong>.打开<strong>build.gradle</strong>然后添加支持库<strong>com.android.support:design:23.0.1</strong></p>
+<p><code>build.gradle</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile fileTree(dir: 'libs', include: ['*.jar'])</span><br><span class="line">    compile 'com.android.support:appcompat-v7:23.0.1'</span><br><span class="line">    compile 'com.android.support:design:23.0.1'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3</strong>.打开位于<strong>res =&gt; values</strong>下的<strong>colors.xml</strong>，并且添加以下颜色值：</p>
+<p><code>colors.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"colorPrimary"</span>&gt;</span>#125688<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"colorPrimaryDark"</span>&gt;</span>#125688<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"textColorPrimary"</span>&gt;</span>#FFFFFF<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"windowBackground"</span>&gt;</span>#FFFFFF<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"navigationBarColor"</span>&gt;</span>#000000<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"colorAccent"</span>&gt;</span>#c8e8ff<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>4</strong>.在<strong>res =&gt; values</strong>下的<strong>dimens.xml</strong>添加以下代码：</p>
+<p><code>dimens.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Default screen margins, per the Android Design guidelines. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"activity_horizontal_margin"</span>&gt;</span>16dp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"activity_vertical_margin"</span>&gt;</span>16dp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"tab_max_width"</span>&gt;</span>264dp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"tab_padding_bottom"</span>&gt;</span>16dp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"tab_label"</span>&gt;</span>14sp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dimen</span> <span class="attribute">name</span>=<span class="value">"custom_tab_layout_height"</span>&gt;</span>72dp<span class="tag">&lt;/<span class="title">dimen</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>5</strong>. 打开<strong>res ⇒ values</strong>下的<strong>styles.xml</strong>，并添加以下主题。在<strong>styles.xml</strong>中这个主题是通用于所有安卓版本的。</p>
+<p><code>styles.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"MyMaterialTheme"</span> <span class="attribute">parent</span>=<span class="value">"MyMaterialTheme.Base"</span>&gt;</span><span class="css"></span><br><span class="line"> </span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"MyMaterialTheme.Base"</span> <span class="attribute">parent</span>=<span class="value">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="css"></span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">windowNoTitle</span>"&gt;<span class="tag">true</span>&lt;/<span class="tag">item</span>&gt;</span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">windowActionBar</span>"&gt;<span class="tag">false</span>&lt;/<span class="tag">item</span>&gt;</span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">colorPrimary</span>"&gt;<span class="at_rule">@<span class="keyword">color/colorPrimary&lt;/item&gt;</span></span><br><span class="line">        &lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"colorAccent"</span>&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>6.</strong> 在<strong>res</strong>下面创建<strong>values-v21</strong>文件夹，然后创建另外一个<strong>styles.xml</strong>，写入以下主题，这个主题是适用于Android 5.0的。</p>
+<p><code>styles.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"MyMaterialTheme"</span> <span class="attribute">parent</span>=<span class="value">"MyMaterialTheme.Base"</span>&gt;</span><span class="css"></span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:windowContentTransitions"</span>&gt;<span class="tag">true</span>&lt;/<span class="tag">item</span>&gt;</span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:windowAllowEnterTransitionOverlap"</span>&gt;<span class="tag">true</span>&lt;/<span class="tag">item</span>&gt;</span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:windowAllowReturnTransitionOverlap"</span>&gt;<span class="tag">true</span>&lt;/<span class="tag">item</span>&gt;</span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:windowSharedElementEnterTransition"</span>&gt;<span class="at_rule">@<span class="keyword">android:transition/move&lt;/item&gt;</span></span><br><span class="line">        &lt;item name=<span class="string">"android:windowSharedElementExitTransition"</span>&gt;@android:transition/move&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>7.</strong> 最后打开<strong>AndroidManifest.xml</strong>并且修改<strong>android:theme</strong>属性为我们自定义的主题。</p>
+<p><code>AndroidManifest.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">manifest</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">package</span>=<span class="value">"info.androidhive.materialtabs"</span> &gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">application</span></span><br><span class="line">        <span class="attribute">android:allowBackup</span>=<span class="value">"true"</span></span><br><span class="line">        <span class="attribute">android:icon</span>=<span class="value">"@mipmap/ic_launcher"</span></span><br><span class="line">        <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span></span><br><span class="line">        <span class="attribute">android:theme</span>=<span class="value">"@style/MyMaterialTheme"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">            <span class="attribute">android:name</span>=<span class="value">".activity.MainActivity"</span></span><br><span class="line">            <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span> &gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">                <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>运行这个应用，通过通知栏的颜色来验证一下Material Design主题。如果你看到通知栏颜色改变了，这就意味着Material Design主题已经被成功使用。</p>
+<p>图例</p>
+<p>现在我们已经有了Material Design主题的应用，接下来让我们开始添加tabs。但是在这之前。我们需要创建一些fragment来协助测试，所有这些fragment只有非常简单的UI，一个TextView而已。</p>
+<p><strong>8.</strong> 在你的包目录下，创建一个fragment，命名为<strong>OneFragment.java</strong>并添加以下代码：</p>
+<p><code>OneFragment.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> info.androidhive.materialtabs.fragments;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.R;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OneFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OneFragment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Required empty public constructor</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,</span><br><span class="line">                             Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Inflate the layout for this fragment</span></span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_one, container, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>9.</strong> 在<strong>res ⇒ layout</strong>下添加<strong>fragment_one.xml</strong>，写入以下代码：</p>
+<p><code>fragment_one.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">tools:context</span>=<span class="value">"info.androidhive.materialtabs.fragments.OneFragment"</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"@string/one"</span></span><br><span class="line">        <span class="attribute">android:textSize</span>=<span class="value">"40dp"</span></span><br><span class="line">        <span class="attribute">android:textStyle</span>=<span class="value">"bold"</span></span><br><span class="line">        <span class="attribute">android:layout_centerInParent</span>=<span class="value">"true"</span>/&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>10.</strong> 同样的，创建一些其它的fragment，并且写入像<strong>OneFragment.java</strong>一样的代码，我已经创建好了<strong>TwoFragment.java</strong>, <strong>ThreeFragment.java</strong>, <strong>FourFragemnt.java</strong>一直到<strong>TenFragment.java</strong></p>
+<h3 id="固定标签">固定标签</h3><p>当tabs是固定数目的时候，你可以使用这个方式。这些tabs固定在适当的位置。在design支持库中，一些新的元素像<strong>CoordinatorLayout</strong>、<strong>AppBarLayout</strong>、<strong>TabLayout</strong>等介绍了很多。我覆盖不到所有的情况，因为这不是本文的目的。</p>
+<p><strong>11</strong>. 打开布局文件<strong>activity_main.xml</strong>并修改为一下代码：</p>
+<p><code>app:tabMode</code> – 定义tab的形式，在这我们定义为<strong>fixed</strong></p>
+<p><code>activity_main.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">android.support.design.widget.CoordinatorLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">xmlns:app</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">android.support.design.widget.AppBarLayout</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:theme</span>=<span class="value">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="title">android.support.v7.widget.Toolbar</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/toolbar"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"?attr/actionBarSize"</span></span><br><span class="line">            <span class="attribute">android:background</span>=<span class="value">"?attr/colorPrimary"</span></span><br><span class="line">            <span class="attribute">app:layout_scrollFlags</span>=<span class="value">"scroll|enterAlways"</span></span><br><span class="line">            <span class="attribute">app:popupTheme</span>=<span class="value">"@style/ThemeOverlay.AppCompat.Light"</span> /&gt;</span></span><br><span class="line"> </span><br><span class="line">        <span class="tag">&lt;<span class="title">android.support.design.widget.TabLayout</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/tabs"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">app:tabMode</span>=<span class="value">"fixed"</span></span><br><span class="line">            <span class="attribute">app:tabGravity</span>=<span class="value">"fill"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">android.support.v4.view.ViewPager</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/viewpager"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">app:layout_behavior</span>=<span class="value">"@string/appbar_scrolling_view_behavior"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>12.</strong> 打开<strong>MainActivity.java</strong> 并作以下修改：</p>
+<p><code>tabLayout.setupWithViewPager()</code> – 适配ViewPager给TabLayout</p>
+<p><code>setupViewPager()</code> – 通过添加适当的fragment来设置tabs的数量和tab的名字</p>
+<p><code>ViewPagerAdapter</code> – 自定义适配器类提供了ViewPager需要的额fragment</p>
+<p><code>MainActivity.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> info.androidhive.materialtabs.activity;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.TabLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentManager;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentPagerAdapter;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.view.ViewPager;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.Toolbar;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.R;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.OneFragment;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.ThreeFragment;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.TwoFragment;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Toolbar toolbar;</span><br><span class="line">    <span class="keyword">private</span> TabLayout tabLayout;</span><br><span class="line">    <span class="keyword">private</span> ViewPager viewPager;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line"> </span><br><span class="line">        getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line"> </span><br><span class="line">        viewPager = (ViewPager) findViewById(R.id.viewpager);</span><br><span class="line">        setupViewPager(viewPager);</span><br><span class="line"> </span><br><span class="line">        tabLayout = (TabLayout) findViewById(R.id.tabs);</span><br><span class="line">        tabLayout.setupWithViewPager(viewPager);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupViewPager</span><span class="params">(ViewPager viewPager)</span> </span>&#123;</span><br><span class="line">        ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> OneFragment(), <span class="string">"ONE"</span>);</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> TwoFragment(), <span class="string">"TWO"</span>);</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> ThreeFragment(), <span class="string">"THREE"</span>);</span><br><span class="line">        viewPager.setAdapter(adapter);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Fragment&gt; mFragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; mFragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager manager)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(manager);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.size();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFragment</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">            mFragmentList.add(fragment);</span><br><span class="line">            mFragmentTitleList.add(title);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentTitleList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在运行这个应用，你应该能看到tabs已经显示，并且能够通过滑动在他们之间切换。</p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-material-design-tab-layout.png" alt="swipe"></p>
+<p><strong>2.1</strong> 屏幕宽度的标签<br>如果你想要标签栏占据整个屏幕的宽度，你需要给TabLayout设置 <strong>app:tabGravity=”fill”</strong>属性。</p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-tab-layout-landscape-view.png" alt="full"></p>
+<p><strong>2.2</strong> 中心对齐的标签<br>如果你想要你的标签按照水平居中的形式来显示，你需要给TabLayout设置<strong>app:tabGravity=”center”</strong>的属性。</p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-tab-layout-gravity-center.png" alt="full"></p>
+<h3 id="滚动标签">滚动标签</h3><p>当你有很多标签时，并且一个屏幕的空间放不下的时候，你可以使用滑动标签。标签可以滚动，给TabLayout设置<strong>app:tabMode=”scrollable”</strong>即可。</p>
+<p><strong>13.</strong> 打开<strong>activity_main.xml</strong>并且修改<strong>app:tabMode</strong>为<strong>scrollable</strong>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">android.support.design.widget.TabLayout</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/tabs"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">app:tabMode</span>=<span class="value">"scrollable"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>14.</strong> 编辑<strong>MainActivity.java</strong>并且添加一些fragment到ViewPager通过<strong>setupViewPager()</strong>方法。我已经添加了10个fragment，这样做之后，你的MainActivity应该像下面这样。</p>
+<p><code>MainActivity.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> info.androidhive.materialtabs.activity;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.TabLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentManager;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentPagerAdapter;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.view.ViewPager;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.Toolbar;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Toolbar toolbar;</span><br><span class="line">    <span class="keyword">private</span> TabLayout tabLayout;</span><br><span class="line">    <span class="keyword">private</span> ViewPager viewPager;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line"> </span><br><span class="line">        viewPager = (ViewPager) findViewById(R.id.viewpager);</span><br><span class="line">        setupViewPager(viewPager);</span><br><span class="line"> </span><br><span class="line">        tabLayout = (TabLayout) findViewById(R.id.tabs);</span><br><span class="line">        tabLayout.setupWithViewPager(viewPager);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupViewPager</span><span class="params">(ViewPager viewPager)</span> </span>&#123;</span><br><span class="line">        ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> OneFragment(), <span class="string">"ONE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> TwoFragment(), <span class="string">"TWO"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> ThreeFragment(), <span class="string">"THREE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> FourFragment(), <span class="string">"FOUR"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> FiveFragment(), <span class="string">"FIVE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> SixFragment(), <span class="string">"SIX"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> SevenFragment(), <span class="string">"SEVEN"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> EightFragment(), <span class="string">"EIGHT"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> NineFragment(), <span class="string">"NINE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> TenFragment(), <span class="string">"TEN"</span>);</span><br><span class="line">        viewPager.setAdapter(adapter);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Fragment&gt; mFragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; mFragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager manager)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(manager);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.size();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFrag</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">            mFragmentList.add(fragment);</span><br><span class="line">            mFragmentTitleList.add(title);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentTitleList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在如果你再运行你的应用，你就可以看到很多tabs，而且具有欢动功能。 </p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-scrollable-tab-layout.png" alt="layout"><br><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-scrollable-tab-layout-horizontal.png" alt="horizontal"></p>
+<h3 id="图文标签">图文标签</h3><p>有时候你可能想要给标签添加图标。此前给标签添加图标是非常繁琐的过程，但是现在有了Material Design支持库，这就变得很容易了。所以你必须要做的就是调用<strong>setIcon()</strong>方法来设置适当的图标，这个图标就可以显示在标签文字前面了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tabLayout.getTabAt(<span class="number">0</span>).setIcon(tabIcons[<span class="number">0</span>]);</span><br><span class="line">tabLayout.getTabAt(<span class="number">1</span>).setIcon(tabIcons[<span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<p><strong>15.</strong> 打开<strong>MainActivity.java</strong>并且按照下面来修改代码。在这里我已经添加了一个新的方法<strong>setupTabIcons()</strong>来设置标签的图标。</p>
+<p><code>MainActivity.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.TabLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentManager;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentPagerAdapter;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.view.ViewPager;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.Toolbar;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Toolbar toolbar;</span><br><span class="line">    <span class="keyword">private</span> TabLayout tabLayout;</span><br><span class="line">    <span class="keyword">private</span> ViewPager viewPager;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] tabIcons = &#123;</span><br><span class="line">            R.drawable.ic_tab_favourite,</span><br><span class="line">            R.drawable.ic_tab_call,</span><br><span class="line">            R.drawable.ic_tab_contacts</span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line"> </span><br><span class="line">        viewPager = (ViewPager) findViewById(R.id.viewpager);</span><br><span class="line">        setupViewPager(viewPager);</span><br><span class="line"> </span><br><span class="line">        tabLayout = (TabLayout) findViewById(R.id.tabs);</span><br><span class="line">        tabLayout.setupWithViewPager(viewPager);</span><br><span class="line">        setupTabIcons();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupTabIcons</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        tabLayout.getTabAt(<span class="number">0</span>).setIcon(tabIcons[<span class="number">0</span>]);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">1</span>).setIcon(tabIcons[<span class="number">1</span>]);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">2</span>).setIcon(tabIcons[<span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupViewPager</span><span class="params">(ViewPager viewPager)</span> </span>&#123;</span><br><span class="line">        ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> OneFragment(), <span class="string">"ONE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> TwoFragment(), <span class="string">"TWO"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> ThreeFragment(), <span class="string">"THREE"</span>);</span><br><span class="line">        viewPager.setAdapter(adapter);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Fragment&gt; mFragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; mFragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager manager)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(manager);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.size();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFrag</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">            mFragmentList.add(fragment);</span><br><span class="line">            mFragmentTitleList.add(title);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentTitleList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-tab-layout-with-icon-and-text.png" alt="android-tab-layout-with-icon-and-text"></p>
+<h3 id="图标标签">图标标签</h3><p>仅仅设置图标的选项卡是和图文的选项卡是一样的，只是ViewPagerAdapter类的<strong>getPageTitle()</strong>方法返回值为null即可。</p>
+<p><strong>16.</strong> 打开<strong>MainActivity.java</strong>并按照下面的代码修改<strong>getPageTitle()</strong>方法，接着运行项目。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// return null to display only the icon</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-tab-layout-with-only-icons.png" alt="android-tab-layout-with-only-icons"></p>
+<h3 id="自定义图文选项卡">自定义图文选项卡</h3><p>当默认的选项卡布局不能达到你预期的输出效果时，自定义选项卡就非常实用了。在你自定义选项卡试图的时候，请务必遵循Android选项卡的规范建议。</p>
+<p>当我们设置了图文选项卡时，你能够看到图标和文字是水平居中的，但是如果你想要放置图标在选项卡标签之上，你就必须使用一个自定义的view来完成它。</p>
+<p><strong>17.</strong> 在<strong>res ⇒ values</strong>下面,创建<strong>fonts.xml</strong>文件，并且添加以下字符串值。这个xml文件定义了选项卡中文字所使用的字体。</p>
+<p><code>fonts.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">string</span> <span class="attribute">name</span>=<span class="value">"font_fontFamily_medium"</span>&gt;</span>sans-serif<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>18.</strong> 在<strong>res ⇒ values-v21下面，创建另一个</strong>fonts.xml**文件。</p>
+<p><code>fonts.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">string</span> <span class="attribute">name</span>=<span class="value">"font_fontFamily_medium"</span>&gt;</span>sans-serif-medium<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>19.</strong> 打开<strong>activity_main.xml</strong>并且给TabLayout设置自定义的高度。设置这个高度显得非常重要，因为在选项卡标签上面放置图标需要更多的空间。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">android.support.design.widget.TabLayout</span></span><br><span class="line">           <span class="attribute">android:id</span>=<span class="value">"@+id/tabs"</span></span><br><span class="line">           <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">           <span class="attribute">android:layout_height</span>=<span class="value">"@dimen/custom_tab_layout_height"</span></span><br><span class="line">           <span class="attribute">app:tabMode</span>=<span class="value">"fixed"</span></span><br><span class="line">           <span class="attribute">app:tabGravity</span>=<span class="value">"fill"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>20.</strong> 在<strong>res ⇒ layout</strong>下新建的一个xml文件<strong>custom_tab.xml</strong>，这个文件是用来自定义选项卡布局的。</p>
+<p><code>custom_tab.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">TextView</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">    <span class="attribute">android:id</span>=<span class="value">"@+id/tab"</span></span><br><span class="line">    <span class="attribute">android:textColor</span>=<span class="value">"@color/colorAccent"</span></span><br><span class="line">    <span class="attribute">android:textSize</span>=<span class="value">"@dimen/tab_label"</span></span><br><span class="line">    <span class="attribute">android:fontFamily</span>=<span class="value">"@string/font_fontFamily_medium"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>21.</strong> 打开<strong>MainActivity.java</strong>并按照下面的代码做修改。这里你是否注意到setupTabIcon()方法。下面的代码中我已经给每一个选项卡使用了custom_tab.xml布局，。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TextView tabOne = (TextView) LayoutInflater.from(<span class="keyword">this</span>).inflate(R.layout.custom_tab, <span class="keyword">null</span>);</span><br><span class="line">tabOne.setText(<span class="string">"ONE"</span>);</span><br><span class="line">tabOne.setCompoundDrawablesWithIntrinsicBounds(<span class="number">0</span>, R.drawable.ic_tab_favourite, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">tabLayout.getTabAt(<span class="number">0</span>).setCustomView(tabOne);</span><br></pre></td></tr></table></figure>
+<p><code>MainActivity.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.TabLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentManager;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.FragmentPagerAdapter;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.view.ViewPager;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.Toolbar;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.R;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.OneFragment;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.ThreeFragment;</span><br><span class="line"><span class="keyword">import</span> info.androidhive.materialtabs.fragments.TwoFragment;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Toolbar toolbar;</span><br><span class="line">    <span class="keyword">private</span> TabLayout tabLayout;</span><br><span class="line">    <span class="keyword">private</span> ViewPager viewPager;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] tabIcons = &#123;</span><br><span class="line">            R.drawable.ic_tab_favourite,</span><br><span class="line">            R.drawable.ic_tab_call,</span><br><span class="line">            R.drawable.ic_tab_contacts</span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"> </span><br><span class="line">        toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line"> </span><br><span class="line">        viewPager = (ViewPager) findViewById(R.id.viewpager);</span><br><span class="line">        setupViewPager(viewPager);</span><br><span class="line"> </span><br><span class="line">        tabLayout = (TabLayout) findViewById(R.id.tabs);</span><br><span class="line">        tabLayout.setupWithViewPager(viewPager);</span><br><span class="line">        setupTabIcons();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupTabIcons</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">        TextView tabOne = (TextView) LayoutInflater.from(<span class="keyword">this</span>).inflate(R.layout.custom_tab, <span class="keyword">null</span>);</span><br><span class="line">        tabOne.setText(<span class="string">"ONE"</span>);</span><br><span class="line">        tabOne.setCompoundDrawablesWithIntrinsicBounds(<span class="number">0</span>, R.drawable.ic_tab_favourite, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">0</span>).setCustomView(tabOne);</span><br><span class="line"> </span><br><span class="line">        TextView tabTwo = (TextView) LayoutInflater.from(<span class="keyword">this</span>).inflate(R.layout.custom_tab, <span class="keyword">null</span>);</span><br><span class="line">        tabTwo.setText(<span class="string">"TWO"</span>);</span><br><span class="line">        tabTwo.setCompoundDrawablesWithIntrinsicBounds(<span class="number">0</span>, R.drawable.ic_tab_call, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">1</span>).setCustomView(tabTwo);</span><br><span class="line"> </span><br><span class="line">        TextView tabThree = (TextView) LayoutInflater.from(<span class="keyword">this</span>).inflate(R.layout.custom_tab, <span class="keyword">null</span>);</span><br><span class="line">        tabThree.setText(<span class="string">"THREE"</span>);</span><br><span class="line">        tabThree.setCompoundDrawablesWithIntrinsicBounds(<span class="number">0</span>, R.drawable.ic_tab_contacts, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">2</span>).setCustomView(tabThree);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupViewPager</span><span class="params">(ViewPager viewPager)</span> </span>&#123;</span><br><span class="line">        ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> OneFragment(), <span class="string">"ONE"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> TwoFragment(), <span class="string">"TWO"</span>);</span><br><span class="line">        adapter.addFrag(<span class="keyword">new</span> ThreeFragment(), <span class="string">"THREE"</span>);</span><br><span class="line">        viewPager.setAdapter(adapter);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Fragment&gt; mFragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; mFragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager manager)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(manager);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentList.size();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFrag</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">            mFragmentList.add(fragment);</span><br><span class="line">            mFragmentTitleList.add(title);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> mFragmentTitleList.get(position);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在如果你运行这个程序，你就能看到图标被放置在选项卡标签的上面了。</p>
+<p><img src="http://www.androidhive.info/wp-content/uploads/2015/09/android-tab-layout-with-custom-view-icon-and-text.png" alt="android-tab-layout-with-custom-view-icon-and-text"></p>
+<p>我希望这篇文章对于Material Design支持库的使用，提供了一些非常有用的信息，如果你有任何问题，请在下面回复。</p>
+  
+		
+  <div class="article-statement">
+    <hr>
+1.&#x5982;&#x672A;&#x6CE8;&#x660E;&#xFF0C;&#x672C;&#x7AD9;&#x535A;&#x5BA2;&#x5747;&#x4E3A;&#x539F;&#x521B;&#xFF0C;&#x8F6C;&#x8F7D;&#x8BF7;&#x4EE5;&#x94FE;&#x63A5;&#x5F62;&#x5F0F;&#x6807;&#x660E;&#x672C;&#x6587;&#x5730;&#x5740;&#x3002;<br>
+2.&#x672C;&#x535A;&#x5BA2;&#x53EA;&#x4EE3;&#x8868;&#x535A;&#x4E3B;&#x5F53;&#x65F6;&#x7684;&#x89C2;&#x70B9;&#x6216;&#x7ED3;&#x8BBA;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+3.&#x5982;&#x672C;&#x535A;&#x5BA2;&#x6D89;&#x53CA;&#x7684;&#x60A8;&#x7684;&#x4E13;&#x5229;&#x3001;&#x9690;&#x79C1;&#x7B49;&#x654F;&#x611F;&#x4FE1;&#x606F;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+4.&#x535A;&#x4E3B;&#x7FFB;&#x8BD1;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x6216;&#x8BEF;&#x5BFC;&#x884C;&#x4E3A;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+5.&#x5982;&#x672C;&#x6587;&#x5E2E;&#x5230;&#x4E86;&#x60A8;&#xFF0C;&#x8BF7;&#x901A;&#x8FC7; &#x5206;&#x4EAB; &#x6309;&#x94AE;&#x5206;&#x4EAB;&#x5230;&#x5176;&#x4ED6;&#x5E73;&#x53F0;&#x3002;<br>
+6.&#x60A8;&#x7684;&#x9F13;&#x52B1;&#x662F;&#x535A;&#x4E3B;&#x5199;&#x4F5C;&#x6700;&#x5927;&#x7684;&#x52A8;&#x529B;&#xFF0C;&#x611F;&#x8C22;&#x60A8;&#x7684;&#x9605;&#x8BFB;&#x548C;&#x5206;&#x4EAB;&#x3002;<br>  </div>
+
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Material-Design/">Material Design</a><a href="/tags/TabLayout/">TabLayout</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://xiaofeng.site/2015/12/28/Android-Material-Design-Tabs/undefined/" data-title="Android Material Design - Tabs | 晓峰的博客 | Beyond Compare" data-tsina="xiaofeng117" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/12/30/Android-Material-Design-Floating-Labels-for-EditText/undefined/" title="Android Material Design - Floating Labels for EditText">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Android Material Design - Floating Labels for EditText</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/12/24/Android-Material-Design-Snackbar/undefined/"  title="Android Material Design - Snackbar">
+ <strong>NEXT:</strong><br/> 
+ <span>Android Material Design - Snackbar
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+  <div class="recent-vit">
+	<br>
+	&#x6700;&#x8FD1;&#x8BBF;&#x5BA2;&#xFF1A;
+    <hr>
+	<div class="ds-recent-visitors" data-num-items="12" data-avatar-size="54" id="ds-recent-visitors">
+	</div>
+	
+  </div>
+
+	
+<section id="comments">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Material"><span class="toc-number">1.</span> <span class="toc-text">使用Material</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#固定标签"><span class="toc-number">2.</span> <span class="toc-text">固定标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚动标签"><span class="toc-number">3.</span> <span class="toc-text">滚动标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图文标签"><span class="toc-number">4.</span> <span class="toc-text">图文标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图标标签"><span class="toc-number">5.</span> <span class="toc-text">图标标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义图文选项卡"><span class="toc-number">6.</span> <span class="toc-text">自定义图文选项卡</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Android-Studio/" title="Android Studio">Android Studio<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Complex/" title="Complex">Complex<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/ButterKnife/" title="ButterKnife">ButterKnife<sup>1</sup></a></li>
+		
+			<li><a href="/tags/EditText/" title="EditText">EditText<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Floating-Lables/" title="Floating Lables">Floating Lables<sup>1</sup></a></li>
+		
+			<li><a href="/tags/InjectView/" title="InjectView">InjectView<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Log/" title="Log">Log<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownPad/" title="MarkdownPad">MarkdownPad<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownX/" title="MarkdownX">MarkdownX<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Material-Design/" title="Material Design">Material Design<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Parcelable/" title="Parcelable">Parcelable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Serializable/" title="Serializable">Serializable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Snackbar/" title="Snackbar">Snackbar<sup>1</sup></a></li>
+		
+			<li><a href="/tags/TabLayout/" title="TabLayout">TabLayout<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Terminal/" title="Terminal">Terminal<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1660762900&verifier=346b7a09&dpc=1"></iframe>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Programing is an interesting thing.  <br/>
+			If you have some other better issues or blogs, recommend me please. </p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/xiaofeng117" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/goghtsui" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-70168817-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript">
+		(function(w,d,t,u,n,s,e){
+			w['SwiftypeObject']=n;w[n]=w[n]||function(){
+			(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+			e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+		})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+		_st('install','w7ca3xWstLkz2UvAeyAJ','2.0.0');
+	</script>
+
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<script language=JavaScript>
+		today=new Date();
+		function initArray(){
+			this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+				this[i+1]=initArray.arguments[i] 
+			}
+		
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		
+		document.write("<marquee scrollAmount=2 width=screen.width-200 onmouseover=stop() onmouseout=start()><font color=#ffffff style='font-size:14pt;font-family: 黑体'> ",
+			today.getFullYear(),"年",
+			today.getMonth()+1,"月",
+			today.getDate(),"日   ",
+			d[today.getDay()+1],
+			"</font></marquee>" ); 
+	</script>
+	
+	<div class="copyright">
+		Powered by 
+		<a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+			<a href="http://xiaofeng.site" target="_blank" title="xiaofeng">xiaofeng</a>
+		
+		
+		<span id="busuanzi_container_site_pv" >
+			<font color="#ffffff" size="4" >| Wow，i got </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_pv"></span> </font >
+			<font color="#ffffff" size="4" > hits! </font >
+		</span>
+		
+		<span style="width:100px;"></span>
+		<span id="busuanzi_container_site_uv">
+			<font color="#ffffff" size="4" >  You are the </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_uv"></span>th </font >
+			<font color="#ffffff" size="4" > visitor！ </font >
+		</span>
+	</div>
+	
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xiaofeng365"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//7xod2d.com1.z0.glb.clouddn.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-70168817-1', 'xiaofeng.site');  
+ga('send', 'pageview');
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
+<a title="Back to the top"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+</html>

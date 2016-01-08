@@ -7,10 +7,10 @@ tags: [Markdown, 马克飞象, MarkdownPad, MarkdownX]
 相信大家都有去过Github吧，这是一个大牛集结，学习的好去处，可以说大部分开源项目都托管在这上面，我以AndroidSwipeLayou为例，我们看到的是这样的页面：
 ![gitbub-readme](http://7xod2d.com1.z0.glb.clouddn.com/github-readme.png)
 上面是代码目录结构，下面是什么？对，README.md！下面的内容都是README.md来描述的信息，我当时不知道.md是什么文件，也不知道它可以写出这么酷炫的文字和页面效果。md是markdown的简写，markdown提供了非常友好的文字处理能力，在了解到Markdown之后，才知道原来还可以这么玩，使用过了才知道它的强大之处。Github在添加README.md时就相当于是一个在线编辑器，而且还有转换预览，其实你可以在这里编辑，然后copy到任何支持的地方使用，但是离线的时候怎么办？于是开始寻找一款高效的编辑器，没错Sublime text，它已经成为一款程序员必备软件，无奈我没始终没安装上markdown的插件（请自行google安装教程），只好放弃了，但是最后我找到了各种Markdown的编辑器，下面就为大家一一揭晓。
+
 ### 在线编辑器 - 马克飞象
-官方地址：[点我跳转](https://maxiang.io/)
-这是一个在线的编辑器，它的效果实在是太炫酷了，第一次进去会有一个示例页面，这里的语法足够日后使用了，直接上图：
-![markfeixiang](http://7xod2d.com1.z0.glb.clouddn.com/markfeixiang.png)
+官方地址：[点我跳转](http://tool.oschina.net/markdown/)
+这是oschina提供的一个在线的编辑器，可以实时预览、Html效果预览
 
 ### Windows - MarkdownPad
 官网地址：[点我跳转](http://markdownpad.com/)

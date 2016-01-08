@@ -2,8 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xiaofeng.site/2015/12/23/Android-Studio-Tips-%E4%BA%8C/undefined/</loc>
+    <lastmod>2015-12-30T07:49:16.244Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/22/Android-Studio-Tips-%E4%B8%80/undefined/</loc>
+    <lastmod>2015-12-30T07:48:26.710Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/24/Android-Material-Design-Snackbar/undefined/</loc>
+    <lastmod>2015-12-30T07:43:46.031Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/30/Android-Material-Design-Floating-Labels-for-EditText/undefined/</loc>
+    <lastmod>2015-12-30T07:42:07.926Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/28/Android-Material-Design-Tabs/undefined/</loc>
+    <lastmod>2015-12-30T02:09:31.406Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/24/Parcelable-vs-Serializable/undefined/</loc>
+    <lastmod>2015-12-24T08:30:54.760Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/11/24/%E6%8E%A8%E8%8D%90-Markdown%E7%BC%96%E8%BE%91%E5%99%A8/undefined/</loc>
+    <lastmod>2015-12-23T03:29:32.071Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://xiaofeng.site/love.html</loc>
-    <lastmod>2015-12-02T07:37:59.149Z</lastmod>
+    <lastmod>2015-12-21T02:11:19.471Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xiaofeng.site/2015/12/09/Java%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96/undefined/</loc>
+    <lastmod>2015-12-09T05:49:30.617Z</lastmod>
   </url>
   
   <url>
@@ -34,11 +74,6 @@
   <url>
     <loc>http://xiaofeng.site/2015/11/23/Java%E9%87%8D%E8%BD%BD%E5%8C%B9%E9%85%8D%E4%BC%98%E5%85%88%E7%BA%A7/undefined/</loc>
     <lastmod>2015-11-24T09:59:07.532Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://xiaofeng.site/2015/11/24/%E6%8E%A8%E8%8D%90-Markdown%E7%BC%96%E8%BE%91%E5%99%A8/undefined/</loc>
-    <lastmod>2015-11-24T09:52:01.173Z</lastmod>
   </url>
   
   <url>
