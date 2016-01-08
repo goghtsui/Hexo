@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Learning programming, i enjoy it.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://xiaofeng.site/"/>
-  <updated>2015-12-30T07:42:07.926Z</updated>
+  <updated>2015-12-31T02:02:37.659Z</updated>
   <id>http://xiaofeng.site/</id>
   
   <author>
@@ -13,6 +13,606 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Android Material Design入门]]></title>
+    <link href="http://xiaofeng.site/2015/12/31/Android-Material-Design%E5%85%A5%E9%97%A8/undefined/"/>
+    <id>http://xiaofeng.site/2015/12/31/Android-Material-Design入门/undefined/</id>
+    <published>2015-12-31T01:41:32.000Z</published>
+    <updated>2015-12-31T02:02:37.659Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>原作者：Ravi Tamada<br>原文地址：<a href="http://www.androidhive.info/2015/04/android-getting-started-with-material-design/" target="_blank" rel="external">http://www.androidhive.info/…with-material-design/</a></p>
+</blockquote>
+<p>你可能听说了在Android Lollipop（棒棒糖）版本中有关Material Design的介绍。在Material Design中，介绍了许多新的东西，像Material主题、新的widget、自定义阴影、矢量图片和自定义动画。如果你还没有使用过Material Design，那么这篇文章会给你一个好的开始。</p>
+<p>在这个教程中，我们将学习Material Design开发基础的步骤，比如编写自定义主题、使用RecyclerView实现导航抽屉。</p>
+<p>通过下面的链接获取更多的关于Material Design的知识：</p>
+<blockquote>
+<p><a href="http://www.google.com/design/spec/material-design/introduction.html#" target="_blank" rel="external">Material Design Specifications</a><br><a href="http://developer.android.com/intl/zh-tw/training/material/index.html" target="_blank" rel="external">Creating Apps with Material Design</a></p>
+</blockquote>
+<p>本文资源链接：</p>
+<blockquote>
+<p>源码下载：<a href="http://download.androidhive.info/download?code=WPSkdrdZprHT0KLCZS3ClafgXBikGqM4r7FnNYdsdUTmlAkK6%2F2mkT0heOlNOq4U82rzqbod%2F14yU2uk5TWY4Zp%2FAYx6oiD7SKI%2FEgtUapzQUqkqcWEXX1bmw%3D%3DvqARiMEKqkqsXGbVf3vVUoffTqQcD2qfqZo" target="_blank" rel="external">点击获取</a><br>视频演示地址：<a href="https://youtu.be/jDXX_wDvarM" target="_blank" rel="external">Yutube</a></p>
+</blockquote>
+<ol>
+<li>Downloading Android Studio<br>Before going further, download the Android Studio and do the necessary setup as I am going to use Android Studio for all my tutorial from now on. If you are trying the Android Studio for the first time, go the overview doc to get complete overview of android studio.</li>
+</ol>
+<ol>
+<li>Material Design Color Customization<br>Material Design provides set of properties to customize the Material Design Color theme. But we use five primary attributes to customize overall theme.</li>
+</ol>
+<p>colorPrimaryDark – This is darkest primary color of the app mainly applies to notification bar background.</p>
+<p>colorPrimary – This is the primary color of the app. This color will be applied as toolbar background.</p>
+<p>textColorPrimary – This is the primary color of text. This applies to toolbar title.</p>
+<p>windowBackground – This is the default background color of the app.</p>
+<p>navigationBarColor – This color defines the background color of footer navigation bar.</p>
+<p>android-material-design-color-schema<br>You can go through this material design color patterns and choose the one that suits your app.</p>
+<ol>
+<li>Creating Material Design Theme</li>
+<li><p>In Android Studio, go to File ⇒ New Project and fill all the details required to create a new project. When it prompts to select a default activity, select Blank Activity and proceed.</p>
+</li>
+<li><p>Open res ⇒ values ⇒ strings.xml and add below string values.</p>
+</li>
+</ol>
+<p>strings.xml</p>
+<resources><br>    <string name="app_name">Material Design</string><br>    <string name="action_settings">Settings</string><br>    <string name="action_search">Search</string><br>    <string name="drawer_open">Open</string><br>    <string name="drawer_close">Close</string><br><br>    <string name="nav_item_home">Home</string><br>    <string name="nav_item_friends">Friends</string><br>    <string name="nav_item_notifications">Messages</string><br><br>    <!-- navigation drawer item labels  --><br>    <string-array name="nav_drawer_labels"><br>        <item>@string/nav_item_home</item><br>        <item>@string/nav_item_friends</item><br>        <item>@string/nav_item_notifications</item><br>    </string-array><br><br>    <string name="title_messages">Messages</string><br>    <string name="title_friends">Friends</string><br>    <string name="title_home">Home</string><br></resources>
+
+
+<ol>
+<li>Open res ⇒ values ⇒ colors.xml and add the below color values. If you don’t find colors.xml, create a new resource file with the name.</li>
+</ol>
+<p>colors.xml<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
+<resources><br>    <color name="colorPrimary">#F50057</color><br>    <color name="colorPrimaryDark">#C51162</color><br>    <color name="textColorPrimary">#FFFFFF</color><br>    <color name="windowBackground">#FFFFFF</color><br>    <color name="navigationBarColor">#000000</color><br>    <color name="colorAccent">#FF80AB</color><br></resources>
+
+
+<ol>
+<li>Open res ⇒ values ⇒ dimens.xml and add below dimensions.</li>
+</ol>
+<p>dimens.xml</p>
+<resources><br>    <!-- Default screen margins, per the Android Design guidelines. --><br>    <dimen name="activity_horizontal_margin">16dp</dimen><br>    <dimen name="activity_vertical_margin">16dp</dimen><br>    <dimen name="nav_drawer_width">260dp</dimen><br></resources>
+
+
+<ol>
+<li>Open styles.xml under res ⇒ values and add below styles. The styles defined in this styles.xml are common to all the android versions. Here I am naming my theme as MyMaterialTheme.</li>
+</ol>
+<p>styles.xml</p>
+<resources><br><br>    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"><br><br>    </style><br><br>    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar"><br>        <item name="windowNoTitle">true</item><br>        <item name="windowActionBar">false</item><br>        <item name="colorPrimary">@color/colorPrimary</item><br>        <item name="colorPrimaryDark">@color/colorPrimaryDark</item><br>        <item name="colorAccent">@color/colorAccent</item><br>    </style><br><br></resources>
+
+
+<ol>
+<li>Now under res, create a folder named values-v21. Inside values-v21, create another styles.xml with the below styles. These styles are specific to Android Lollipop only.</li>
+</ol>
+<p>styles.xml</p>
+<resources><br><br>    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"><br>        <item name="android:windowContentTransitions">true</item><br>        <item name="android:windowAllowEnterTransitionOverlap">true</item><br>        <item name="android:windowAllowReturnTransitionOverlap">true</item><br>        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item><br>        <item name="android:windowSharedElementExitTransition">@android:transition/move</item><br>    </style><br><br></resources>
+
+
+<ol>
+<li>Now we have the basic Material Design styles ready. In order to apply the theme, open AndroidManifest.xml and modify the android:theme attribute of <application> tag.</application></li>
+</ol>
+<p>android:theme=”@style/MyMaterialTheme”<br>So after applying the theme, your AndroidManifest.xml should look like below.</p>
+<p>AndroidManifest.xml<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="info.androidhive.materialdesign">
+
+<pre><code><span class="tag">&lt;<span class="title">application</span>
+    <span class="attribute">android:allowBackup</span>=<span class="value">"true"</span>
+    <span class="attribute">android:icon</span>=<span class="value">"@mipmap/ic_launcher"</span>
+    <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span>
+    <span class="attribute">android:theme</span>=<span class="value">"@style/MyMaterialTheme"</span> &gt;</span>
+    <span class="tag">&lt;<span class="title">activity</span>
+        <span class="attribute">android:name</span>=<span class="value">".activity.MainActivity"</span>
+        <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span> &gt;</span>
+        <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.MAIN"</span> /&gt;</span>
+
+            <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.LAUNCHER"</span> /&gt;</span>
+        <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">activity</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">application</span>&gt;</span>
+</code></pre><p></p></manifest><br>Now if you run the app, you can see the notification bar color changed to the color that we have mentioned in our styles.<p></p>
+<p>android-material-design-notification-bar</p>
+<p>3.1 Adding the Toolbar (Action Bar)<br>Adding the toolbar is very easy. All you have to do is, create a separate layout for the toolbar and include it in other layout wherever you want the toolbar to be displayed.</p>
+<ol>
+<li>Create an xml file named toolbar.xml under res ⇒ layout and add android.support.v7.widget.Toolbar element. This create the toolbar with specific height and theming.</li>
+</ol>
+<p>toolbar.xml<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
+<android.support.v7.widget.toolbar xmlns:android="http://schemas.android.com/apk/res/android" xmlns:local="http://schemas.android.com/apk/res-auto" android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="wrap_content" android:minheight="?attr/actionBarSize" android:background="?attr/colorPrimary" local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" local:popuptheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+<ol>
+<li>Open the layout file of your main activity (activity_main.xml) and add the toolbar using <include> tag.</include></li>
+</ol>
+<p>activity_main.xml</p>
+<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity"><br><br>    <linearlayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignparenttop="true" android:orientation="vertical"><br><br>        <include android:id="@+id/toolbar" layout="@layout/toolbar"><br>    </include></linearlayout><br><br><br></relativelayout><br>Run the app and see if the toolbar displayed on the screen or not.<br><br>android-material-design-toolbar<br>Now let’s try to add a toolbar title and enable the action items.<br><br>10. Download this search icon and import it into Android Studio as a Image Asset.<br><br>11. To import the Image Asset in Android Studio, right click on res ⇒ New ⇒ Image Asset. It will show you a popup window to import the resource. Browse the search icon that you have downloaded in the above step, select Action Bar and Tab Icons for Asset Type and give the resource name as ic_search_action and proceed.<br><br>android-studio-importing-image-asset<br>12. Once the icon is imported, open menu_main.xml located under res ⇒ menu and add the search menu item as mentioned below.<br><br>menu_main.xml<br><menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity"><br><br>    <item android:id="@+id/action_search" android:title="@string/action_search" android:orderincategory="100" android:icon="@drawable/ic_action_search" app:showasaction="ifRoom"><br><br>    <item android:id="@+id/action_settings" android:title="@string/action_settings" android:orderincategory="100" app:showasaction="never"><br></item></item></menu><br><br><br>13. Now open your MainActivity.java and do the below changes.<br><br>&gt; Extend the activity from AppCompatActivity<br><br>&gt; Enable the toolbar by calling setSupportActionBar() by passing the toolbar object.<br><br>&gt; Override onCreateOptionsMenu() and onOptionsItemSelected() methods to enable toolbar action items.<br><br>MainActivity.java<br>import android.os.Bundle;<br>import android.support.v7.app.AppCompatActivity;<br>import android.support.v7.widget.Toolbar;<br>import android.view.Menu;<br>import android.view.MenuItem;<br><br>public class MainActivity extends AppCompatActivity {<br><br>    private Toolbar mToolbar;<br><br>    @Override<br>    protected void onCreate(Bundle savedInstanceState) {<br>        super.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br><br>        mToolbar = (Toolbar) findViewById(R.id.toolbar);<br><br>        setSupportActionBar(mToolbar);<br>        getSupportActionBar().setDisplayShowHomeEnabled(true);<br>    }<br><br><br>    @Override<br>    public boolean onCreateOptionsMenu(Menu menu) {<br>        // Inflate the menu; this adds items to the action bar if it is present.<br>        getMenuInflater().inflate(R.menu.menu_main, menu);<br>        return true;<br>    }<br><br>    @Override<br>    public boolean onOptionsItemSelected(MenuItem item) {<br>        // Handle action bar item clicks here. The action bar will<br>        // automatically handle clicks on the Home/Up button, so long<br>        // as you specify a parent activity in AndroidManifest.xml.<br>        int id = item.getItemId();<br><br>        //noinspection SimplifiableIfStatement<br>        if (id == R.id.action_settings) {<br>            return true;<br>        }<br><br>        return super.onOptionsItemSelected(item);<br>    }<br>}<br><br><br>After doing the above changes, if you run the app, you should see the search icon and action overflow icon.<br><br>android-material-design-toolbar-action-items<br>3.2 Adding Navigation Drawer<br>Adding navigation drawer is same as that we do before lollipop, but instead if using ListView for menu items, we use RecyclerView in material design. So let’s see how to implement the navigation drawer with RecyclerView.<br><br>14. In your project’s java folder, create three packages named activity, adapter, model and move your MainActivity.java to activity package. This will keep your project organized.<br><br>15. Open build.gradle located under your app module and add below dependencies. After adding the dependencies, goto Build ⇒ Rebuild Project to download required libraries.<br><br>build.gradle<br>dependencies {<br>    compile fileTree(dir: ‘libs’, include: [‘<em>.jar’])<br>    compile ‘com.android.support:appcompat-v7:22.2.0’<br>    compile ‘com.android.support:recyclerview-v7:22.2.+’<br>}<br><br><br>16. Under model package, create a class named NavDrawerItem.java with the below code. This model class is POJO class that defines each row in navigation drawer menu.<br><br>NavDrawerItem.java<br>package info.androidhive.materialdesign.model;<br><br>/**
+ </em> Created by Ravi on 29/07/15.<br> */<br>public class NavDrawerItem {<br>    private boolean showNotify;<br>    private String title;<br><br><br>    public NavDrawerItem() {<br><br>    }<br><br>    public NavDrawerItem(boolean showNotify, String title) {<br>        this.showNotify = showNotify;<br>        this.title = title;<br>    }<br><br>    public boolean isShowNotify() {<br>        return showNotify;<br>    }<br><br>    public void setShowNotify(boolean showNotify) {<br>        this.showNotify = showNotify;<br>    }<br><br>    public String getTitle() {<br>        return title;<br>    }<br><br>    public void setTitle(String title) {<br>        this.title = title;<br>    }<br>}<br><br><br>17. Under res ⇒ layout, create an xml layout named nav_drawer_row.xml and add the below code. The layout renders each row in navigation drawer menu. If you want to customize the navigation drawer menu item, you have to do the changes in this file. For now it has only one TextView.<br><br>nav_drawer_row.xml<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br><relativelayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:clickable="true"><br><br>    <textview android:id="@+id/title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingleft="30dp" android:paddingtop="10dp" android:paddingbottom="10dp" android:textsize="15dp" android:textstyle="bold"><br><br></textview></relativelayout>
+
+
+<ol>
+<li><p>Download this profile icon and paste it in your drawable folder. This step is optional, but this icon used in the navigation drawer header part.</p>
+</li>
+<li><p>Create another xml layout named fragment_navigation_drawer.xml and add the below code. This layout renders the complete navigation drawer view. This layout contains a header section to display the user information and a RecyclerView to display the list view.</p>
+</li>
+</ol>
+<p>fragment_navigation_drawer.xml</p>
+<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@android:color/white"><br><br><br>    <relativelayout android:id="@+id/nav_header_container" android:layout_width="match_parent" android:layout_height="140dp" android:layout_alignparenttop="true" android:background="@color/colorPrimary"><br><br>        <imageview android:layout_width="70dp" android:layout_height="70dp" android:src="@drawable/ic_profile" android:scaletype="fitCenter" android:layout_centerinparent="true"><br><br>    </imageview></relativelayout>
+
+
+<pre><code>&lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.RecyclerView</span>
+    android:id=<span class="string">"@+id/drawerList"</span>
+    android:layout_width=<span class="string">"match_parent"</span>
+    android:layout_height=<span class="string">"wrap_content"</span>
+    android:layout_below=<span class="string">"@id/nav_header_container"</span>
+    android:layout_marginTop=<span class="string">"15dp"</span> /&gt;
+</code></pre><p></p></relativelayout><p></p>
+<ol>
+<li>As the RecyclerView is customized, we need an adapter class to render the custom xml layout. So under adapter package, create a class named NavigationDrawerAdapter.java and paste the below code. This adapter class inflates nav_drawer_row.xml and renders the RecycleView drawer menu.</li>
+</ol>
+<p>import android.content.Context;<br>import android.support.v7.widget.RecyclerView;<br>import android.view.LayoutInflater;<br>import android.view.View;<br>import android.view.ViewGroup;<br>import android.widget.TextView;</p>
+<p>import java.util.Collections;<br>import java.util.List;</p>
+<p>/**</p>
+<ul>
+<li><p>Created by Ravi Tamada on 12-03-2015.<br>*/<br>public class NavigationDrawerAdapter extends RecyclerView.Adapter<navigationdraweradapter.myviewholder> {<br> List<navdraweritem> data = Collections.emptyList();<br> private LayoutInflater inflater;<br> private Context context;</navdraweritem></navigationdraweradapter.myviewholder></p>
+<p> public NavigationDrawerAdapter(Context context, List<navdraweritem> data) {</navdraweritem></p>
+<pre><code><span class="keyword">this</span>.context = context;
+inflater = LayoutInflater.<span class="keyword">from</span>(context);
+<span class="keyword">this</span>.data = data;
+</code></pre><p> }</p>
+<p> public void delete(int position) {</p>
+<pre><code><span class="type">data</span>.remove(<span class="keyword">position</span>);
+notifyItemRemoved(<span class="keyword">position</span>);
+</code></pre><p> }</p>
+<p> @Override<br> public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {</p>
+<pre><code>View view = inflater<span class="built_in">.</span>inflate(R<span class="built_in">.</span>layout<span class="built_in">.</span>nav_drawer_row, <span class="keyword">parent</span>, <span class="literal">false</span>);
+MyViewHolder holder = <span class="literal">new</span> MyViewHolder(view);
+<span class="keyword">return</span> holder;
+</code></pre><p> }</p>
+<p> @Override<br> public void onBindViewHolder(MyViewHolder holder, int position) {</p>
+<pre><code><span class="type">NavDrawerItem</span> current = <span class="typedef"><span class="keyword">data</span>.get<span class="container">(<span class="title">position</span>)</span>;</span>
+<span class="title">holder</span>.title.setText(current.getTitle());
+</code></pre><p> }</p>
+<p> @Override<br> public int getItemCount() {</p>
+<pre><code><span class="keyword">return</span> <span class="type">data</span>.<span class="built_in">size</span>();
+</code></pre><p> }</p>
+<p> class MyViewHolder extends RecyclerView.ViewHolder {</p>
+<pre><code><span class="label">TextView</span> title<span class="comment">;</span>
+
+<span class="label">public</span> MyViewHolder(View <span class="keyword">itemView) </span>{
+    super(<span class="keyword">itemView);
+</span>    title = (TextView) <span class="keyword">itemView.findViewById(R.id.title);
+</span>}
+</code></pre><p> }<br>}</p>
+</li>
+</ul>
+<ol>
+<li>Under activity package, create a fragment named FragmentDrawer.java. In Android Studio, to create a new fragment, Right click on activity ⇒ New ⇒ Fragment ⇒ Fragment (Blank) and give your fragment class name.</li>
+</ol>
+<p>FragmentDrawer.java<br>/**</p>
+<ul>
+<li>Created by Ravi on 29/07/15.<br>*/</li>
+</ul>
+<p>import android.content.Context;<br>import android.os.Bundle;<br>import android.support.v4.app.Fragment;<br>import android.support.v4.widget.DrawerLayout;<br>import android.support.v7.app.ActionBarDrawerToggle;<br>import android.support.v7.widget.LinearLayoutManager;<br>import android.support.v7.widget.RecyclerView;<br>import android.support.v7.widget.Toolbar;<br>import android.view.GestureDetector;<br>import android.view.LayoutInflater;<br>import android.view.MotionEvent;<br>import android.view.View;<br>import android.view.ViewGroup;</p>
+<p>import java.util.ArrayList;<br>import java.util.List;</p>
+<p>import info.androidhive.materialdesign.R;<br>import info.androidhive.materialdesign.adapter.NavigationDrawerAdapter;<br>import info.androidhive.materialdesign.model.NavDrawerItem;</p>
+<p>public class FragmentDrawer extends Fragment {</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">static</span> String TAG = FragmentDrawer.class.getSimpleName();
+
+<span class="keyword">private</span> RecyclerView recyclerView;
+<span class="keyword">private</span> ActionBarDrawerToggle mDrawerToggle;
+<span class="keyword">private</span> DrawerLayout mDrawerLayout;
+<span class="keyword">private</span> NavigationDrawerAdapter adapter;
+<span class="keyword">private</span> View containerView;
+<span class="keyword">private</span> <span class="keyword">static</span> String[] titles = <span class="keyword">null</span>;
+<span class="keyword">private</span> FragmentDrawerListener drawerListener;
+
+<span class="function"><span class="keyword">public</span> <span class="title">FragmentDrawer</span><span class="params">()</span> </span>{
+
+}
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDrawerListener</span><span class="params">(FragmentDrawerListener listener)</span> </span>{
+    <span class="keyword">this</span>.drawerListener = listener;
+}
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;NavDrawerItem&gt; <span class="title">getData</span><span class="params">()</span> </span>{
+    List&lt;NavDrawerItem&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+
+    <span class="comment">// preparing navigation drawer items</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; titles.length; i++) {
+        NavDrawerItem navItem = <span class="keyword">new</span> NavDrawerItem();
+        navItem.setTitle(titles[i]);
+        data.add(navItem);
+    }
+    <span class="keyword">return</span> data;
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+
+    <span class="comment">// drawer labels</span>
+    titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState)</span> </span>{
+    <span class="comment">// Inflating view layout</span>
+    View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, <span class="keyword">false</span>);
+    recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+
+    adapter = <span class="keyword">new</span> NavigationDrawerAdapter(getActivity(), getData());
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));
+    recyclerView.addOnItemTouchListener(<span class="keyword">new</span> RecyclerTouchListener(getActivity(), recyclerView, <span class="keyword">new</span> ClickListener() {
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>{
+            drawerListener.onDrawerItemSelected(view, position);
+            mDrawerLayout.closeDrawer(containerView);
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>{
+
+        }
+    }));
+
+    <span class="keyword">return</span> layout;
+}
+
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">(<span class="keyword">int</span> fragmentId, DrawerLayout drawerLayout, <span class="keyword">final</span> Toolbar toolbar)</span> </span>{
+    containerView = getActivity().findViewById(fragmentId);
+    mDrawerLayout = drawerLayout;
+    mDrawerToggle = <span class="keyword">new</span> ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerOpened</span><span class="params">(View drawerView)</span> </span>{
+            <span class="keyword">super</span>.onDrawerOpened(drawerView);
+            getActivity().invalidateOptionsMenu();
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerClosed</span><span class="params">(View drawerView)</span> </span>{
+            <span class="keyword">super</span>.onDrawerClosed(drawerView);
+            getActivity().invalidateOptionsMenu();
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerSlide</span><span class="params">(View drawerView, <span class="keyword">float</span> slideOffset)</span> </span>{
+            <span class="keyword">super</span>.onDrawerSlide(drawerView, slideOffset);
+            toolbar.setAlpha(<span class="number">1</span> - slideOffset / <span class="number">2</span>);
+        }
+    };
+
+    mDrawerLayout.setDrawerListener(mDrawerToggle);
+    mDrawerLayout.post(<span class="keyword">new</span> Runnable() {
+        <span class="annotation">@Override</span>
+        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+            mDrawerToggle.syncState();
+        }
+    });
+
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">interface</span> <span class="title">ClickListener</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span>;
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span>;
+}
+
+<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RecyclerTouchListener</span> <span class="keyword">implements</span> <span class="title">RecyclerView</span>.<span class="title">OnItemTouchListener</span> </span>{
+
+    <span class="keyword">private</span> GestureDetector gestureDetector;
+    <span class="keyword">private</span> ClickListener clickListener;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">RecyclerTouchListener</span><span class="params">(Context context, <span class="keyword">final</span> RecyclerView recyclerView, <span class="keyword">final</span> ClickListener clickListener)</span> </span>{
+        <span class="keyword">this</span>.clickListener = clickListener;
+        gestureDetector = <span class="keyword">new</span> GestureDetector(context, <span class="keyword">new</span> GestureDetector.SimpleOnGestureListener() {
+            <span class="annotation">@Override</span>
+            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapUp</span><span class="params">(MotionEvent e)</span> </span>{
+                <span class="keyword">return</span> <span class="keyword">true</span>;
+            }
+
+            <span class="annotation">@Override</span>
+            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongPress</span><span class="params">(MotionEvent e)</span> </span>{
+                View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                <span class="keyword">if</span> (child != <span class="keyword">null</span> &amp;&amp; clickListener != <span class="keyword">null</span>) {
+                    clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                }
+            }
+        });
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(RecyclerView rv, MotionEvent e)</span> </span>{
+
+        View child = rv.findChildViewUnder(e.getX(), e.getY());
+        <span class="keyword">if</span> (child != <span class="keyword">null</span> &amp;&amp; clickListener != <span class="keyword">null</span> &amp;&amp; gestureDetector.onTouchEvent(e)) {
+            clickListener.onClick(child, rv.getChildPosition(child));
+        }
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTouchEvent</span><span class="params">(RecyclerView rv, MotionEvent e)</span> </span>{
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestDisallowInterceptTouchEvent</span><span class="params">(<span class="keyword">boolean</span> disallowIntercept)</span> </span>{
+
+    }
+
+
+}
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FragmentDrawerListener</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawerItemSelected</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span>;
+}
+</code></pre><p>}</p>
+<ol>
+<li>Finally open main activity layout (activity_main.xml) and modify the layout as below. In this layout we are adding android.support.v4.widget.DrawerLayout to display the navigation drawer menu.</li>
+</ol>
+<p>Also you have to give the correct path of your FragmentDrawer in <fragment> element.</fragment></p>
+<p>actiivty_main.xml</p>
+<android.support.v4.widget.drawerlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout" android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+<pre><code><span class="tag">&lt;<span class="title">LinearLayout</span>
+    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span>
+    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>
+    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">LinearLayout</span>
+        <span class="attribute">android:id</span>=<span class="value">"@+id/container_toolbar"</span>
+        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span>
+        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span>
+        <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span>
+
+        <span class="tag">&lt;<span class="title">include</span>
+            <span class="attribute">android:id</span>=<span class="value">"@+id/toolbar"</span>
+            <span class="attribute">layout</span>=<span class="value">"@layout/toolbar"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">FrameLayout</span>
+        <span class="attribute">android:id</span>=<span class="value">"@+id/container_body"</span>
+        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span>
+        <span class="attribute">android:layout_height</span>=<span class="value">"0dp"</span>
+        <span class="attribute">android:layout_weight</span>=<span class="value">"1"</span> /&gt;</span>
+
+
+<span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span>
+
+
+<span class="tag">&lt;<span class="title">fragment</span>
+    <span class="attribute">android:id</span>=<span class="value">"@+id/fragment_navigation_drawer"</span>
+    <span class="attribute">android:name</span>=<span class="value">"info.androidhive.materialdesign.activity.FragmentDrawer"</span>
+    <span class="attribute">android:layout_width</span>=<span class="value">"@dimen/nav_drawer_width"</span>
+    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>
+    <span class="attribute">android:layout_gravity</span>=<span class="value">"start"</span>
+    <span class="attribute">app:layout</span>=<span class="value">"@layout/fragment_navigation_drawer"</span>
+    <span class="attribute">tools:layout</span>=<span class="value">"@layout/fragment_navigation_drawer"</span> /&gt;</span>
+</code></pre><p></p></android.support.v4.widget.drawerlayout><p></p>
+<p>Now we have all the layout files and java classes ready in place. Let’s do the necessary changes in MainActivity to make the navigation drawer functioning.</p>
+<ol>
+<li>Open your MainActivity.java and do the below changes.</li>
+</ol>
+<blockquote>
+<p>Implement the activity from FragmentDrawer.FragmentDrawerListener and add the onDrawerItemSelected() override method.</p>
+<p>Create an instance of FragmentDrawer and set the drawer selected listeners.</p>
+</blockquote>
+<p>MainActivity.java<br>import android.support.v4.widget.DrawerLayout;<br>import android.support.v7.app.AppCompatActivity;<br>import android.os.Bundle;<br>import android.support.v7.widget.Toolbar;<br>import android.view.Menu;<br>import android.view.MenuItem;<br>import android.view.View;</p>
+<p>public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {</p>
+<pre><code><span class="keyword">private</span> Toolbar mToolbar;
+<span class="keyword">private</span> FragmentDrawer drawerFragment;
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayShowHomeEnabled(<span class="keyword">true</span>);
+
+    drawerFragment = (FragmentDrawer)
+            getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+    drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+    drawerFragment.setDrawerListener(<span class="keyword">this</span>);
+}
+
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>{
+    <span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span>
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>{
+    <span class="comment">// Handle action bar item clicks here. The action bar will</span>
+    <span class="comment">// automatically handle clicks on the Home/Up button, so long</span>
+    <span class="comment">// as you specify a parent activity in AndroidManifest.xml.</span>
+    <span class="keyword">int</span> id = item.getItemId();
+
+    <span class="comment">//noinspection SimplifiableIfStatement</span>
+    <span class="keyword">if</span> (id == R.id.action_settings) {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onOptionsItemSelected</span><span class="params">(item)</span></span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDrawerItemSelected</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>{
+
+}
+</code></pre><p>}</p>
+<p>Now if you run the app, you can see the navigation drawer with a header and few list items in it.</p>
+<p>androd-material-design-navigation-drawer<br>3.3 Implementing Navigation Drawer Item Selection<br>Although navigation drawer is functioning, you can see the selection of drawer list items not working. This is because we are yet to implement the click listener on RecyclerView items.</p>
+<p>As we have three menu items in navigation drawer (Home, Friends &amp; Messages), we need to create three separate fragment classes for each menu item.</p>
+<ol>
+<li>Under res layout, create an xml layout named fragment_home.xml and add below code.</li>
+</ol>
+<p>fragment_home.xml</p>
+<relativelayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" tools:context="info.androidhive.materialdesign.activity.HomeFragment"><br><br><br>    <textview android:id="@+id/label" android:layout_alignparenttop="true" android:layout_margintop="100dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="center_horizontal" android:textsize="45dp" android:text="HOME" android:textstyle="bold"><br><br>    <textview android:layout_below="@id/label" android:layout_centerinparent="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textsize="12dp" android:layout_margintop="10dp" android:gravity="center_horizontal" android:text="Edit fragment_home.xml to change the appearance"><br><br></textview></textview></relativelayout>
+
+
+<ol>
+<li>Under activity package, create a fragment class named HomeFragment.java and add below code.</li>
+</ol>
+<p>HomeFragment.java<br>import android.app.Activity;<br>import android.os.Bundle;<br>import android.support.v4.app.Fragment;<br>import android.view.LayoutInflater;<br>import android.view.View;<br>import android.view.ViewGroup;</p>
+<p>public class HomeFragment extends Fragment {</p>
+<pre><code><span class="function"><span class="keyword">public</span> <span class="title">HomeFragment</span><span class="params">()</span> </span>{
+    <span class="comment">// Required empty public constructor</span>
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function">View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState)</span> </span>{
+    View rootView = inflater.inflate(R.layout.fragment_home, container, <span class="keyword">false</span>);
+
+
+    <span class="comment">// Inflate the layout for this fragment</span>
+    <span class="keyword">return</span> rootView;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span> </span>{
+    <span class="keyword">super</span>.onAttach(activity);
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>{
+    <span class="keyword">super</span>.onDetach();
+}
+</code></pre><p>}</p>
+<ol>
+<li><p>Create two more fragment classes named FriendsFragment.java, MessagesFragment.java and respected layout files named fragment_friends.xml and fragment_messages.xml and add the code from above two steps.</p>
+</li>
+<li><p>Now open MainActivity.java and do the below changes. In the below code</p>
+</li>
+</ol>
+<blockquote>
+<p>displayView() method displays the fragment view respected the navigation menu item selection. This method should be called in onDrawerItemSelected() to render the respected view when a navigation menu item is selected.</p>
+</blockquote>
+<p>MainActivity.java<br>import android.os.Bundle;<br>import android.support.v4.app.Fragment;<br>import android.support.v4.app.FragmentManager;<br>import android.support.v4.app.FragmentTransaction;<br>import android.support.v4.widget.DrawerLayout;<br>import android.support.v7.app.ActionBarActivity;<br>import android.support.v7.widget.Toolbar;<br>import android.view.Menu;<br>import android.view.MenuItem;<br>import android.view.View;<br>import android.widget.Toast;</p>
+<p>public class MainActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">static</span> String TAG = MainActivity.class.getSimpleName();
+
+<span class="keyword">private</span> Toolbar mToolbar;
+<span class="keyword">private</span> FragmentDrawer drawerFragment;
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayShowHomeEnabled(<span class="keyword">true</span>);
+
+    drawerFragment = (FragmentDrawer)
+            getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+    drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+    drawerFragment.setDrawerListener(<span class="keyword">this</span>);
+
+    <span class="comment">// display the first navigation drawer view on app launch</span>
+    displayView(<span class="number">0</span>);
+}
+
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>{
+    <span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span>
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>{
+    <span class="comment">// Handle action bar item clicks here. The action bar will</span>
+    <span class="comment">// automatically handle clicks on the Home/Up button, so long</span>
+    <span class="comment">// as you specify a parent activity in AndroidManifest.xml.</span>
+    <span class="keyword">int</span> id = item.getItemId();
+
+    <span class="comment">//noinspection SimplifiableIfStatement</span>
+    <span class="keyword">if</span> (id == R.id.action_settings) {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="keyword">if</span>(id == R.id.action_search){
+        Toast.makeText(getApplicationContext(), <span class="string">"Search action is selected!"</span>, Toast.LENGTH_SHORT).show();
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onOptionsItemSelected</span><span class="params">(item)</span></span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDrawerItemSelected</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>{
+        displayView(position);
+}
+
+<span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">displayView</span><span class="params">(<span class="keyword">int</span> position)</span> </span>{
+    Fragment fragment = <span class="keyword">null</span>;
+    String title = getString(R.string.app_name);
+    <span class="keyword">switch</span> (position) {
+        <span class="keyword">case</span> <span class="number">0</span>:
+            fragment = <span class="keyword">new</span> HomeFragment();
+            title = getString(R.string.title_home);
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">1</span>:
+            fragment = <span class="keyword">new</span> FriendsFragment();
+            title = getString(R.string.title_friends);
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">2</span>:
+            fragment = <span class="keyword">new</span> MessagesFragment();
+            title = getString(R.string.title_messages);
+            <span class="keyword">break</span>;
+        <span class="keyword">default</span>:
+            <span class="keyword">break</span>;
+    }
+
+    <span class="keyword">if</span> (fragment != <span class="keyword">null</span>) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_body, fragment);
+        fragmentTransaction.commit();
+
+        <span class="comment">// set the toolbar title</span>
+        getSupportActionBar().setTitle(title);
+    }
+}
+</code></pre><p>}</p>
+<p>Now if you run the app, you can see the selection of navigation drawer menu is working and respected view displayed below the toolbar.</p>
+<p>android-material-design-navigation-drawer-1<br>android-material-design-navigation-drawer-2<br>android-material-design-navigation-drawer-3</p>
+<p>What’s Next?<br>Below are few more material components you can add to your app. These were implemented using recent Android Design Support Library.</p>
+<ol>
+<li><p>Material Design Tab Layout<br>If you want to add tabs to your app, Android Material Design Tabs covers different aspects of Tab Layout.</p>
+</li>
+<li><p>Floating Labels for EditText<br>Learn how floating labels works on EditText with a simple form validation example.</p>
+</li>
+<li><p>Floating Action Button (FAB)<br>Add the Floating Action Button to your which displays in circular shape floating on the top of the UI.</p>
+</li>
+<li><p>Snackbar<br>Add the Snackbar to your app to give immediate feedback about any operation that user performed.</p>
+</li>
+</ol>
+</android.support.v7.widget.toolbar>]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>原作者：Ravi Tamada<br>原文地址：<a href="http://www.androidhive.info/2015/04/android-getting-started-with-material-design/" target="]]>
+    </summary>
+    
+      <category term="Material Design" scheme="http://xiaofeng.site/tags/Material-Design/"/>
+    
+      <category term="Android" scheme="http://xiaofeng.site/categories/Android/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Android Material Design - Floating Labels for EditText]]></title>
