@@ -22,34 +22,42 @@ tags: [Material Design]
 >源码下载：[点击获取](http://download.androidhive.info/download?code=WPSkdrdZprHT0KLCZS3ClafgXBikGqM4r7FnNYdsdUTmlAkK6%2F2mkT0heOlNOq4U82rzqbod%2F14yU2uk5TWY4Zp%2FAYx6oiD7SKI%2FEgtUapzQUqkqcWEXX1bmw%3D%3DvqARiMEKqkqsXGbVf3vVUoffTqQcD2qfqZo)
 >视频演示地址：[Yutube](https://youtu.be/jDXX_wDvarM)
 
-1. Downloading Android Studio
-Before going further, download the Android Studio and do the necessary setup as I am going to use Android Studio for all my tutorial from now on. If you are trying the Android Studio for the first time, go the overview doc to get complete overview of android studio.
+## 1. 下载Android Studio
+
+在进一步了解之前,下载Android Studio并且进行必须的设置，因为之后我将使用Android Studio做教程讲解。如果你是第一次尝试Android Studio，通过[概述文档][1]了一下Android Studio。
 
 
 
-2. Material Design Color Customization
-Material Design provides set of properties to customize the Material Design Color theme. But we use five primary attributes to customize overall theme.
-
-colorPrimaryDark – This is darkest primary color of the app mainly applies to notification bar background.
-
-colorPrimary – This is the primary color of the app. This color will be applied as toolbar background.
-
-textColorPrimary – This is the primary color of text. This applies to toolbar title.
-
-windowBackground – This is the default background color of the app.
-
-navigationBarColor – This color defines the background color of footer navigation bar.
-
-android-material-design-color-schema
-You can go through this material design color patterns and choose the one that suits your app.
 
 
-3. Creating Material Design Theme
-1. In Android Studio, go to File ⇒ New Project and fill all the details required to create a new project. When it prompts to select a default activity, select Blank Activity and proceed.
+## 2. Material Design颜色自定义
 
-2. Open res ⇒ values ⇒ strings.xml and add below string values.
+Material Design提供了一些其颜色主题的自定义属性，但是我们使用主要的五种，来自定义整个主题：
 
-strings.xml
+- `colorPrimaryDark` – 应用于通知栏的背景色
+
+- `colorPrimary` – 这是应用最主要的颜色，应用于toolbar的背景色
+
+- `textColorPrimary` – 这是文字的颜色，应用于toolbar的标题
+
+- `windowBackground` – 这是应用默认的背景色
+
+- `navigationBarColor` – 这个颜色定义了底部导航按钮的背景色
+
+![android-material-design-color-schema](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-color-schema.png)
+
+你可以通过Material Design颜色模型，去选择适合你应用的一套颜色
+
+
+## 3. 创建 Material Design 主题
+
+
+**1.** 在Android Studio中，通过**File ⇒ New Project`**并且填写其他需要的选项，来创建一个新的工程，当被提示选择默认的Activity时，选择**Blank Activity**即可
+
+**2.** 打开**res ⇒ values ⇒ strings.xml**并且添加以下文字：
+
+`strings.xml`
+``` xml
 <resources>
     <string name="app_name">Material Design</string>
     <string name="action_settings">Settings</string>
@@ -72,11 +80,12 @@ strings.xml
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
 </resources>
+```
 
+**3.** 打开**res ⇒ values ⇒ colors.xml**并且添加以下颜色值，如果你没有找到`colors.xml`，就新建一个文件即可
 
-3. Open res ⇒ values ⇒ colors.xml and add the below color values. If you don’t find colors.xml, create a new resource file with the name.
-
-colors.xml
+`colors.xml`
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#F50057</color>
@@ -86,22 +95,24 @@ colors.xml
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF80AB</color>
 </resources>
+```
 
+**4.** 打开**res ⇒ values ⇒ dimens.xml**并添加以下尺寸值
 
-4. Open res ⇒ values ⇒ dimens.xml and add below dimensions.
-
-dimens.xml
+`dimens.xml`
+``` xml
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_drawer_width">260dp</dimen>
 </resources>
+```
 
+**5.** 打开**res ⇒ values ⇒ styles.xml**并添加以下样式。这些样式适用于所有的安卓版本，这里我定义主题的名字为：**MyMaterialTheme**
 
-5. Open styles.xml under res ⇒ values and add below styles. The styles defined in this styles.xml are common to all the android versions. Here I am naming my theme as MyMaterialTheme.
-
-styles.xml
+`styles.xml`
+``` xml
 <resources>
  
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
@@ -117,11 +128,12 @@ styles.xml
     </style>
      
 </resources>
+```
 
+**6.** 在**res**下新建一个文件夹：**values-v21**，在这下面新建另外一个**styles.xml**天下一下样式，这些延时只适用于**Android Lollipop**版本
 
-6. Now under res, create a folder named values-v21. Inside values-v21, create another styles.xml with the below styles. These styles are specific to Android Lollipop only.
-
-styles.xml
+`styles.xml`
+```xml
 <resources>
  
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
@@ -133,14 +145,16 @@ styles.xml
     </style>
  
 </resources>
+```
 
+**7.** 现在我们已经准备好了基本的Material Design样式，为了应用这个主题，打开**AndroidManifest.xml**并通过<application>标签下的**android:theme attribute of**属性为应用设置该主题
 
-7. Now we have the basic Material Design styles ready. In order to apply the theme, open AndroidManifest.xml and modify the android:theme attribute of <application> tag.
+`android:theme="@style/MyMaterialTheme"`
 
-android:theme="@style/MyMaterialTheme"
-So after applying the theme, your AndroidManifest.xml should look like below.
+在设置了该主题之后，你的**AndroidManifest.xml**应该是下面的样子：
 
-AndroidManifest.xml
+`AndroidManifest.xml`
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.androidhive.materialdesign" >
@@ -162,17 +176,21 @@ AndroidManifest.xml
     </application>
  
 </manifest>
-Now if you run the app, you can see the notification bar color changed to the color that we have mentioned in our styles.
+```
 
-android-material-design-notification-bar
+现在运行你的应用，你可以看到通知栏的颜色已经是我们设置的样式的颜色了。
+
+![android-material-design-notification-bar](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-notification-bar.png)
 
 
-3.1 Adding the Toolbar (Action Bar)
-Adding the toolbar is very easy. All you have to do is, create a separate layout for the toolbar and include it in other layout wherever you want the toolbar to be displayed.
+**3.1** 添加Toolbar(Action Bar)
 
-8. Create an xml file named toolbar.xml under res ⇒ layout and add android.support.v7.widget.Toolbar element. This create the toolbar with specific height and theming.
+添加toolbar是非常容易的，你需要做的就是，为toolbar创建一个单独的layout，在其他layout中需要显示的地方使用。
 
-toolbar.xml
+**8.** 新建一个xml文件**res ⇒ layout ⇒ toolbar.xml**并添加`android.support.v7.widget.Toolbar`控件，这个toolbar具有特定的宽度和主题
+
+`toolbar.xml`
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
@@ -183,11 +201,12 @@ toolbar.xml
     android:background="?attr/colorPrimary"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+```
 
+**9.** 打开主Activity的布局文件(activity_main.xml)，并通过`<include/>`来添加对toolbar的使用
 
-9. Open the layout file of your main activity (activity_main.xml) and add the toolbar using <include/> tag.
-
-activity_main.xml
+`activity_main.xml`
+``` xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -207,19 +226,24 @@ activity_main.xml
  
  
 </RelativeLayout>
-Run the app and see if the toolbar displayed on the screen or not.
+```
 
-android-material-design-toolbar
-Now let’s try to add a toolbar title and enable the action items.
+运行这个应用，并且看看toolbar是不是显示在屏幕上
 
-10. Download this search icon and import it into Android Studio as a Image Asset.
+![android-material-design-toolbar](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-toolbar1.png)
 
-11. To import the Image Asset in Android Studio, right click on res ⇒ New ⇒ Image Asset. It will show you a popup window to import the resource. Browse the search icon that you have downloaded in the above step, select Action Bar and Tab Icons for Asset Type and give the resource name as ic_search_action and proceed.
+现在让我们试着给toolbar添加标题和交互
 
-android-studio-importing-image-asset
-12. Once the icon is imported, open menu_main.xml located under res ⇒ menu and add the search menu item as mentioned below.
+**10.** 下载这个[搜索图标][2]，在Android Studio中通过Image Asset来引用它
 
-menu_main.xml
+**11.** 右键**res ⇒ New ⇒ Image Asset**，会显示一个弹窗来引入资源，找到你下载的搜索图标，Asset Type选择**Action Bar and Tab Icons**，并命名为**ic_search_action**
+
+![android-studio-importing-image-asset](http://www.androidhive.info/wp-content/uploads/2015/04/android-studio-importing-image-asset.png)
+
+**12.** 图标导入完成之后，打开**res ⇒ menu ⇒ menu_main.xml**并且添加下面的搜索菜单：
+
+`menu_main.xml`
+``` xml
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -238,17 +262,19 @@ menu_main.xml
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>
+```
 
+**13.** 现在打开**MainActivity.java**并且做如下修改：
 
-13. Now open your MainActivity.java and do the below changes.
+- 1.继承的activity是**AppCompatActivity**
 
-> Extend the activity from AppCompatActivity
+- 2.调用`setSupportActionBar()`并传递toolbar对象，以设置toolbar为可用状态
 
-> Enable the toolbar by calling setSupportActionBar() by passing the toolbar object.
+- 3. 复写**onCreateOptionsMenu()**和**onOptionsItemSelected()**方法来设置toolbar的交互行为
 
-> Override onCreateOptionsMenu() and onOptionsItemSelected() methods to enable toolbar action items.
+`MainActivity.java`
 
-MainActivity.java
+``` java
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -293,29 +319,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+```
 
+在做了以上修改之后，如果你运行应用，你应该能够在toolbar中看到搜索图标和更多菜单选项了
 
-After doing the above changes, if you run the app, you should see the search icon and action overflow icon.
+![android-material-design-toolbar-action-items](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-toolbar-action-items.png)
 
-android-material-design-toolbar-action-items
-3.2 Adding Navigation Drawer
-Adding navigation drawer is same as that we do before lollipop, but instead if using ListView for menu items, we use RecyclerView in material design. So let’s see how to implement the navigation drawer with RecyclerView.
+**3.2** 添加导航抽屉
 
-14. In your project’s java folder, create three packages named activity, adapter, model and move your MainActivity.java to activity package. This will keep your project organized.
+添加导航抽屉，同样是按照之前lollipop的方式，但是如果菜单项使用列表视图，在Material design中要使用**RecyclerView**。因此让我们看看怎样实现**RecyclerView**导航抽屉。
 
-15. Open build.gradle located under your app module and add below dependencies. After adding the dependencies, goto Build ⇒ Rebuild Project to download required libraries.
+**14.** 在你项目的java文件夹中，新建三个包：_activity_、_adapter_、_model_，并且把_MainActivity.java_移动到_activity_包下，这样来保证项目的条理性
 
-build.gradle
+**15.** 打开model下的**build.gradle**，添加下面的依赖，然后执行**Build ⇒ Rebuild Project**来下载必须的库
+
+`build.gradle`
+``` xml
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.+'
 }
+```
 
+**16.** 在_model_包下，新建一个class文件，命名为**NavDrawerItem.java**，添加以下代码，这个class是一个实体类，它定义了导航抽屉里每一行的菜单项
 
-16. Under model package, create a class named NavDrawerItem.java with the below code. This model class is POJO class that defines each row in navigation drawer menu.
+`NavDrawerItem.java`
 
-NavDrawerItem.java
+``` java
 package info.androidhive.materialdesign.model;
  
 /**
@@ -351,11 +382,12 @@ public class NavDrawerItem {
         this.title = title;
     }
 }
+```
 
+**17.** 在**res ⇒ layout**之下，新建一个布局文件，叫做**nav_draw_row.xml**添加以下代码。这个layout渲染的导航抽屉每一行的视图，如果你想要自定义导航抽屉菜单项，你应该修改这个文件，现在只有一个TextView
 
-17. Under res ⇒ layout, create an xml layout named nav_drawer_row.xml and add the below code. The layout renders each row in navigation drawer menu. If you want to customize the navigation drawer menu item, you have to do the changes in this file. For now it has only one TextView.
-
-nav_drawer_row.xml
+`nav_drawer_row.xml`
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -373,13 +405,14 @@ nav_drawer_row.xml
         android:textStyle="bold" />
  
 </RelativeLayout>
+```
 
+**18.** 下载这个[个人信息][3]的图标，并把它粘贴到_drawable_ 文件夹下，这一步是可选的，但是这个图标在导航抽屉的header中有使用到
 
-18. Download this profile icon and paste it in your drawable folder. This step is optional, but this icon used in the navigation drawer header part.
+**19.** 新建一个layout命名**fragment_navigation_drawer.xml**，并且添加以下代码。这个layout呈现了整个导航抽屉的视图，它包含了头部部分，用于展示用户信息、RecyclerView来展示列表视图
 
-19. Create another xml layout named fragment_navigation_drawer.xml and add the below code. This layout renders the complete navigation drawer view. This layout contains a header section to display the user information and a RecyclerView to display the list view.
-
-fragment_navigation_drawer.xml
+`fragment_navigation_drawer.xml`
+``` xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -412,10 +445,11 @@ fragment_navigation_drawer.xml
  
  
 </RelativeLayout>
+```
 
+**20.** 因为**RecyclerView**是自定义的，我们需要一个adapter类去渲染自定义xml布局，因此，在adapter包下，创建一个适配器类**NavigationDrawerAdapter.java**，然后粘贴下面的代码。这个适配器类适配nav_drawer_row.xml布局并呈现RecycleView抽屉菜单
 
-20. As the RecyclerView is customized, we need an adapter class to render the custom xml layout. So under adapter package, create a class named NavigationDrawerAdapter.java and paste the below code. This adapter class inflates nav_drawer_row.xml and renders the RecycleView drawer menu.
-
+``` java
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -472,11 +506,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         }
     }
 }
+```
 
+**21.** 在activity包下，新建一个fragment叫做**FragmentDrawer.java**。在Android Studio中，新建fragment：_右键activity ⇒ New ⇒ Fragment ⇒ Fragment (Blank)_，并且给出你的fragment的名称
 
-21. Under activity package, create a fragment named FragmentDrawer.java. In Android Studio, to create a new fragment, Right click on activity ⇒ New ⇒ Fragment ⇒ Fragment (Blank) and give your fragment class name.
-
-FragmentDrawer.java
+`FragmentDrawer.java`
+``` java
 /**
  * Created by Ravi on 29/07/15.
  */
@@ -658,13 +693,14 @@ public class FragmentDrawer extends Fragment {
         public void onDrawerItemSelected(View view, int position);
     }
 }
+```
 
+**22.** 最后，打开首页activity的布局文件**activity_main.xml**，按照下面这样修改。在这个布局中，我们添加了**android.support.v4.widget.DrawerLayout**，来显示导航抽屉菜单
 
-22. Finally open main activity layout (activity_main.xml) and modify the layout as below. In this layout we are adding android.support.v4.widget.DrawerLayout to display the navigation drawer menu.
+你也必须写出你的fragment下**FragmentDrawer**的正确路径
 
-Also you have to give the correct path of your FragmentDrawer in <fragment> element.
-
-actiivty_main.xml
+`actiivty_main.xml`
+``` java
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -709,17 +745,18 @@ actiivty_main.xml
         tools:layout="@layout/fragment_navigation_drawer" />
  
 </android.support.v4.widget.DrawerLayout>
+```
 
+现在，我们已经准备好所有的layout和class，让我们在**MainActivity**中做一些必要的修改，使得导航抽屉可以正常运行
 
-Now we have all the layout files and java classes ready in place. Let’s do the necessary changes in MainActivity to make the navigation drawer functioning.
+**23.** 打开**MainActivity.java**并且做如下修改
 
-23. Open your MainActivity.java and do the below changes.
+- activity需要实现FragmentDrawer.FragmentDrawerListener**并且复写**onDrawerItemSelected()**方法
 
-> Implement the activity from FragmentDrawer.FragmentDrawerListener and add the onDrawerItemSelected() override method.
+- 创建一个**FragmentDrawer的实例，并设置这个菜单选择的监听器
 
-> Create an instance of FragmentDrawer and set the drawer selected listeners.
-
-MainActivity.java
+`MainActivity.java`
+``` java
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -777,19 +814,23 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
  
     }
 }
+```
 
+现在，如果你运行这个应用，你能够看到这个导航抽屉，包含一个header和列表
 
-Now if you run the app, you can see the navigation drawer with a header and few list items in it.
+![androd-material-design-navigation-drawer](http://www.androidhive.info/wp-content/uploads/2015/04/androd-material-design-navigation-drawer.png)
 
 androd-material-design-navigation-drawer
-3.3 Implementing Navigation Drawer Item Selection
-Although navigation drawer is functioning, you can see the selection of drawer list items not working. This is because we are yet to implement the click listener on RecyclerView items.
 
-As we have three menu items in navigation drawer (Home, Friends & Messages), we need to create three separate fragment classes for each menu item.
+**3.3** 实现导航抽屉的选择事件
+尽管导航抽屉成功运行了，但是你看到菜单的点击事件没有正常运行，这是因为我们也需要实现RecyclerView的click监听事件
 
-24. Under res layout, create an xml layout named fragment_home.xml and add below code.
+因为我们有三个菜单项（Home, Friends & Messages）在导航抽屉中，因此我们需要创建三个独立的fragment类为每一个菜单
 
-fragment_home.xml
+**24.** 在res下面，新建一个xml文件叫做**fragment_home.xml**并添加以下代码
+
+`fragment_home.xml`
+``` xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -820,11 +861,12 @@ fragment_home.xml
         android:text="Edit fragment_home.xml to change the appearance" />
  
 </RelativeLayout>
+```
 
+**25.** 在activity包下，新建一个fragment类，叫做**HomeFragment.java**并且添加以下代码
 
-25. Under activity package, create a fragment class named HomeFragment.java and add below code.
-
-HomeFragment.java
+`HomeFragment.java`
+``` java
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -865,15 +907,16 @@ public class HomeFragment extends Fragment {
         super.onDetach();
     }
 }
+```
 
+**26.** 新建两个fragment类分别叫做：**FriendsFragment.java**、**MessagesFragment.java**，同样新建两个xml：**fragment_friends.xml**、**fragment_messages.xml**，按照上面步骤添加代码
 
-26. Create two more fragment classes named FriendsFragment.java, MessagesFragment.java and respected layout files named fragment_friends.xml and fragment_messages.xml and add the code from above two steps.
+**27.** 现在打开**MainActivity.java**，做以下修改
 
-27. Now open MainActivity.java and do the below changes. In the below code
+- _displayView()_方法显示fragment，这个方法在**onDrawerItemSelected()**中被调用，当菜单被选择的时候，来渲染对应的布局
 
-> displayView() method displays the fragment view respected the navigation menu item selection. This method should be called in onDrawerItemSelected() to render the respected view when a navigation menu item is selected.
-
-MainActivity.java
+`MainActivity.java`
+``` java
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -976,26 +1019,19 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         }
     }
 }
+```
+
+现在再来运行你的应用，你能够看到导航抽屉菜单的选择事件可以正常实现，并且对应的布局显示在toolbar下面
 
 
-Now if you run the app, you can see the selection of navigation drawer menu is working and respected view displayed below the toolbar.
+![android-material-design-navigation-drawer-1](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-navigation-drawer-1.png)
 
-android-material-design-navigation-drawer-1
-android-material-design-navigation-drawer-2
-android-material-design-navigation-drawer-3
+![android-material-design-navigation-drawer-2](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-navigation-drawer-2.png)
+
+![android-material-design-navigation-drawer-3](http://www.androidhive.info/wp-content/uploads/2015/04/android-material-design-navigation-drawer-3.png)
 
 
-What’s Next?
-Below are few more material components you can add to your app. These were implemented using recent Android Design Support Library.
 
-1. Material Design Tab Layout
-If you want to add tabs to your app, Android Material Design Tabs covers different aspects of Tab Layout.
-
-2. Floating Labels for EditText
-Learn how floating labels works on EditText with a simple form validation example.
-
-3. Floating Action Button (FAB)
-Add the Floating Action Button to your which displays in circular shape floating on the top of the UI.
-
-4. Snackbar
-Add the Snackbar to your app to give immediate feedback about any operation that user performed.
+[1]: http://developer.android.com/intl/zh-tw/tools/studio/index.html
+[2]: http://api.androidhive.info/images/ic_action_search.png
+[3]: http://api.androidhive.info/images/ic_profile.png
