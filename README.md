@@ -3,8 +3,11 @@
  
 ## Description
 - This is my blog source, you will view my blog via http://xiaofeng.site or http://www.xiaofeng.site
+
 - You can clone my source as your source, but declare it and tell me please.
+
 - If my blog or source use about your patent or sensitive information, tell me please.
+
 
 ## Contact
 - Blog: [晓峰的博客](http://xiaofeng.site)
