@@ -1,0 +1,773 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Http协议简介 | 晓峰的博客 | Beyond Compare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiaofeng">
+    
+    <meta name="description" content="原作者：吾爱源地址：点击跳转
+
+序言我们平时在浏览网页的时候都是使用浏览器，输入你要的网址后回车，就会显示出我们所想要的内容，看似这个简单的用户操作行为的背后，Web的工作原理是怎样的呢？到底隐藏了些什么呢？
+对于传统的上网流程，系统它是这么做的：浏览器本身它是一个客户端，当输入URL地址的时候，浏">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="晓峰的博客 | Beyond Compare" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.gif" alt="晓峰的博客 | Beyond Compare" title="晓峰的博客 | Beyond Compare"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="晓峰的博客 | Beyond Compare">晓峰的博客 | Beyond Compare</a></h1>
+				<h2 class="blog-motto">Learning programming, i enjoy it.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+				
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/02/Http协议简介/undefined/" title="Http协议简介" itemprop="url">Http协议简介</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/111664499118438311534/posts?rel=author" title="xiaofeng" target="_blank" itemprop="author">xiaofeng</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-03-02T06:20:33.000Z" itemprop="datePublished">2016-03-02</time>
+    更新日期:<time datetime="2016-03-02T06:21:51.746Z" itemprop="dateModified">2016-03-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web服务器的工作原理可以简单地定义为："><span class="toc-number">2.</span> <span class="toc-text">Web服务器的工作原理可以简单地定义为：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL和DNS解析"><span class="toc-number">3.</span> <span class="toc-text">URL和DNS解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS工作原理"><span class="toc-number">4.</span> <span class="toc-text">DNS工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS解析的整个流程"><span class="toc-number">5.</span> <span class="toc-text">DNS解析的整个流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议详解"><span class="toc-number">6.</span> <span class="toc-text">HTTP协议详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP请求包（浏览器信息）"><span class="toc-number">7.</span> <span class="toc-text">HTTP请求包（浏览器信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过fiddler抓包可以看到如下请求信息:"><span class="toc-number">8.</span> <span class="toc-text">通过fiddler抓包可以看到如下请求信息:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET和POST的区别:"><span class="toc-number">9.</span> <span class="toc-text">GET和POST的区别:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP响应包（服务器信息）"><span class="toc-number">10.</span> <span class="toc-text">HTTP响应包（服务器信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议是无状态的和Connection:_keep-alive的区别"><span class="toc-number">11.</span> <span class="toc-text">HTTP协议是无状态的和Connection: keep-alive的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求实例"><span class="toc-number">12.</span> <span class="toc-text">请求实例</span></a></li></ol>
+		</div>
+		
+		<blockquote>
+<p>原作者：吾爱<br>源地址：<a href="http://my.oschina.net/cxz001/blog/331671" target="_blank" rel="external">点击跳转</a></p>
+</blockquote>
+<h2 id="序言">序言</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/d0177c725e5b3660d9984b0f70e431f0.jpg" alt="request-response"><br>我们平时在浏览网页的时候都是使用浏览器，输入你要的网址后回车，就会显示出我们所想要的内容，看似这个简单的用户操作行为的背后，Web的工作原理是怎样的呢？到底隐藏了些什么呢？</p>
+<p>对于传统的上网流程，系统它是这么做的：浏览器本身它是一个客户端，当输入URL地址的时候，浏览器首先会去请求DNS服务器，通过DNS查询获取相应的域名所对应的IP地址，然后通过这个映射的IP地址找到IP对应的服务器，并建立连接，等浏览器发送完HTTP Request（请求）包后，服务器接收到请求包之后才开始处理，返回HTTP Response（响应）包，客户端浏览器收到来自服务器的响应后就开始渲染这个Response包里的主体（body）部分，等收到全部的内容后断开与该服务器之间的连接。</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/9f039f15b643c9cea8bab75b92f3e26b.png" alt="web-request-process"></p>
+<p>一个Web服务器也被称为HTTP服务器，它通过HTTP协议与客户端通信。这个客户端通常指的是Web浏览器(其实手机端客户端内部也是浏览器实现的)。</p>
+<h2 id="Web服务器的工作原理可以简单地定义为：">Web服务器的工作原理可以简单地定义为：</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>客户机通过TCP/IP协议建立到服务器的TCP连接</td>
+</tr>
+<tr>
+<td>2</td>
+<td>客户端向服务器发送HTTP协议请求包，请求服务器里的资源文档</td>
+</tr>
+<tr>
+<td>3</td>
+<td>服务器向客户机发送HTTP协议应答包，如果请求的资源包含有动态语言的内容，那么服务器会调用动态语言的解释引擎负责处理“动态内容”，并将处理得到的数据返回给客户端</td>
+</tr>
+<tr>
+<td>4</td>
+<td>客户机与服务器断开。由客户端解释HTML文档，在客户端屏幕上渲染图形结果</td>
+</tr>
+</tbody>
+</table>
+<p>一个简单的HTTP事务就是这样实现的，看起来很复杂，原理其实是挺简单的。需要注意的是客户机与服务器之间的通信是非持久连接的，也就是当服务器发送了应答后就与客户机断开连接，等待下一次请求。</p>
+<h2 id="URL和DNS解析">URL和DNS解析</h2><p>我们浏览网页都是通过URL访问的，那么URL到底是怎么样的呢？<br>URL(Uniform Resource Locator)是“统一资源定位符”的英文缩写，用于描述一个网络上的资源, 基本格式如下：</p>
+<p><code>html
+scheme://host[:port#]/path/.../[?query-string][#anchor]</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scheme</td>
+<td>指定低层使用的协议(例如：http, https, ftp)</td>
+</tr>
+<tr>
+<td>host</td>
+<td>HTTP服务器的IP地址或者域名</td>
+</tr>
+<tr>
+<td>port</td>
+<td>HTTP服务器的默认端口是80，这种情况下端口号可以省略。如果使用了别的端口，必须指明，例如 <a href="http://www.qixing318.com:80/" target="_blank" rel="external">http://www.qixing318.com:80/</a></td>
+</tr>
+<tr>
+<td>path</td>
+<td>访问资源的路径</td>
+</tr>
+<tr>
+<td>query-string</td>
+<td>发送给http服务器的数据</td>
+</tr>
+<tr>
+<td>anchor</td>
+<td>锚</td>
+</tr>
+</tbody>
+</table>
+<p>DNS(Domain Name System)是“域名系统”的英文缩写，是一种组织成域层次结构的计算机和网络服务命名系统，它用于TCP/IP网络，它从事将主机名或域名转换为实际IP地址的工作。DNS就是这样的一位“翻译官”，它的基本工作原理可用下图来表示。</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/97fc06248d4bc542a355ddfce1549044.png" alt="dns-core"></p>
+<h2 id="DNS工作原理">DNS工作原理</h2><p>更详细的DNS解析的过程如下，这个过程有助于我们理解DNS的工作模式</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在浏览器中输入www.qq.com域名，操作系统会先检查自己本地的hosts文件是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>如果hosts里没有这个域名的映射，则查找本地DNS解析器缓存，是否有这个网址映射关系，如果有，直接返回，完成域名解析。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>如果hosts与本地DNS解析器缓存都没有相应的网址映射关系，首先会找TCP/IP参数中设置的首选DNS服务器，在此我们叫它本地DNS服务器，此服务器收到查询时，如果要查询的域名，包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析，此解析具有权威性。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>如果要查询的域名，不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>如果本地DNS服务器本地区域文件与缓存解析都失效，则根据本地DNS服务器的设置（是否设置转发器）进行查询，如果未用转发模式，本地DNS就把请求发至 “根DNS服务器”，“根DNS服务器”收到请求后会判断这个域名(.com)是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收到IP信息后，将会联系负责.com域的这台服务器。这台负责.com域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级DNS服务器地址(qixing318.com)给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找qixing318.com域服务器，重复上面的动作，进行查询，直至找到www.qixing318.com主机。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>如果用的是转发模式，此DNS服务器就会把请求转发至上一级DNS服务器，由上一级服务器进行解析，上一级服务器如果不能解析，或找根DNS或把转请求转至上上级，以此循环。不管是本地DNS服务器用是是转发，还是根提示，最后都是把结果返回给本地DNS服务器，由此DNS服务器再返回给客户机。</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/639c39cf315ddbd717d3d2d78ff74228.png" alt="dns-process"></p>
+<h2 id="DNS解析的整个流程">DNS解析的整个流程</h2><p>所谓 递归查询过程 就是 “查询的递交者” 更替, 而 迭代查询过程 则是 “查询的递交者”不变。</p>
+<blockquote>
+<p>举个例子来说，你想知道某个一起上法律课的女孩的电话，并且你偷偷拍了她的照片，回到寝室告诉一个很仗义的哥们儿，这个哥们儿二话没说，拍着胸脯告诉你，甭急，我替你查(此处完成了一次递归查询，即，问询者的角色更替)。然后他拿着照片问了学院大四学长，学长告诉他，这姑娘是xx系的；然后这哥们儿马不停蹄又问了xx系的办公室主任助理同学，助理同学说是xx系yy班的，然后很仗义的哥们儿去xx系yy班的班长那里取到了该女孩儿电话。(此处完成若干次迭代查询，即，问询者角色不变，但反复更替问询对象)最后，他把号码交到了你手里。完成整个查询过程。<br>通过上面的步骤，我们最后获取的是IP地址，也就是浏览器最后发起请求的时候是基于IP来和服务器做信息交互的。</p>
+</blockquote>
+<h2 id="HTTP协议详解">HTTP协议详解</h2><p>HTTP协议是Web工作的核心，所以要了解清楚Web的工作方式就需要详细的了解清楚HTTP是怎么样工作的。</p>
+<p>HTTP是一种让Web服务器与浏览器(客户端)通过Internet发送与接收数据的协议,它建立在TCP协议之上，一般采用TCP的80端口。它是一个请求、响应协议–客户端发出一个请求，服务器响应这个请求。</p>
+<p>在HTTP中，客户端总是通过建立一个连接与发送一个HTTP请求来发起一个事务。服务器不能主动去与客户端联系，也不能给客户端发出一个回调连接。客户端与服务器端都可以提前中断一个连接。例如，当浏览器下载一个文件时，你可以通过点击“停止”键来中断文件的下载，关闭与服务器的HTTP连接。</p>
+<p>HTTP协议是无状态的，同一个客户端的这次请求和上次请求是没有对应关系，对HTTP服务器来说，它并不知道这两个请求是否来自同一个客户端。为了解决这个问题， Web程序引入了Cookie机制来维护连接的可持续状态。</p>
+<blockquote>
+<p>HTTP协议是建立在TCP协议之上的，因此TCP攻击一样会影响HTTP的通讯，例如比较常见的一些攻击：SYN Flood是当前最流行的DoS（拒绝服务攻击）与DdoS（分布式拒绝服务攻击）的方式之一，这是一种利用TCP协议缺陷，发送大量伪造的TCP连接请求，从而使得被攻击方资源耗尽（CPU满负荷或内存不足）的攻击方式。</p>
+</blockquote>
+<h2 id="HTTP请求包（浏览器信息）">HTTP请求包（浏览器信息）</h2><p>我们先来看看Request包的结构, Request包分为3部分，第一部分叫Request line（请求行）, 第二部分叫Request header（请求头）,第三部分是body（主体）。</p>
+<p>header和body之间有个空行，请求包的例子所示:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /domains/example/ HTTP/1.1</td>
+<td>请求行: 请求方法 请求URI HTTP协议/协议版本</td>
+</tr>
+<tr>
+<td>Host：www.qixing318.com.</td>
+<td>服务端的主机名</td>
+</tr>
+<tr>
+<td>User-Agent：Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4</td>
+<td>客户端浏览器信息</td>
+</tr>
+<tr>
+<td>Accept：text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8</td>
+<td>客户端能接收的mine类型</td>
+</tr>
+<tr>
+<td>Accept-Encoding：gzip,deflate,sdcn</td>
+<td>是否支持流压缩</td>
+</tr>
+<tr>
+<td>Accept-Charset：UTF-8,*;q=0.5</td>
+<td>客户端字符编码集</td>
+</tr>
+<tr>
+<td>“\r\n\r\n”</td>
+<td>空行,用于分割请求头和消息体</td>
+</tr>
+<tr>
+<td>“\r\n\r\n”</td>
+<td>空行,消息体,请求资源参数,例如POST传递的参数</td>
+</tr>
+</tbody>
+</table>
+<p>HTTP协议定义了很多与服务器交互的请求方法，最基本的有4种，分别是GET,POST,PUT,DELETE。一个URL地址用于描述一个网络上的资源，而HTTP中的GET, POST, PUT, DELETE就对应着对这个资源的查，改，增，删4个操作。我们最常见的就是GET和POST了。GET一般用于获取/查询资源信息，而POST一般用于更新资源信息。</p>
+<h2 id="通过fiddler抓包可以看到如下请求信息:">通过fiddler抓包可以看到如下请求信息:</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/1b655d5bc2e339010d3857fb50c841a2.png" alt="fiddler-get"><br>上图为：fiddler抓取的GET信息</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/125b42ec4dcfb1e5601c8e2695076fb9.png" alt="fiddler-post"><br>上图为：fiddler抓取的POST信息</p>
+<h2 id="GET和POST的区别:">GET和POST的区别:</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>我们可以看到GET请求消息体为空，POST请求带有消息体。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456。POST方法是把提交的数据放在HTTP包的body中。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="HTTP响应包（服务器信息）">HTTP响应包（服务器信息）</h2><p>我们再来看看HTTP的response包，他的结构如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP/1.1 200 OK</td>
+<td>状态行</td>
+</tr>
+<tr>
+<td>Server: nginx/1.0.8</td>
+<td>服务器使用的WEB软件名及版本</td>
+</tr>
+<tr>
+<td>Date:Date: Tue, 30 Oct 2012 04:14:25 GMT</td>
+<td>发送时间</td>
+</tr>
+<tr>
+<td>Content-Type: text/html</td>
+<td>服务器发送信息的类型</td>
+</tr>
+<tr>
+<td>Transfer-Encoding: chunked</td>
+<td>表示发送HTTP包是分段发的</td>
+</tr>
+<tr>
+<td>Connection: keep-alive</td>
+<td>保持连接状态</td>
+</tr>
+<tr>
+<td>Content-Length: 90</td>
+<td>消息主体内容长度</td>
+</tr>
+<tr>
+<td>\r\n</td>
+<td>空行，用来分割消息头和主体</td>
+</tr>
+<tr>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”…</td>
+<td>消息体部分</td>
+</tr>
+</tbody>
+</table>
+<p>Response包中的第一行叫做状态行，由HTTP协议版本号， 状态码， 状态消息 三部分组成。<br>状态码用来告诉HTTP客户端,HTTP服务器是否产生了预期的Response。<br>HTTP/1.1协议中定义了5类状态码， 状态码由三位数字组成，第一个数字定义了响应的类别</p>
+<blockquote>
+<p><a href="https://httpstatuses.com/" target="_blank" rel="external">状态码详细查询</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>提示信息 - 表示请求已被成功接收，继续处理</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>成功 - 表示请求已被成功接收，理解，接受</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>重定向 - 要完成请求必须进行更进一步的处理</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>客户端错误 - 请求有语法错误或请求无法实现</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>服务器端错误 - 服务器未能实现合法的请求</td>
+</tr>
+</tbody>
+</table>
+<p>我们看下面这个图展示了详细的返回信息，左边可以看到有很多的资源返回码，200是常用的，表示正常信息，302表示跳转。response header里面展示了详细的信息。<br><img src="http://www.qixing318.com/uploads/blog/image/20150120/c9e285dfb362101c4d258534ccfa5401.png" alt="request-allinfo"><br>【上图：访问一次网站的全部请求信息】</p>
+<h2 id="HTTP协议是无状态的和Connection:_keep-alive的区别">HTTP协议是无状态的和Connection: keep-alive的区别</h2><p>无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。从另一方面讲，打开一个服务器上的网页和你之前打开这个服务器上的网页之间没有任何联系。<br>HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（面对无连接）。<br>从HTTP/1.1起，默认都开启了Keep-Alive保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的TCP连接。<br>Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同服务器软件（如Apache）中设置这个时间。</p>
+<h2 id="请求实例">请求实例</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/919ca19ef2176dacecdd2824083e9baa.png" alt="request-entity"></p>
+<p>【上图为：一次请求的request和response】</p>
+<p>上面这张图我们可以了解到整个的通讯过程，同时细心的读者是否注意到了一点，一个URL请求但是左边栏里面为什么会有那么多的资源请求(这些都是静态文件，go对于静态文件有专门的处理方式)。</p>
+<p>这个就是浏览器的一个功能，第一次请求url，服务器端返回的是html页面，然后浏览器开始渲染HTML：当解析到HTML DOM里面的图片连接，css脚本和js脚本的链接，浏览器就会自动发起一个请求静态资源的HTTP请求，获取相对应的静态资源，然后浏览器就会渲染出来，最终将所有资源整合、渲染，完整展现在我们面前的屏幕上。</p>
+<blockquote>
+<p>网页优化方面有一项措施是减少HTTP请求次数，就是把尽量多的css和js资源合并在一起，目的是尽量减少网页请求静态资源的次数，提高网页加载速度，同时减缓服务器的压力。</p>
+</blockquote>
+  
+		
+  <div class="article-statement">
+    <hr>
+1.&#x5982;&#x672A;&#x6CE8;&#x660E;&#xFF0C;&#x672C;&#x7AD9;&#x535A;&#x5BA2;&#x5747;&#x4E3A;&#x539F;&#x521B;&#xFF0C;&#x8F6C;&#x8F7D;&#x8BF7;&#x4EE5;&#x94FE;&#x63A5;&#x5F62;&#x5F0F;&#x6807;&#x660E;&#x672C;&#x6587;&#x5730;&#x5740;&#x3002;<br>
+2.&#x672C;&#x535A;&#x5BA2;&#x53EA;&#x4EE3;&#x8868;&#x535A;&#x4E3B;&#x5F53;&#x65F6;&#x7684;&#x89C2;&#x70B9;&#x6216;&#x7ED3;&#x8BBA;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+3.&#x5982;&#x672C;&#x535A;&#x5BA2;&#x6D89;&#x53CA;&#x7684;&#x60A8;&#x7684;&#x4E13;&#x5229;&#x3001;&#x9690;&#x79C1;&#x7B49;&#x654F;&#x611F;&#x4FE1;&#x606F;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+4.&#x535A;&#x4E3B;&#x7FFB;&#x8BD1;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x6216;&#x8BEF;&#x5BFC;&#x884C;&#x4E3A;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+5.&#x5982;&#x672C;&#x6587;&#x5E2E;&#x5230;&#x4E86;&#x60A8;&#xFF0C;&#x8BF7;&#x901A;&#x8FC7; &#x5206;&#x4EAB; &#x6309;&#x94AE;&#x5206;&#x4EAB;&#x5230;&#x5176;&#x4ED6;&#x5E73;&#x53F0;&#x3002;<br>
+6.&#x60A8;&#x7684;&#x9F13;&#x52B1;&#x662F;&#x535A;&#x4E3B;&#x5199;&#x4F5C;&#x6700;&#x5927;&#x7684;&#x52A8;&#x529B;&#xFF0C;&#x611F;&#x8C22;&#x60A8;&#x7684;&#x9605;&#x8BFB;&#x548C;&#x5206;&#x4EAB;&#x3002;<br>  </div>
+
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/http协议/">http协议</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://xiaofeng.site/2016/03/02/Http协议简介/undefined/" data-title="Http协议简介 | 晓峰的博客 | Beyond Compare" data-tsina="xiaofeng117" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/03/01/实用bat脚本-笔记/undefined/"  title="实用bat脚本[笔记]">
+ <strong>NEXT:</strong><br/> 
+ <span>实用bat脚本[笔记]
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+  <div class="recent-vit">
+	<br>
+	&#x6700;&#x8FD1;&#x8BBF;&#x5BA2;&#xFF1A;
+    <hr>
+	<div class="ds-recent-visitors" data-num-items="12" data-avatar-size="54" id="ds-recent-visitors">
+	</div>
+	
+  </div>
+
+	
+<section id="comments">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#序言"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web服务器的工作原理可以简单地定义为："><span class="toc-number">2.</span> <span class="toc-text">Web服务器的工作原理可以简单地定义为：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL和DNS解析"><span class="toc-number">3.</span> <span class="toc-text">URL和DNS解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS工作原理"><span class="toc-number">4.</span> <span class="toc-text">DNS工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS解析的整个流程"><span class="toc-number">5.</span> <span class="toc-text">DNS解析的整个流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议详解"><span class="toc-number">6.</span> <span class="toc-text">HTTP协议详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP请求包（浏览器信息）"><span class="toc-number">7.</span> <span class="toc-text">HTTP请求包（浏览器信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过fiddler抓包可以看到如下请求信息:"><span class="toc-number">8.</span> <span class="toc-text">通过fiddler抓包可以看到如下请求信息:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET和POST的区别:"><span class="toc-number">9.</span> <span class="toc-text">GET和POST的区别:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP响应包（服务器信息）"><span class="toc-number">10.</span> <span class="toc-text">HTTP响应包（服务器信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议是无状态的和Connection:_keep-alive的区别"><span class="toc-number">11.</span> <span class="toc-text">HTTP协议是无状态的和Connection: keep-alive的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求实例"><span class="toc-number">12.</span> <span class="toc-text">请求实例</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>9</sup></a></li>
+		
+			<li><a href="/categories/Android-Studio/" title="Android Studio">Android Studio<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Complex/" title="Complex">Complex<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>5</sup></a></li>
+		
+			<li><a href="/categories/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/categories/PC/" title="PC">PC<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/ButterKnife/" title="ButterKnife">ButterKnife<sup>1</sup></a></li>
+		
+			<li><a href="/tags/EditText/" title="EditText">EditText<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Floating-Lables/" title="Floating Lables">Floating Lables<sup>1</sup></a></li>
+		
+			<li><a href="/tags/HashMap/" title="HashMap">HashMap<sup>1</sup></a></li>
+		
+			<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/InjectView/" title="InjectView">InjectView<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Log/" title="Log">Log<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownPad/" title="MarkdownPad">MarkdownPad<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownX/" title="MarkdownX">MarkdownX<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Material-Design/" title="Material Design">Material Design<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Matrix/" title="Matrix">Matrix<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Parcelable/" title="Parcelable">Parcelable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Serializable/" title="Serializable">Serializable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Snackbar/" title="Snackbar">Snackbar<sup>1</sup></a></li>
+		
+			<li><a href="/tags/TabLayout/" title="TabLayout">TabLayout<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Terminal/" title="Terminal">Terminal<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1660762900&verifier=346b7a09&dpc=1"></iframe>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Programing is an interesting thing.  <br/>
+			If you have some other better issues or blogs, recommend me please. </p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/xiaofeng117" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/goghtsui" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-70168817-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript">
+		(function(w,d,t,u,n,s,e){
+			w['SwiftypeObject']=n;w[n]=w[n]||function(){
+			(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+			e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+		})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+		_st('install','w7ca3xWstLkz2UvAeyAJ','2.0.0');
+	</script>
+
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<script language=JavaScript>
+		today=new Date();
+		function initArray(){
+			this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+				this[i+1]=initArray.arguments[i] 
+			}
+		
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		
+		document.write("<marquee scrollAmount=2 width=screen.width-200 onmouseover=stop() onmouseout=start()><font color=#ffffff style='font-size:14pt;font-family: 黑体'> ",
+			today.getFullYear(),"年",
+			today.getMonth()+1,"月",
+			today.getDate(),"日   ",
+			d[today.getDay()+1],
+			"</font></marquee>" ); 
+	</script>
+	
+	<div class="copyright">
+		Powered by 
+		<a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+			<a href="http://xiaofeng.site" target="_blank" title="xiaofeng">xiaofeng</a>
+		
+		
+		<span id="busuanzi_container_site_pv" >
+			<font color="#ffffff" size="4" >| Wow，i got </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_pv"></span> </font >
+			<font color="#ffffff" size="4" > hits! </font >
+		</span>
+		
+		<span style="width:100px;"></span>
+		<span id="busuanzi_container_site_uv">
+			<font color="#ffffff" size="4" >  You are the </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_uv"></span>th </font >
+			<font color="#ffffff" size="4" > visitor！ </font >
+		</span>
+	</div>
+	
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xiaofeng365"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//7xod2d.com1.z0.glb.clouddn.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-70168817-1', 'xiaofeng.site');  
+ga('send', 'pageview');
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
+<a title="Back to the top"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,635 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Android之Matrix | 晓峰的博客 | Beyond Compare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiaofeng">
+    
+    <meta name="description" content="原作者： Qiengo源地址： 点击跳转
+
+Matrix的数学原理在Android中，如果你用Matrix进行过图像处理，那么一定知道Matrix这个类。Android中的Matrix是一个3 x 3的矩阵，其内容如下：
+Matrix的对图像的处理可分为四类基本变换：
+
+Translate - 平移">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="晓峰的博客 | Beyond Compare" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.gif" alt="晓峰的博客 | Beyond Compare" title="晓峰的博客 | Beyond Compare"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="晓峰的博客 | Beyond Compare">晓峰的博客 | Beyond Compare</a></h1>
+				<h2 class="blog-motto">Learning programming, i enjoy it.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+				
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/19/Android之Matrix/undefined/" title="Android之Matrix" itemprop="url">Android之Matrix</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/111664499118438311534/posts?rel=author" title="xiaofeng" target="_blank" itemprop="author">xiaofeng</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-02-19T07:11:37.000Z" itemprop="datePublished">2016-02-19</time>
+    更新日期:<time datetime="2016-02-19T07:30:47.582Z" itemprop="dateModified">2016-02-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matrix的数学原理"><span class="toc-number">1.</span> <span class="toc-text">Matrix的数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、_平移变换"><span class="toc-number">1.1.</span> <span class="toc-text">一、 平移变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、_旋转变换"><span class="toc-number">1.2.</span> <span class="toc-text">二、 旋转变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_围绕坐标原点旋转："><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1    围绕坐标原点旋转：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_围绕某个点旋转"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2    围绕某个点旋转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、_缩放变换"><span class="toc-number">1.3.</span> <span class="toc-text">三、 缩放变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、_错切变换"><span class="toc-number">1.4.</span> <span class="toc-text">四、 错切变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、_对称变换"><span class="toc-number">1.5.</span> <span class="toc-text">五、 对称变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二部分_代码验证"><span class="toc-number">2.</span> <span class="toc-text">第二部分 代码验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-平移"><span class="toc-number">2.1.</span> <span class="toc-text">1.平移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-旋转(围绕图像的中心点)"><span class="toc-number">2.2.</span> <span class="toc-text">2.旋转(围绕图像的中心点)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-缩放变换"><span class="toc-number">2.3.</span> <span class="toc-text">4.缩放变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-错切变换(水平错切)"><span class="toc-number">2.4.</span> <span class="toc-text">5.错切变换(水平错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-错切变换(垂直错切)"><span class="toc-number">2.5.</span> <span class="toc-text">6.错切变换(垂直错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-错切变换(水平+垂直错切)"><span class="toc-number">2.6.</span> <span class="toc-text">7.错切变换(水平+垂直错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-对称变换(水平对称)"><span class="toc-number">2.7.</span> <span class="toc-text">8.对称变换(水平对称)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-对称变换(垂直对称)"><span class="toc-number">2.8.</span> <span class="toc-text">9.对称变换(垂直对称)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-对称变换(对称轴为直线y_=_x)"><span class="toc-number">2.9.</span> <span class="toc-text">10.对称变换(对称轴为直线y = x)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-关于先乘和后乘的问题"><span class="toc-number">2.10.</span> <span class="toc-text">11.关于先乘和后乘的问题</span></a></li></ol></li></ol>
+		</div>
+		
+		<blockquote>
+<p>原作者： Qiengo<br>源地址： <a href="http://www.cnblogs.com/qiengo/archive/2012/06/30/2570874.html" target="_blank" rel="external">点击跳转</a></p>
+</blockquote>
+<h2 id="Matrix的数学原理">Matrix的数学原理</h2><p>在Android中，如果你用Matrix进行过图像处理，那么一定知道Matrix这个类。Android中的Matrix是一个3 x 3的矩阵，其内容如下：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217092330d9Q.gif" alt="matrix_iamge_description"></p>
+<p>Matrix的对图像的处理可分为四类基本变换：</p>
+<ul>
+<li>Translate - 平移变换</li>
+<li>Rotate - 旋转变换</li>
+<li>Scale - 缩放变换</li>
+<li>Skew - 错切变换</li>
+</ul>
+<p>从字面上理解，矩阵中的MSCALE用于处理缩放变换，MSKEW用于处理错切变换，MTRANS用于处理平移变换，MPERSP用于处理透视变换。实际中当然不能完全按照字面上的说法去理解Matrix。同时，在Android的文档中，未见到用Matrix进行透视变换的相关说明，所以本文也不讨论这方面的问题。</p>
+<p>针对每种变换，Android提供了pre、set和post三种操作方式。其中：</p>
+<ul>
+<li>set - 用于设置Matrix中的值。</li>
+<li>pre - 是先乘，因为矩阵的乘法不满足交换律，因此先乘、后乘必须要严格区分。先乘相当于矩阵运算中的右乘。</li>
+<li>post - 是后乘，因为矩阵的乘法不满足交换律，因此先乘、后乘必须要严格区分。后乘相当于矩阵运算中的左乘。</li>
+</ul>
+<p>除平移变换(Translate)外，旋转变换(Rotate)、缩放变换(Scale)和错切变换(Skew)都可以围绕一个中心点来进行，如果不指定，在默认情况下是围绕(0, 0)来进行相应的变换的。</p>
+<p>下面我们来看看四种变换的具体情形。由于所有的图形都是有点组成，因此我们只需要考察一个点相关变换即可。</p>
+<h3 id="一、_平移变换">一、 平移变换</h3><hr>
+<p>假定有一个点的坐标是 ，将其移动到 ，再假定在x轴和y轴方向移动的大小分别为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709352RQ75.gif" alt="translate"></p>
+<p>如下图所示：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709520MmsS.gif" alt="translate_sample"></p>
+<p>不难知道：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709527kmK6.gif" alt="translate_result"></p>
+<p>如果用矩阵来表示的话，就可以写成：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709536Otg4.gif" alt="translate_tips"></p>
+<h3 id="二、_旋转变换">二、 旋转变换</h3><hr>
+<h4 id="2-1_围绕坐标原点旋转：">2.1    围绕坐标原点旋转：</h4><p>假定有一个点 ，相对坐标原点顺时针旋转后的情形，同时假定P点离坐标原点的距离为r，如下图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132170975189NC.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709797SBJW.gif" alt="translate_tips"></p>
+<p>如果用矩阵，就可以表示为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709849ZLVc.gif" alt="translate_tips"></p>
+<h4 id="2-2_围绕某个点旋转">2.2    围绕某个点旋转</h4><p>如果是围绕某个点顺时针旋转，那么可以用矩阵表示为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217100380220.gif" alt="translate_tips"></p>
+<p>可以化为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217100952Vqv.gif" alt="translate_tips"></p>
+<p>很显然，</p>
+<p><strong>1.</strong><br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710153kurQ.gif" alt="translate_tips"> 是将坐标原点移动到点后， 的新坐标。</p>
+<p><strong>2.</strong>     </p>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321710301T9nf.gif" alt="translate_tips"> 是将上一步变换后的，围绕新的坐标原点顺时针旋转 。</p>
+<p><strong>3.</strong><br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710398Z3Je.gif" alt="translate_tips"> 经过上一步旋转变换后，再将坐标原点移回到原来的坐标原点。</p>
+<p>所以，围绕某一点进行旋转变换，可以分成3个步骤，即首先将坐标原点移至该点，然后围绕新的坐标原点进行旋转变换，再然后将坐标原点移回到原先的坐标原点。</p>
+<h3 id="三、_缩放变换">三、 缩放变换</h3><hr>
+<p>理论上而言，一个点是不存在什么缩放变换的，但考虑到所有图像都是由点组成，因此，如果图像在x轴和y轴方向分别放大k1和k2倍的话，那么图像中的所有点的x坐标和y坐标均会分别放大k1和k2倍，即</p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710517pb9W.gif" alt="translate_tips"></p>
+<p>缩放变换比较好理解，就不多说了。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710615riwr.gif" alt="translate_tips"></p>
+<h3 id="四、_错切变换">四、 错切变换</h3><hr>
+<p>错切变换(skew)在数学上又称为Shear mapping(可译为“剪切变换”)或者Transvection(缩并)，它是一种比较特殊的线性变换。错切变换的效果就是让所有点的x坐标(或者y坐标)保持不变，而对应的y坐标(或者x坐标)则按比例发生平移，且平移的大小和该点到x轴(或y轴)的垂直距离成正比。错切变换，属于等面积变换，即一个形状在错切变换的前后，其面积是相等的。</p>
+<p>比如下图，各点的y坐标保持不变，但其x坐标则按比例发生了平移。这种情况将水平错切。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710625smm5.gif" alt="translate_tips"></p>
+<p>下图各点的x坐标保持不变，但其y坐标则按比例发生了平移。这种情况叫垂直错切。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710790633H.gif" alt="translate_tips"></p>
+<p>假定一个点经过错切变换后得到，对于水平错切而言，应该有如下关系：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710798y5L6.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217108084B3T.gif" alt="translate_tips"></p>
+<p>扩展到3 x 3的矩阵就是下面这样的形式：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217108954sms.gif" alt="translate_tips"></p>
+<p>同理，对于垂直错切，可以有：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217109074Nv2.gif" alt="translate_tips"></p>
+<p>在数学上严格的错切变换就是上面这样的。在Android中除了有上面说到的情况外，还可以同时进行水平、垂直错切，那么形式上就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711018S31a.gif" alt="translate_tips"></p>
+<h3 id="五、_对称变换">五、 对称变换</h3><hr>
+<p>除了上面讲到的4中基本变换外，事实上，我们还可以利用Matrix，进行对称变换。所谓对称变换，就是经过变化后的图像和原图像是关于某个对称轴是对称的。比如，某点 经过对称变换后得到，</p>
+<p>如果对称轴是x轴，难么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711026LZ03.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711090fhGd.gif" alt="translate_tips"></p>
+<p>如果对称轴是y轴，那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711099Xhak.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711217oHNz.gif" alt="translate_tips"></p>
+<p>如果对称轴是y = x，如图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711240gEeT.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711240gEeT.gif" alt="translate_tips"></p>
+<p>很容易可以解得：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711261E6xG.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132171128473YK.gif" alt="translate_tips"></p>
+<p>同样的道理，如果对称轴是y = -x，那么用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711292jO01.gif" alt="translate_tips"></p>
+<p>特殊地，如果对称轴是y = kx，如下图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217113506Hb8.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711502QQ7A.gif" alt="translate_tips"></p>
+<p>很容易可解得：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711521GZlt.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711541FJA1.gif" alt="translate_tips"></p>
+<p>当k = 0时，即y = 0，也就是对称轴为x轴的情况；当k趋于无穷大时，即x = 0，也就是对称轴为y轴的情况；当k =1时，即y = x，也就是对称轴为y = x的情况；当k = -1时，即y = -x，也就是对称轴为y = -x的情况。不难验证，这和我们前面说到的4中具体情况是相吻合的。</p>
+<p>如果对称轴是y = kx + b这样的情况，只需要在上面的基础上增加两次平移变换即可，即先将坐标原点移动到(0, b)，然后做上面的关于y = kx的对称变换，再然后将坐标原点移回到原来的坐标原点即可。用矩阵表示大致是这样的：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711616I9SJ.gif" alt="translate_tips"></p>
+<p>需要特别注意：在实际编程中，我们知道屏幕的y坐标的正向和数学中y坐标的正向刚好是相反的，所以在数学上y = x和屏幕上的y = -x才是真正的同一个东西，反之亦然。也就是说，如果要使图片在屏幕上看起来像按照数学意义上y = x对称，那么需使用这种转换：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711292jO01.gif" alt="translate_tips"></p>
+<p>要使图片在屏幕上看起来像按照数学意义上y = -x对称，那么需使用这种转换：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132171128473YK.gif" alt="translate_tips"></p>
+<p>关于对称轴为y = kx 或y = kx + b的情况，同样需要考虑这方面的问题。</p>
+<h2 id="第二部分_代码验证">第二部分 代码验证</h2><p>在第一部分中讲到的各种图像变换的验证代码如下，一共列出了10种情况。如果要验证其中的某一种情况，只需将相应的代码反注释即可。试验中用到的图片：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217122673338.gif" alt=""><br>其尺寸为162 x 251。</p>
+<p>每种变换的结果，请见代码之后的说明。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pat.testtransformmatrix;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> android.app.Activity;  </span><br><span class="line"><span class="keyword">import</span> android.content.Context;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Bitmap;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.BitmapFactory;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Canvas;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Matrix;  </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;  </span><br><span class="line"><span class="keyword">import</span> android.util.Log;  </span><br><span class="line"><span class="keyword">import</span> android.view.MotionEvent;  </span><br><span class="line"><span class="keyword">import</span> android.view.View;  </span><br><span class="line"><span class="keyword">import</span> android.view.Window;  </span><br><span class="line"><span class="keyword">import</span> android.view.WindowManager;  </span><br><span class="line"><span class="keyword">import</span> android.view.View.OnTouchListener;  </span><br><span class="line"><span class="keyword">import</span> android.widget.ImageView;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestTransformMatrixActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span>  </span><br><span class="line"><span class="keyword">implements</span>  </span><br><span class="line"><span class="title">OnTouchListener</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> TransformMatrixView view;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">        requestWindowFeature(Window.FEATURE_NO_TITLE);  </span><br><span class="line">        <span class="keyword">this</span>.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);  </span><br><span class="line">  </span><br><span class="line">        view = <span class="keyword">new</span> TransformMatrixView(<span class="keyword">this</span>);  </span><br><span class="line">        view.setScaleType(ImageView.ScaleType.MATRIX);  </span><br><span class="line">        view.setOnTouchListener(<span class="keyword">this</span>);  </span><br><span class="line">          </span><br><span class="line">        setContentView(view);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TransformMatrixView</span> <span class="keyword">extends</span> <span class="title">ImageView</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> Bitmap bitmap;  </span><br><span class="line">        <span class="keyword">private</span> Matrix matrix;  </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TransformMatrixView</span><span class="params">(Context context)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">super</span>(context);  </span><br><span class="line">            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sophie);  </span><br><span class="line">            matrix = <span class="keyword">new</span> Matrix();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="annotation">@Override</span>  </span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="comment">// 画出原图像  </span></span><br><span class="line">            canvas.drawBitmap(bitmap, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">null</span>);  </span><br><span class="line">            <span class="comment">// 画出变换后的图像  </span></span><br><span class="line">            canvas.drawBitmap(bitmap, matrix, <span class="keyword">null</span>);  </span><br><span class="line">            <span class="keyword">super</span>.onDraw(canvas);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="annotation">@Override</span>  </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImageMatrix</span><span class="params">(Matrix matrix)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">this</span>.matrix.set(matrix);  </span><br><span class="line">            <span class="keyword">super</span>.setImageMatrix(matrix);  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        <span class="function"><span class="keyword">public</span> Bitmap <span class="title">getImageBitmap</span><span class="params">()</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">return</span> bitmap;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent e)</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span>(e.getAction() == MotionEvent.ACTION_UP)  </span><br><span class="line">        &#123;  </span><br><span class="line">            Matrix matrix = <span class="keyword">new</span> Matrix();  </span><br><span class="line">            <span class="comment">// 输出图像的宽度和高度(162 x 251)  </span></span><br><span class="line">            Log.e(<span class="string">"TestTransformMatrixActivity"</span>, <span class="string">"image size: width x height = "</span> +  view.getImageBitmap().getWidth() + <span class="string">" x "</span> + view.getImageBitmap().getHeight());  </span><br><span class="line">            <span class="comment">// 1. 平移  </span></span><br><span class="line">            matrix.postTranslate(view.getImageBitmap().getWidth(), view.getImageBitmap().getHeight());  </span><br><span class="line">            <span class="comment">// 在x方向平移view.getImageBitmap().getWidth()，在y轴方向view.getImageBitmap().getHeight()  </span></span><br><span class="line">            view.setImageMatrix(matrix);  </span><br><span class="line">              </span><br><span class="line">            <span class="comment">// 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line">            <span class="keyword">float</span>[] matrixValues = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">9</span>];  </span><br><span class="line">            matrix.getValues(matrixValues);  </span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)  </span><br><span class="line">            &#123;  </span><br><span class="line">                String temp = <span class="keyword">new</span> String();  </span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; ++j)  </span><br><span class="line">                &#123;  </span><br><span class="line">                    temp += matrixValues[<span class="number">3</span> * i + j ] + <span class="string">"\t"</span>;  </span><br><span class="line">                &#125;  </span><br><span class="line">                Log.e(<span class="string">"TestTransformMatrixActivity"</span>, temp);  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">  </span><br><span class="line"><span class="comment">//          // 2. 旋转(围绕图像的中心点)  </span></span><br><span class="line"><span class="comment">//          matrix.setRotate(45f, view.getImageBitmap().getWidth() / 2f, view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth() * 1.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 3. 旋转(围绕坐标原点) + 平移(效果同2)  </span></span><br><span class="line"><span class="comment">//          matrix.setRotate(45f);  </span></span><br><span class="line"><span class="comment">//          matrix.preTranslate(-1f * view.getImageBitmap().getWidth() / 2f, -1f * view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate((float)view.getImageBitmap().getWidth() / 2f, (float)view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate((float)view.getImageBitmap().getWidth() * 1.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 4. 缩放  </span></span><br><span class="line"><span class="comment">//          matrix.setScale(2f, 2f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth(), view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">  </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 5. 错切 - 水平  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠           </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth(), 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 6. 错切 - 垂直  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0f, 0.5f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          7. 错切 - 水平 + 垂直  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0.5f, 0.5f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 8. 对称 (水平对称)  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠   </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight() * 2f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 9. 对称 - 垂直  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;-1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;     </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠   </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth() * 2f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">  </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 10. 对称(对称轴为直线y = x)  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;0f, -1f, 0f, -1f, 0f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getHeight() + view.getImageBitmap().getWidth(),   </span></span><br><span class="line"><span class="comment">//                  view.getImageBitmap().getHeight() + view.getImageBitmap().getWidth());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line">            view.invalidate();  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面给出上述代码中，各种变换的具体结果及其对应的相关变换矩阵</p>
+<h3 id="1-平移">1.平移</h3><p><img src="http://hi.csdn.net/attachment/201111/19/0_1321712352qQRu.gif" alt=""></p>
+<p>输出的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217123565Wwz.gif" alt=""></p>
+<p>请对照第一部分中的“一、平移变换”所讲的情形，考察上述矩阵的正确性。</p>
+<h3 id="2-旋转(围绕图像的中心点)">2.旋转(围绕图像的中心点)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_132171250556xp.gif" alt=""></p>
+<p>输出的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712512Yj1i.gif" alt=""></p>
+<p>它实际上是<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>,view.getImageBitmap().getWidth() / <span class="number">2f</span>, view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate(view.getImageBitmap().getWidth()* <span class="number">1.5f</span>, <span class="number">0f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这两条语句综合作用的结果。根据第一部分中“二、旋转变换”里面关于围绕某点旋转的公式，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>,view.getImageBitmap().getWidth() / <span class="number">2f</span>, view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>所产生的转换矩阵就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712644I54M.gif" alt=""></p>
+<p>而<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">matrix.postTranslate(view.getImageBitmap().getWidth()* 1.5f, 0f);</span><br><span class="line">``` </span><br><span class="line">的意思就是在上述矩阵的左边再乘以下面的矩阵：</span><br><span class="line">![][204]</span><br><span class="line"></span><br><span class="line">关于post是左乘这一点，我们在前面的理论部分曾经提及过，后面我们还会专门讨论这个问题。</span><br><span class="line">所以它实际上就是：</span><br><span class="line">![][205]</span><br><span class="line"></span><br><span class="line">出去计算上的精度误差，我们可以看到我们计算出来的结果，和程序直接输出的结果是一致的。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">### 3.旋转(围绕坐标原点旋转，在加上两次平移，效果同2)</span><br><span class="line">---</span><br><span class="line">![][301]</span><br><span class="line"></span><br><span class="line">根据第一部分中“二、旋转变换”里面关于围绕某点旋转的解释，不难知道：</span><br><span class="line">``` java</span><br><span class="line">matrix.setRotate(45f,view.getImageBitmap().getWidth() / 2f, view.getImageBitmap().getHeight() / 2f);</span><br></pre></td></tr></table></figure></p>
+<p>等价于<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>);</span><br><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> *view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>matrix.setRotate(45f)</code>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712949GjN7.gif" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> * view.getImageBitmap().getHeight()/ <span class="number">2f</span>)</span><br></pre></td></tr></table></figure>
+<p>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712956BNj8.gif" alt=""></p>
+<p>由于是preTranslate，是先乘，也就是右乘，即它应该出现在<code>matrix.setRotate(45f)</code>所对应矩阵的右侧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>)</span><br></pre></td></tr></table></figure>
+<p>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712963iNO1.gif" alt=""></p>
+<p>这次由于是postTranslate，是后乘，也就是左乘，即它应该出现在<code>matrix.setRotate(45f)</code>所对应矩阵的左侧。</p>
+<p>所以综合起来，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>);</span><br><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> *view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>对应的矩阵就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713055HOOt.gif" alt=""></p>
+<p>这和下面这个矩阵(围绕图像中心顺时针旋转45度)其实是一样的：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713100VIOz.gif" alt=""></p>
+<p>因此，此处变换后的图像和2中变换后的图像时一样的。<br>![][307]</p>
+<h3 id="4-缩放变换">4.缩放变换</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713185yKS7.gif" alt=""></p>
+<p>程序所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217131941R24.gif" alt=""></p>
+<p>其中第二个矩阵，其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713201VRxs.gif" alt=""></p>
+<p>大家可以对照第一部分中的“三、缩放变换”和“一、平移变换”说法，自行验证结果。</p>
+<h3 id="5-错切变换(水平错切)">5.错切变换(水平错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_132171330766G0.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713314Dk69.gif" alt=""></p>
+<p>其中，第二个矩阵其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713322PeML.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="6-错切变换(垂直错切)">6.错切变换(垂直错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713502Akg2.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713509Hz7p.gif" alt=""></p>
+<p>其中，第二个矩阵其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713516TUvx.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="7-错切变换(水平+垂直错切)">7.错切变换(水平+垂直错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713655Qsij.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217136824kKR.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217136931vl4.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="8-对称变换(水平对称)">8.对称变换(水平对称)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_13217141232rJI.gif" alt=""></p>
+<p>代码所输出的两个各矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714133P0ha.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217141417Bi3.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="9-对称变换(垂直对称)">9.对称变换(垂直对称)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321714261NN3V.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714269Kqs4.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714276ai2f.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="10-对称变换(对称轴为直线y_=_x)">10.对称变换(对称轴为直线y = x)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_13217144950030.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217145038hN8.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714509sBN4.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="11-关于先乘和后乘的问题">11.关于先乘和后乘的问题</h3><hr>
+<p>由于矩阵的乘法运算不满足交换律，我们在前面曾经多次提及先乘、后乘的问题，即先乘就是矩阵运算中右乘，后乘就是矩阵运算中的左乘。其实先乘、后乘的概念是针对变换操作的时间先后而言的，左乘、右乘是针对矩阵运算的左右位置而言的。以第一部分“二、旋转变换”中围绕某点旋转的情况为例：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714645396z.gif" alt=""></p>
+<p>越靠近原图像中像素的矩阵，越先乘，越远离原图像中像素的矩阵，越后乘。事实上，图像处理时，矩阵的运算是从右边往左边方向进行运算的。这就形成了越在右边的矩阵(右乘)，越先运算(先乘)，反之亦然。</p>
+<p>当然，在实际中，如果首先指定了一个matrix，比如我们先setRotate()，即指定了上面变换矩阵中，中间的那个矩阵，那么后续的矩阵到底是pre还是post运算，都是相对这个中间矩阵而言的。</p>
+  
+		
+  <div class="article-statement">
+    <hr>
+1.&#x5982;&#x672A;&#x6CE8;&#x660E;&#xFF0C;&#x672C;&#x7AD9;&#x535A;&#x5BA2;&#x5747;&#x4E3A;&#x539F;&#x521B;&#xFF0C;&#x8F6C;&#x8F7D;&#x8BF7;&#x4EE5;&#x94FE;&#x63A5;&#x5F62;&#x5F0F;&#x6807;&#x660E;&#x672C;&#x6587;&#x5730;&#x5740;&#x3002;<br>
+2.&#x672C;&#x535A;&#x5BA2;&#x53EA;&#x4EE3;&#x8868;&#x535A;&#x4E3B;&#x5F53;&#x65F6;&#x7684;&#x89C2;&#x70B9;&#x6216;&#x7ED3;&#x8BBA;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+3.&#x5982;&#x672C;&#x535A;&#x5BA2;&#x6D89;&#x53CA;&#x7684;&#x60A8;&#x7684;&#x4E13;&#x5229;&#x3001;&#x9690;&#x79C1;&#x7B49;&#x654F;&#x611F;&#x4FE1;&#x606F;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+4.&#x535A;&#x4E3B;&#x7FFB;&#x8BD1;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x5982;&#x6709;&#x9519;&#x8BEF;&#x6216;&#x8BEF;&#x5BFC;&#x884C;&#x4E3A;&#xFF0C;&#x8BF7;&#x53CA;&#x65F6;&#x544A;&#x77E5;&#x3002;<br>
+5.&#x5982;&#x672C;&#x6587;&#x5E2E;&#x5230;&#x4E86;&#x60A8;&#xFF0C;&#x8BF7;&#x901A;&#x8FC7; &#x5206;&#x4EAB; &#x6309;&#x94AE;&#x5206;&#x4EAB;&#x5230;&#x5176;&#x4ED6;&#x5E73;&#x53F0;&#x3002;<br>
+6.&#x60A8;&#x7684;&#x9F13;&#x52B1;&#x662F;&#x535A;&#x4E3B;&#x5199;&#x4F5C;&#x6700;&#x5927;&#x7684;&#x52A8;&#x529B;&#xFF0C;&#x611F;&#x8C22;&#x60A8;&#x7684;&#x9605;&#x8BFB;&#x548C;&#x5206;&#x4EAB;&#x3002;<br>  </div>
+
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Matrix/">Matrix</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://xiaofeng.site/2016/02/19/Android之Matrix/undefined/" data-title="Android之Matrix | 晓峰的博客 | Beyond Compare" data-tsina="xiaofeng117" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/02/19/Java之HashMap和HashTable的不同/undefined/" title="Java之HashMap和HashTable的不同">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Java之HashMap和HashTable的不同</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/12/31/Android-Material-Design入门/undefined/"  title="Android Material Design入门">
+ <strong>NEXT:</strong><br/> 
+ <span>Android Material Design入门
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+  <div class="recent-vit">
+	<br>
+	&#x6700;&#x8FD1;&#x8BBF;&#x5BA2;&#xFF1A;
+    <hr>
+	<div class="ds-recent-visitors" data-num-items="12" data-avatar-size="54" id="ds-recent-visitors">
+	</div>
+	
+  </div>
+
+	
+<section id="comments">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matrix的数学原理"><span class="toc-number">1.</span> <span class="toc-text">Matrix的数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、_平移变换"><span class="toc-number">1.1.</span> <span class="toc-text">一、 平移变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、_旋转变换"><span class="toc-number">1.2.</span> <span class="toc-text">二、 旋转变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_围绕坐标原点旋转："><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1    围绕坐标原点旋转：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_围绕某个点旋转"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2    围绕某个点旋转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、_缩放变换"><span class="toc-number">1.3.</span> <span class="toc-text">三、 缩放变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、_错切变换"><span class="toc-number">1.4.</span> <span class="toc-text">四、 错切变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、_对称变换"><span class="toc-number">1.5.</span> <span class="toc-text">五、 对称变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二部分_代码验证"><span class="toc-number">2.</span> <span class="toc-text">第二部分 代码验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-平移"><span class="toc-number">2.1.</span> <span class="toc-text">1.平移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-旋转(围绕图像的中心点)"><span class="toc-number">2.2.</span> <span class="toc-text">2.旋转(围绕图像的中心点)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-缩放变换"><span class="toc-number">2.3.</span> <span class="toc-text">4.缩放变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-错切变换(水平错切)"><span class="toc-number">2.4.</span> <span class="toc-text">5.错切变换(水平错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-错切变换(垂直错切)"><span class="toc-number">2.5.</span> <span class="toc-text">6.错切变换(垂直错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-错切变换(水平+垂直错切)"><span class="toc-number">2.6.</span> <span class="toc-text">7.错切变换(水平+垂直错切)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-对称变换(水平对称)"><span class="toc-number">2.7.</span> <span class="toc-text">8.对称变换(水平对称)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-对称变换(垂直对称)"><span class="toc-number">2.8.</span> <span class="toc-text">9.对称变换(垂直对称)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-对称变换(对称轴为直线y_=_x)"><span class="toc-number">2.9.</span> <span class="toc-text">10.对称变换(对称轴为直线y = x)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-关于先乘和后乘的问题"><span class="toc-number">2.10.</span> <span class="toc-text">11.关于先乘和后乘的问题</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>9</sup></a></li>
+		
+			<li><a href="/categories/Android-Studio/" title="Android Studio">Android Studio<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Complex/" title="Complex">Complex<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>5</sup></a></li>
+		
+			<li><a href="/categories/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/categories/PC/" title="PC">PC<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/ButterKnife/" title="ButterKnife">ButterKnife<sup>1</sup></a></li>
+		
+			<li><a href="/tags/EditText/" title="EditText">EditText<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Floating-Lables/" title="Floating Lables">Floating Lables<sup>1</sup></a></li>
+		
+			<li><a href="/tags/HashMap/" title="HashMap">HashMap<sup>1</sup></a></li>
+		
+			<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/InjectView/" title="InjectView">InjectView<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Log/" title="Log">Log<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownPad/" title="MarkdownPad">MarkdownPad<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MarkdownX/" title="MarkdownX">MarkdownX<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Material-Design/" title="Material Design">Material Design<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Matrix/" title="Matrix">Matrix<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Parcelable/" title="Parcelable">Parcelable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Serializable/" title="Serializable">Serializable<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Snackbar/" title="Snackbar">Snackbar<sup>1</sup></a></li>
+		
+			<li><a href="/tags/TabLayout/" title="TabLayout">TabLayout<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Terminal/" title="Terminal">Terminal<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Win10/" title="Win10">Win10<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1660762900&verifier=346b7a09&dpc=1"></iframe>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Programing is an interesting thing.  <br/>
+			If you have some other better issues or blogs, recommend me please. </p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/xiaofeng117" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/goghtsui" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-70168817-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript">
+		(function(w,d,t,u,n,s,e){
+			w['SwiftypeObject']=n;w[n]=w[n]||function(){
+			(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+			e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+		})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+		_st('install','w7ca3xWstLkz2UvAeyAJ','2.0.0');
+	</script>
+
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<script language=JavaScript>
+		today=new Date();
+		function initArray(){
+			this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+				this[i+1]=initArray.arguments[i] 
+			}
+		
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		
+		document.write("<marquee scrollAmount=2 width=screen.width-200 onmouseover=stop() onmouseout=start()><font color=#ffffff style='font-size:14pt;font-family: 黑体'> ",
+			today.getFullYear(),"年",
+			today.getMonth()+1,"月",
+			today.getDate(),"日   ",
+			d[today.getDay()+1],
+			"</font></marquee>" ); 
+	</script>
+	
+	<div class="copyright">
+		Powered by 
+		<a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+			<a href="http://xiaofeng.site" target="_blank" title="xiaofeng">xiaofeng</a>
+		
+		
+		<span id="busuanzi_container_site_pv" >
+			<font color="#ffffff" size="4" >| Wow，i got </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_pv"></span> </font >
+			<font color="#ffffff" size="4" > hits! </font >
+		</span>
+		
+		<span style="width:100px;"></span>
+		<span id="busuanzi_container_site_uv">
+			<font color="#ffffff" size="4" >  You are the </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_uv"></span>th </font >
+			<font color="#ffffff" size="4" > visitor！ </font >
+		</span>
+	</div>
+	
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xiaofeng365"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//7xod2d.com1.z0.glb.clouddn.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-70168817-1', 'xiaofeng.site');  
+ga('send', 'pageview');
+</script>
+
+
+
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
+<a title="Back to the top"><img src="/img/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+</html>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Learning programming, i enjoy it.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://xiaofeng.site/"/>
-  <updated>2016-01-25T02:09:06.047Z</updated>
+  <updated>2016-03-02T06:21:51.746Z</updated>
   <id>http://xiaofeng.site/</id>
   
   <author>
@@ -13,6 +13,606 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Http协议简介]]></title>
+    <link href="http://xiaofeng.site/2016/03/02/Http%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B/undefined/"/>
+    <id>http://xiaofeng.site/2016/03/02/Http协议简介/undefined/</id>
+    <published>2016-03-02T06:20:33.000Z</published>
+    <updated>2016-03-02T06:21:51.746Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>原作者：吾爱<br>源地址：<a href="http://my.oschina.net/cxz001/blog/331671" target="_blank" rel="external">点击跳转</a></p>
+</blockquote>
+<h2 id="序言">序言</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/d0177c725e5b3660d9984b0f70e431f0.jpg" alt="request-response"><br>我们平时在浏览网页的时候都是使用浏览器，输入你要的网址后回车，就会显示出我们所想要的内容，看似这个简单的用户操作行为的背后，Web的工作原理是怎样的呢？到底隐藏了些什么呢？</p>
+<p>对于传统的上网流程，系统它是这么做的：浏览器本身它是一个客户端，当输入URL地址的时候，浏览器首先会去请求DNS服务器，通过DNS查询获取相应的域名所对应的IP地址，然后通过这个映射的IP地址找到IP对应的服务器，并建立连接，等浏览器发送完HTTP Request（请求）包后，服务器接收到请求包之后才开始处理，返回HTTP Response（响应）包，客户端浏览器收到来自服务器的响应后就开始渲染这个Response包里的主体（body）部分，等收到全部的内容后断开与该服务器之间的连接。</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/9f039f15b643c9cea8bab75b92f3e26b.png" alt="web-request-process"></p>
+<p>一个Web服务器也被称为HTTP服务器，它通过HTTP协议与客户端通信。这个客户端通常指的是Web浏览器(其实手机端客户端内部也是浏览器实现的)。</p>
+<h2 id="Web服务器的工作原理可以简单地定义为：">Web服务器的工作原理可以简单地定义为：</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>客户机通过TCP/IP协议建立到服务器的TCP连接</td>
+</tr>
+<tr>
+<td>2</td>
+<td>客户端向服务器发送HTTP协议请求包，请求服务器里的资源文档</td>
+</tr>
+<tr>
+<td>3</td>
+<td>服务器向客户机发送HTTP协议应答包，如果请求的资源包含有动态语言的内容，那么服务器会调用动态语言的解释引擎负责处理“动态内容”，并将处理得到的数据返回给客户端</td>
+</tr>
+<tr>
+<td>4</td>
+<td>客户机与服务器断开。由客户端解释HTML文档，在客户端屏幕上渲染图形结果</td>
+</tr>
+</tbody>
+</table>
+<p>一个简单的HTTP事务就是这样实现的，看起来很复杂，原理其实是挺简单的。需要注意的是客户机与服务器之间的通信是非持久连接的，也就是当服务器发送了应答后就与客户机断开连接，等待下一次请求。</p>
+<h2 id="URL和DNS解析">URL和DNS解析</h2><p>我们浏览网页都是通过URL访问的，那么URL到底是怎么样的呢？<br>URL(Uniform Resource Locator)是“统一资源定位符”的英文缩写，用于描述一个网络上的资源, 基本格式如下：</p>
+<p><code>html
+scheme://host[:port#]/path/.../[?query-string][#anchor]</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scheme</td>
+<td>指定低层使用的协议(例如：http, https, ftp)</td>
+</tr>
+<tr>
+<td>host</td>
+<td>HTTP服务器的IP地址或者域名</td>
+</tr>
+<tr>
+<td>port</td>
+<td>HTTP服务器的默认端口是80，这种情况下端口号可以省略。如果使用了别的端口，必须指明，例如 <a href="http://www.qixing318.com:80/" target="_blank" rel="external">http://www.qixing318.com:80/</a></td>
+</tr>
+<tr>
+<td>path</td>
+<td>访问资源的路径</td>
+</tr>
+<tr>
+<td>query-string</td>
+<td>发送给http服务器的数据</td>
+</tr>
+<tr>
+<td>anchor</td>
+<td>锚</td>
+</tr>
+</tbody>
+</table>
+<p>DNS(Domain Name System)是“域名系统”的英文缩写，是一种组织成域层次结构的计算机和网络服务命名系统，它用于TCP/IP网络，它从事将主机名或域名转换为实际IP地址的工作。DNS就是这样的一位“翻译官”，它的基本工作原理可用下图来表示。</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/97fc06248d4bc542a355ddfce1549044.png" alt="dns-core"></p>
+<h2 id="DNS工作原理">DNS工作原理</h2><p>更详细的DNS解析的过程如下，这个过程有助于我们理解DNS的工作模式</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>在浏览器中输入www.qq.com域名，操作系统会先检查自己本地的hosts文件是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>如果hosts里没有这个域名的映射，则查找本地DNS解析器缓存，是否有这个网址映射关系，如果有，直接返回，完成域名解析。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>如果hosts与本地DNS解析器缓存都没有相应的网址映射关系，首先会找TCP/IP参数中设置的首选DNS服务器，在此我们叫它本地DNS服务器，此服务器收到查询时，如果要查询的域名，包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析，此解析具有权威性。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>如果要查询的域名，不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>如果本地DNS服务器本地区域文件与缓存解析都失效，则根据本地DNS服务器的设置（是否设置转发器）进行查询，如果未用转发模式，本地DNS就把请求发至 “根DNS服务器”，“根DNS服务器”收到请求后会判断这个域名(.com)是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收到IP信息后，将会联系负责.com域的这台服务器。这台负责.com域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级DNS服务器地址(qixing318.com)给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找qixing318.com域服务器，重复上面的动作，进行查询，直至找到www.qixing318.com主机。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>如果用的是转发模式，此DNS服务器就会把请求转发至上一级DNS服务器，由上一级服务器进行解析，上一级服务器如果不能解析，或找根DNS或把转请求转至上上级，以此循环。不管是本地DNS服务器用是是转发，还是根提示，最后都是把结果返回给本地DNS服务器，由此DNS服务器再返回给客户机。</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/639c39cf315ddbd717d3d2d78ff74228.png" alt="dns-process"></p>
+<h2 id="DNS解析的整个流程">DNS解析的整个流程</h2><p>所谓 递归查询过程 就是 “查询的递交者” 更替, 而 迭代查询过程 则是 “查询的递交者”不变。</p>
+<blockquote>
+<p>举个例子来说，你想知道某个一起上法律课的女孩的电话，并且你偷偷拍了她的照片，回到寝室告诉一个很仗义的哥们儿，这个哥们儿二话没说，拍着胸脯告诉你，甭急，我替你查(此处完成了一次递归查询，即，问询者的角色更替)。然后他拿着照片问了学院大四学长，学长告诉他，这姑娘是xx系的；然后这哥们儿马不停蹄又问了xx系的办公室主任助理同学，助理同学说是xx系yy班的，然后很仗义的哥们儿去xx系yy班的班长那里取到了该女孩儿电话。(此处完成若干次迭代查询，即，问询者角色不变，但反复更替问询对象)最后，他把号码交到了你手里。完成整个查询过程。<br>通过上面的步骤，我们最后获取的是IP地址，也就是浏览器最后发起请求的时候是基于IP来和服务器做信息交互的。</p>
+</blockquote>
+<h2 id="HTTP协议详解">HTTP协议详解</h2><p>HTTP协议是Web工作的核心，所以要了解清楚Web的工作方式就需要详细的了解清楚HTTP是怎么样工作的。</p>
+<p>HTTP是一种让Web服务器与浏览器(客户端)通过Internet发送与接收数据的协议,它建立在TCP协议之上，一般采用TCP的80端口。它是一个请求、响应协议–客户端发出一个请求，服务器响应这个请求。</p>
+<p>在HTTP中，客户端总是通过建立一个连接与发送一个HTTP请求来发起一个事务。服务器不能主动去与客户端联系，也不能给客户端发出一个回调连接。客户端与服务器端都可以提前中断一个连接。例如，当浏览器下载一个文件时，你可以通过点击“停止”键来中断文件的下载，关闭与服务器的HTTP连接。</p>
+<p>HTTP协议是无状态的，同一个客户端的这次请求和上次请求是没有对应关系，对HTTP服务器来说，它并不知道这两个请求是否来自同一个客户端。为了解决这个问题， Web程序引入了Cookie机制来维护连接的可持续状态。</p>
+<blockquote>
+<p>HTTP协议是建立在TCP协议之上的，因此TCP攻击一样会影响HTTP的通讯，例如比较常见的一些攻击：SYN Flood是当前最流行的DoS（拒绝服务攻击）与DdoS（分布式拒绝服务攻击）的方式之一，这是一种利用TCP协议缺陷，发送大量伪造的TCP连接请求，从而使得被攻击方资源耗尽（CPU满负荷或内存不足）的攻击方式。</p>
+</blockquote>
+<h2 id="HTTP请求包（浏览器信息）">HTTP请求包（浏览器信息）</h2><p>我们先来看看Request包的结构, Request包分为3部分，第一部分叫Request line（请求行）, 第二部分叫Request header（请求头）,第三部分是body（主体）。</p>
+<p>header和body之间有个空行，请求包的例子所示:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /domains/example/ HTTP/1.1</td>
+<td>请求行: 请求方法 请求URI HTTP协议/协议版本</td>
+</tr>
+<tr>
+<td>Host：www.qixing318.com.</td>
+<td>服务端的主机名</td>
+</tr>
+<tr>
+<td>User-Agent：Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4</td>
+<td>客户端浏览器信息</td>
+</tr>
+<tr>
+<td>Accept：text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8</td>
+<td>客户端能接收的mine类型</td>
+</tr>
+<tr>
+<td>Accept-Encoding：gzip,deflate,sdcn</td>
+<td>是否支持流压缩</td>
+</tr>
+<tr>
+<td>Accept-Charset：UTF-8,*;q=0.5</td>
+<td>客户端字符编码集</td>
+</tr>
+<tr>
+<td>“\r\n\r\n”</td>
+<td>空行,用于分割请求头和消息体</td>
+</tr>
+<tr>
+<td>“\r\n\r\n”</td>
+<td>空行,消息体,请求资源参数,例如POST传递的参数</td>
+</tr>
+</tbody>
+</table>
+<p>HTTP协议定义了很多与服务器交互的请求方法，最基本的有4种，分别是GET,POST,PUT,DELETE。一个URL地址用于描述一个网络上的资源，而HTTP中的GET, POST, PUT, DELETE就对应着对这个资源的查，改，增，删4个操作。我们最常见的就是GET和POST了。GET一般用于获取/查询资源信息，而POST一般用于更新资源信息。</p>
+<h2 id="通过fiddler抓包可以看到如下请求信息:">通过fiddler抓包可以看到如下请求信息:</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/1b655d5bc2e339010d3857fb50c841a2.png" alt="fiddler-get"><br>上图为：fiddler抓取的GET信息</p>
+<p><img src="http://www.qixing318.com/uploads/blog/image/20150120/125b42ec4dcfb1e5601c8e2695076fb9.png" alt="fiddler-post"><br>上图为：fiddler抓取的POST信息</p>
+<h2 id="GET和POST的区别:">GET和POST的区别:</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>我们可以看到GET请求消息体为空，POST请求带有消息体。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456。POST方法是把提交的数据放在HTTP包的body中。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="HTTP响应包（服务器信息）">HTTP响应包（服务器信息）</h2><p>我们再来看看HTTP的response包，他的结构如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP/1.1 200 OK</td>
+<td>状态行</td>
+</tr>
+<tr>
+<td>Server: nginx/1.0.8</td>
+<td>服务器使用的WEB软件名及版本</td>
+</tr>
+<tr>
+<td>Date:Date: Tue, 30 Oct 2012 04:14:25 GMT</td>
+<td>发送时间</td>
+</tr>
+<tr>
+<td>Content-Type: text/html</td>
+<td>服务器发送信息的类型</td>
+</tr>
+<tr>
+<td>Transfer-Encoding: chunked</td>
+<td>表示发送HTTP包是分段发的</td>
+</tr>
+<tr>
+<td>Connection: keep-alive</td>
+<td>保持连接状态</td>
+</tr>
+<tr>
+<td>Content-Length: 90</td>
+<td>消息主体内容长度</td>
+</tr>
+<tr>
+<td>\r\n</td>
+<td>空行，用来分割消息头和主体</td>
+</tr>
+<tr>
+<td>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”…</td>
+<td>消息体部分</td>
+</tr>
+</tbody>
+</table>
+<p>Response包中的第一行叫做状态行，由HTTP协议版本号， 状态码， 状态消息 三部分组成。<br>状态码用来告诉HTTP客户端,HTTP服务器是否产生了预期的Response。<br>HTTP/1.1协议中定义了5类状态码， 状态码由三位数字组成，第一个数字定义了响应的类别</p>
+<blockquote>
+<p><a href="https://httpstatuses.com/" target="_blank" rel="external">状态码详细查询</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>提示信息 - 表示请求已被成功接收，继续处理</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>成功 - 表示请求已被成功接收，理解，接受</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>重定向 - 要完成请求必须进行更进一步的处理</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>客户端错误 - 请求有语法错误或请求无法实现</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>服务器端错误 - 服务器未能实现合法的请求</td>
+</tr>
+</tbody>
+</table>
+<p>我们看下面这个图展示了详细的返回信息，左边可以看到有很多的资源返回码，200是常用的，表示正常信息，302表示跳转。response header里面展示了详细的信息。<br><img src="http://www.qixing318.com/uploads/blog/image/20150120/c9e285dfb362101c4d258534ccfa5401.png" alt="request-allinfo"><br>【上图：访问一次网站的全部请求信息】</p>
+<h2 id="HTTP协议是无状态的和Connection:_keep-alive的区别">HTTP协议是无状态的和Connection: keep-alive的区别</h2><p>无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。从另一方面讲，打开一个服务器上的网页和你之前打开这个服务器上的网页之间没有任何联系。<br>HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（面对无连接）。<br>从HTTP/1.1起，默认都开启了Keep-Alive保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的TCP连接。<br>Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同服务器软件（如Apache）中设置这个时间。</p>
+<h2 id="请求实例">请求实例</h2><p><img src="http://www.qixing318.com/uploads/blog/image/20150120/919ca19ef2176dacecdd2824083e9baa.png" alt="request-entity"></p>
+<p>【上图为：一次请求的request和response】</p>
+<p>上面这张图我们可以了解到整个的通讯过程，同时细心的读者是否注意到了一点，一个URL请求但是左边栏里面为什么会有那么多的资源请求(这些都是静态文件，go对于静态文件有专门的处理方式)。</p>
+<p>这个就是浏览器的一个功能，第一次请求url，服务器端返回的是html页面，然后浏览器开始渲染HTML：当解析到HTML DOM里面的图片连接，css脚本和js脚本的链接，浏览器就会自动发起一个请求静态资源的HTTP请求，获取相对应的静态资源，然后浏览器就会渲染出来，最终将所有资源整合、渲染，完整展现在我们面前的屏幕上。</p>
+<blockquote>
+<p>网页优化方面有一项措施是减少HTTP请求次数，就是把尽量多的css和js资源合并在一起，目的是尽量减少网页请求静态资源的次数，提高网页加载速度，同时减缓服务器的压力。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>原作者：吾爱<br>源地址：<a href="http://my.oschina.net/cxz001/blog/331671" target="_blank" rel="external">点击跳转</a></p>
+</blockquote>
+<]]>
+    </summary>
+    
+      <category term="http协议" scheme="http://xiaofeng.site/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="Java" scheme="http://xiaofeng.site/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[实用bat脚本[笔记]]]></title>
+    <link href="http://xiaofeng.site/2016/03/01/%E5%AE%9E%E7%94%A8bat%E8%84%9A%E6%9C%AC-%E7%AC%94%E8%AE%B0/undefined/"/>
+    <id>http://xiaofeng.site/2016/03/01/实用bat脚本-笔记/undefined/</id>
+    <published>2016-03-01T03:41:36.000Z</published>
+    <updated>2016-03-01T06:02:58.480Z</updated>
+    <content type="html"><![CDATA[<h3 id="垃圾清理">垃圾清理</h3><hr>
+<p>一个自定义的pc端系统垃圾清理批处理文件，可以配合各大电脑管家使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@<span class="built_in">echo</span> off </span><br><span class="line">color <span class="number">0</span>a</span><br><span class="line">title ********系统垃圾清理******** </span><br><span class="line"><span class="built_in">echo</span> 正在清除系统垃圾文件，请稍后...... </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除补丁备份目录 </span><br><span class="line">RD %windir%\<span class="variable">$hf_mig</span>$ /Q /S </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 把补丁卸载文件夹的名字保存成patchs.txt </span><br><span class="line">dir %windir%\<span class="variable">$NtUninstall</span>* /a:d /b &gt;%windir%\patchs.txt </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 从patchs.txt中读取文件夹列表并且删除文件夹 </span><br><span class="line"><span class="keyword">for</span> /f %%i <span class="keyword">in</span> (%windir%\patchs.txt) <span class="keyword">do</span> rd %windir%\%%i /s /q </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除patchs.txt </span><br><span class="line">del %windir%\patchs.txt /f /q </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除补丁安装记录内容（下面的del /f /s /q %systemdrive%\*.log已经包含删除此类文件） </span><br><span class="line">del %windir%\KB*.log /f /q </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统盘目录下临时文件 </span><br><span class="line">del /f /s /q %systemdrive%\*.tmp </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统盘目录下临时文件 </span><br><span class="line">del /f /s /q %systemdrive%\*._mp </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统盘目录下日志文件 </span><br><span class="line">del /f /s /q %systemdrive%\*.log </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统盘目录下GID文件(属于临时文件，具体作用不详) </span><br><span class="line">del /f /s /q %systemdrive%\*.gid </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统目录下scandisk（磁盘扫描）留下的无用文件 </span><br><span class="line">del /f /s /q %systemdrive%\*.chk </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统目录下old文件 </span><br><span class="line">del /f /s /q %systemdrive%\*.old</span><br><span class="line"> </span><br><span class="line"><span class="built_in">echo</span> 删除回收站的无用文件 </span><br><span class="line">del /f /s /q %systemdrive%\recycled\*.* </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统目录下备份文件 </span><br><span class="line">del /f /s /q %windir%\*.bak </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除应用程序临时文件 </span><br><span class="line">del /f /s /q %windir%\prefetch\*.* </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除系统维护等操作产生的临时文件 </span><br><span class="line">rd /s /q %windir%\temp &amp; md %windir%\temp </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除当前用户的COOKIE（IE） </span><br><span class="line">del /f /q %userprofile%\cookies\*.* </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除internet临时文件 </span><br><span class="line">del /f /s /q <span class="string">"%userprofile%\local settings\temporary internet files\*.*"</span> </span><br><span class="line">del /f /s /q <span class="string">"%userprofile%\Local Settings\Temporary Internet Files\*.*"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除当前用户日常操作临时文件 </span><br><span class="line">del /f /s /q <span class="string">"%userprofile%\local settings\temp\*.*"</span> </span><br><span class="line">del /f /s /q <span class="string">"%userprofile%\Local Settings\Temp\*.*"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 删除访问记录（开始菜单中的文档里面的东西） </span><br><span class="line">del /f /s /q <span class="string">"%userprofile%\recent\*.*"</span> </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">echo</span> 恭喜您！清理全部完成！</span><br><span class="line">echo. &amp; pause</span><br></pre></td></tr></table></figure>
+<p>右键 -&gt; 已管理员身份运行 即可，不会存在任何风险，当然你也可以自己添加路径或者相关的处理，可以说是绿色安全</p>
+<h3 id="启动应用">启动应用</h3><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line">color <span class="number">0</span>a</span><br><span class="line">title ********快速启动******** </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="number">1</span>、QQ</span><br><span class="line"><span class="built_in">echo</span> <span class="number">2</span>、Exit</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> /p s=请输入应用的编号，按Enter启动应用：</span><br><span class="line"><span class="keyword">if</span> %s% equ <span class="number">1</span> goto a</span><br><span class="line"><span class="keyword">if</span> %s% equ <span class="number">2</span> goto b</span><br><span class="line"></span><br><span class="line">:a</span><br><span class="line">start <span class="string">""</span> <span class="string">"E:\Program Files (x86)\Tencent\QQ\Bin\QQ.exe"</span></span><br><span class="line"><span class="built_in">echo</span> QQ启动完成！</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">:b</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>这个就非常简单了，一个if判断，指定对应应用的绝对路径，启动指定的应用，还可以打开指定的路径的，因为我比较喜欢简洁的桌面，有了这个脚本，桌面上就不用放置很多快捷方式了</p>
+<h3 id="adb_shell">adb shell</h3><hr>
+<p>这个适用于Win系统下对手机执行一些操作，原因是命令行执行了adb shell之后，无法继续使用shell的相关命令，那么我们可以先将命令输出到一个文件里，在读取出来就可以了,以删除文件为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">adb root</span><br><span class="line"></span><br><span class="line">adb remount</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">cd</span> /sdcard/ &gt;&gt; temp.txt</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> rm -r <span class="number">1</span>.txt &gt;&gt; temp.txt</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">exit</span> &gt;&gt; temp.txt</span><br><span class="line"></span><br><span class="line">adb shell &lt; temp.txt</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="垃圾清理">垃圾清理</h3><hr>
+<p>一个自定义的pc端系统垃圾清理批处理文件，可以配合各大电脑管家使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><spa]]>
+    </summary>
+    
+      <category term="bat" scheme="http://xiaofeng.site/tags/bat/"/>
+    
+      <category term="批处理文件" scheme="http://xiaofeng.site/tags/%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6/"/>
+    
+      <category term="PC" scheme="http://xiaofeng.site/categories/PC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android之自定义actionbar[笔记]]]></title>
+    <link href="http://xiaofeng.site/2016/03/01/Android%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89actionbar%5B%E7%AC%94%E8%AE%B0%5D/undefined/"/>
+    <id>http://xiaofeng.site/2016/03/01/Android之自定义actionbar[笔记]/undefined/</id>
+    <published>2016-03-01T03:06:22.000Z</published>
+    <updated>2016-03-01T03:22:33.145Z</updated>
+    <content type="html"><![CDATA[<p>自定义actionbar或toolbar的属性样式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"detail_actionbar_style"</span> <span class="attribute">parent</span>=<span class="value">"AppBaseTheme"</span>&gt;</span><span class="css"></span><br><span class="line">        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:windowAnimationStyle"</span>&gt;<span class="at_rule">@<span class="keyword">null&lt;/item&gt;</span></span><br><span class="line">        &lt;item name=<span class="string">"android:windowBackground"</span>&gt;@android:color/transparent&lt;/item&gt;</span><br><span class="line">        &lt;!--&lt;item name=<span class="string">"android:colorBackgroundCacheHint"</span>&gt;@null&lt;/item&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;item name=<span class="string">"android:windowFrame"</span>&gt;@null&lt;/item&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;item name=<span class="string">"android:windowIsFloating"</span>&gt;false&lt;/item&gt;--&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowIsTranslucent"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowTranslucentNavigation"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowNoTitle"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowActionBar"</span>&gt;false&lt;/item&gt;</span><br><span class="line">        &lt;!-- actionbar --&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowActionBarOverlay"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowContentOverlay"</span>&gt;@null&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:actionBarStyle"</span>&gt;@style/ActionBar.Style.Transparent&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:actionOverflowButtonStyle"</span>&gt;@style/OverFlow&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- actionbar --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"ActionBar.Transparent"</span> <span class="attribute">parent</span>=<span class="value">"@android:style/Theme.Holo.Light"</span>&gt;</span><span class="css"><span class="at_rule"></span><br><span class="line">        &lt;item name=<span class="string">"android:windowActionBarOverlay"</span>&gt;true&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:windowContentOverlay"</span>&gt;@null&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:actionBarStyle"</span>&gt;@style/ActionBar.Style.Transparent&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:actionOverflowButtonStyle"</span>&gt;@style/OverFlow&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 实现Actionbar的透明度 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"ActionBar.Style.Transparent"</span> <span class="attribute">parent</span>=<span class="value">"@android:style/Widget.Holo.ActionBar"</span>&gt;</span><span class="css"><span class="at_rule"></span><br><span class="line">        &lt;item name=<span class="string">"android:background"</span>&gt;@android:color/transparent&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:titleTextStyle"</span>&gt;@style/ActionBarText&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 标题文字 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"ActionBarText"</span>&gt;</span><span class="css"><span class="at_rule"></span><br><span class="line">        &lt;item name=<span class="string">"android:textSize"</span>&gt;<span class="number">19s</span>p&lt;/item&gt;</span><br><span class="line">        &lt;item name=<span class="string">"android:textColor"</span>&gt;@android:color/white&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 重写actionbar中 OverFlow的属性 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"OverFlow"</span> <span class="attribute">parent</span>=<span class="value">"@android:style/Widget.Holo.ActionButton.Overflow"</span>&gt;</span><span class="css"><span class="at_rule"></span><br><span class="line">        &lt;item name=<span class="string">"android:src"</span>&gt;@drawable/custom_actionbar_overflow&lt;/item&gt;</span><br><span class="line">    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>自定义actionbar或toolbar的属性样式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
+    </summary>
+    
+      <category term="沉浸式状态栏" scheme="http://xiaofeng.site/tags/%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%8A%B6%E6%80%81%E6%A0%8F/"/>
+    
+      <category term="Android" scheme="http://xiaofeng.site/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java之HashMap和HashTable的不同]]></title>
+    <link href="http://xiaofeng.site/2016/02/19/Java%E4%B9%8BHashMap%E5%92%8CHashTable%E7%9A%84%E4%B8%8D%E5%90%8C/undefined/"/>
+    <id>http://xiaofeng.site/2016/02/19/Java之HashMap和HashTable的不同/undefined/</id>
+    <published>2016-02-19T07:13:32.000Z</published>
+    <updated>2016-02-19T07:23:58.564Z</updated>
+    <content type="html"><![CDATA[<p>HashTable和HashMap的6个不同点：Java热门面试题例子</p>
+<p>HashTable和HashMa的区别是面试题中经常被问到的问题。还有其他比较热门的问题，像ArrayList和Vector、Comparator和Comparable。这些问题经常在面试中被问题，以检查我们是否正确理解集合类的使用和拥有的替代解决方案的知识。这两者之间的不同，包括6个点，分别是<em>Synchronization</em>、<em>Null keys and values</em>、<em>Iterating values</em>、<em>Fail fast iterator</em>、<em>Performance</em>、<em>Superclass</em></p>
+<h2 id="HashTable和HashMap的不同">HashTable和HashMap的不同</h2><p><strong>1.Synchronization or Thread Safe :</strong></p>
+<p>这是它们最重要的不同点。HashMap不是同步的，并且不是是线程安全的。相反，HashTable是线程安全和同步的。</p>
+<p>什么时候使用HashMap？答案是如果你的应用不需要任何多线程任务，就是说HashMap适用于没有线程的应用。HashTable应该在多线程应用中使用。</p>
+<p>扩展：<br>Java提供了ConcurrentHashMap，它是HashTable的替代品，比HashTable的扩展性更好。HashMap可以通过下面的语句进行同步：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map m = Collections.synchronizeMap(hashMap);</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. Null keys and null values :</strong></p>
+<p>HashMap允许一个空的key和多个空的value， 然而HashTable不允许空的键值。</p>
+<p><strong>3. Iterating the values:</strong></p>
+<p>HashMap对象的值是通过Iterator迭代的。HashTable是除vector之外惟一的一个使用了enumerator迭代器来迭代其对象值的类。</p>
+<p><strong>4.  Fail-fast iterator :</strong></p>
+<p>在HashMap中是<strong>fail-fast</strong>迭代器，而HashTable的emumerator不是。根据<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Hashtable.html" target="_blank" rel="external">Oracle Docs</a>,如果HashTable对象的iterator以任何方式被创建之后它在“结构上”被修改，那么除了迭代器自己的remove方法，否则迭代器将抛出ConcurrentModificationException异常。</p>
+<p>结构上的更改指的是删除或者插入一个元素（hashtable和hashmap），因此，由Hashtable的键和元素方法返回的enumerations不是Fail-fast。关于<a href="http://javahungry.blogspot.com/2013/08/hashing-how-hash-map-works-in-java-or.html" target="_blank" rel="external">iterator and enumeration的不同</a>.</p>
+<p>扩展：<br>如果某个集合对象创建了Iterator或者ListIterator，然后其它的线程试图“结构上”更改集合对象，将会抛出ConcurrentModificationException异常。但其它线程可以通过set()方法更改集合对象是允许的，因为这并没有从“结构上”更改集合。但是假如已经从结构上进行了更改，再调用set()方法，将会抛出IllegalArgumentException异常。</p>
+<p><strong>5. Performance :</strong><br>HashMap是比较快的，并且使用了很少的内存。在单个的线程环境中，不同步的对象通常在性能上是比同步的对象要好的。</p>
+<p><strong>6.Superclass and Legacy :</strong><br>HashTable是Dictionary的子类，在jdk 1.7中已经过时了，因此它不再被使用。它是最好的外部实现同步的方法，或者使用一个ConcurrentMap实现（如ConcurrentHashMap）HashMap是AbstractMap的子类，尽管HashMap和HashTable有不同的父类，但是他们都继承了抽象类“Map”。</p>
+<h2 id="HashMap和HashTable的例子">HashMap和HashTable的例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Hashtable;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMapHashtableExample</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"> </span><br><span class="line">           </span><br><span class="line">  </span><br><span class="line">        Hashtable&lt;String,String&gt; hashtableobj = <span class="keyword">new</span> Hashtable&lt;String, String&gt;();</span><br><span class="line">        hashtableobj.put(<span class="string">"Alive is "</span>, <span class="string">"awesome"</span>);</span><br><span class="line">        hashtableobj.put(<span class="string">"Love"</span>, <span class="string">"yourself"</span>);</span><br><span class="line">        System.out.println(<span class="string">"Hashtable object output :"</span>+ hashtableobj);</span><br><span class="line"> </span><br><span class="line">         </span><br><span class="line"> </span><br><span class="line">        HashMap hashmapobj = <span class="keyword">new</span> HashMap();</span><br><span class="line">        hashmapobj.put(<span class="string">"Alive is "</span>, <span class="string">"awesome"</span>);  </span><br><span class="line">        hashmapobj.put(<span class="string">"Love"</span>, <span class="string">"yourself"</span>); </span><br><span class="line">        System.out.println(<span class="string">"HashMap object output :"</span>+hashmapobj);   </span><br><span class="line"> </span><br><span class="line"> 	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hashtable <span class="keyword">object</span> output :&#123;Love=yourself, Alive <span class="keyword">is</span> =awesome&#125;</span><br><span class="line">HashMap <span class="keyword">object</span> output :&#123;Alive <span class="keyword">is</span> =awesome, Love=yourself&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="HashMap和Hashtable的相似之处">HashMap和Hashtable的相似之处</h2><ul>
+<li><p><strong>1.插入顺序：</strong> 随着时间的推移，HashMap和HashTable都不能保证集合的顺序，相反的，使用LinkedHashMap不会因为时间的推移而改变顺序。</p>
+</li>
+<li><p><strong>2.Map接口：</strong> HashMap和HashTable都是实现了Map接口。</p>
+</li>
+<li><p><strong>3.存和取的方法：</strong> HashMap和HashTable为存取提供了稳定的时间性能</p>
+</li>
+<li><p><strong>4.内部原理：</strong> HashMap和HashTable遵顼的是散列的原则：[HashMap是如何工作的？][3]</p>
+</li>
+</ul>
+<h2 id="HashMap和HashTable什么时候使用？">HashMap和HashTable什么时候使用？</h2><ul>
+<li><p><strong>1. 单线程应用</strong><br>在非线程应用中，HashMap要优于HashTable的，简单来说，使用HashMap在非同步或者单线程的应用中。</p>
+</li>
+<li><p><strong>2. 多线程应用</strong><br>我们应该避免使用Hashtable，因为这个类在最近的jdk1.8中过时了。Oracle已经提供了很好的替代的类：<strong>ConcurrentHashMap</strong>，对于多线程应用，使用ConcurrentHashMap而不是Hashtable。</p>
+</li>
+</ul>
+<h2 id="总结">总结</h2><table>
+<thead>
+<tr>
+<th>区别</th>
+<th>HashMap</th>
+<th>HashTable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同步</td>
+<td>NO</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>线程安全</td>
+<td>NO</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>空键值</td>
+<td>一个空键，任意空值</td>
+<td>不允许空键值</td>
+</tr>
+<tr>
+<td>迭代类型</td>
+<td>Fail fast迭代器</td>
+<td>Fail safe迭代器</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>快</td>
+<td>作比较慢</td>
+</tr>
+<tr>
+<td>父类和遗弃</td>
+<td>AbstractMap，NO</td>
+<td>Dictionary , Yes</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>HashTable和HashMap的6个不同点：Java热门面试题例子</p>
+<p>HashTable和HashMa的区别是面试题中经常被问到的问题。还有其他比较热门的问题，像ArrayList和Vector、Comparator和Comparable。这些问题经常在面试]]>
+    </summary>
+    
+      <category term="HashMap" scheme="http://xiaofeng.site/tags/HashMap/"/>
+    
+      <category term="HashTable" scheme="http://xiaofeng.site/tags/HashTable/"/>
+    
+      <category term="Java" scheme="http://xiaofeng.site/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android之Matrix]]></title>
+    <link href="http://xiaofeng.site/2016/02/19/Android%E4%B9%8BMatrix/undefined/"/>
+    <id>http://xiaofeng.site/2016/02/19/Android之Matrix/undefined/</id>
+    <published>2016-02-19T07:11:37.000Z</published>
+    <updated>2016-02-19T07:30:47.582Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>原作者： Qiengo<br>源地址： <a href="http://www.cnblogs.com/qiengo/archive/2012/06/30/2570874.html" target="_blank" rel="external">点击跳转</a></p>
+</blockquote>
+<h2 id="Matrix的数学原理">Matrix的数学原理</h2><p>在Android中，如果你用Matrix进行过图像处理，那么一定知道Matrix这个类。Android中的Matrix是一个3 x 3的矩阵，其内容如下：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217092330d9Q.gif" alt="matrix_iamge_description"></p>
+<p>Matrix的对图像的处理可分为四类基本变换：</p>
+<ul>
+<li>Translate - 平移变换</li>
+<li>Rotate - 旋转变换</li>
+<li>Scale - 缩放变换</li>
+<li>Skew - 错切变换</li>
+</ul>
+<p>从字面上理解，矩阵中的MSCALE用于处理缩放变换，MSKEW用于处理错切变换，MTRANS用于处理平移变换，MPERSP用于处理透视变换。实际中当然不能完全按照字面上的说法去理解Matrix。同时，在Android的文档中，未见到用Matrix进行透视变换的相关说明，所以本文也不讨论这方面的问题。</p>
+<p>针对每种变换，Android提供了pre、set和post三种操作方式。其中：</p>
+<ul>
+<li>set - 用于设置Matrix中的值。</li>
+<li>pre - 是先乘，因为矩阵的乘法不满足交换律，因此先乘、后乘必须要严格区分。先乘相当于矩阵运算中的右乘。</li>
+<li>post - 是后乘，因为矩阵的乘法不满足交换律，因此先乘、后乘必须要严格区分。后乘相当于矩阵运算中的左乘。</li>
+</ul>
+<p>除平移变换(Translate)外，旋转变换(Rotate)、缩放变换(Scale)和错切变换(Skew)都可以围绕一个中心点来进行，如果不指定，在默认情况下是围绕(0, 0)来进行相应的变换的。</p>
+<p>下面我们来看看四种变换的具体情形。由于所有的图形都是有点组成，因此我们只需要考察一个点相关变换即可。</p>
+<h3 id="一、_平移变换">一、 平移变换</h3><hr>
+<p>假定有一个点的坐标是 ，将其移动到 ，再假定在x轴和y轴方向移动的大小分别为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709352RQ75.gif" alt="translate"></p>
+<p>如下图所示：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709520MmsS.gif" alt="translate_sample"></p>
+<p>不难知道：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709527kmK6.gif" alt="translate_result"></p>
+<p>如果用矩阵来表示的话，就可以写成：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709536Otg4.gif" alt="translate_tips"></p>
+<h3 id="二、_旋转变换">二、 旋转变换</h3><hr>
+<h4 id="2-1_围绕坐标原点旋转：">2.1    围绕坐标原点旋转：</h4><p>假定有一个点 ，相对坐标原点顺时针旋转后的情形，同时假定P点离坐标原点的距离为r，如下图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132170975189NC.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709797SBJW.gif" alt="translate_tips"></p>
+<p>如果用矩阵，就可以表示为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321709849ZLVc.gif" alt="translate_tips"></p>
+<h4 id="2-2_围绕某个点旋转">2.2    围绕某个点旋转</h4><p>如果是围绕某个点顺时针旋转，那么可以用矩阵表示为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217100380220.gif" alt="translate_tips"></p>
+<p>可以化为：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217100952Vqv.gif" alt="translate_tips"></p>
+<p>很显然，</p>
+<p><strong>1.</strong><br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710153kurQ.gif" alt="translate_tips"> 是将坐标原点移动到点后， 的新坐标。</p>
+<p><strong>2.</strong>     </p>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321710301T9nf.gif" alt="translate_tips"> 是将上一步变换后的，围绕新的坐标原点顺时针旋转 。</p>
+<p><strong>3.</strong><br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710398Z3Je.gif" alt="translate_tips"> 经过上一步旋转变换后，再将坐标原点移回到原来的坐标原点。</p>
+<p>所以，围绕某一点进行旋转变换，可以分成3个步骤，即首先将坐标原点移至该点，然后围绕新的坐标原点进行旋转变换，再然后将坐标原点移回到原先的坐标原点。</p>
+<h3 id="三、_缩放变换">三、 缩放变换</h3><hr>
+<p>理论上而言，一个点是不存在什么缩放变换的，但考虑到所有图像都是由点组成，因此，如果图像在x轴和y轴方向分别放大k1和k2倍的话，那么图像中的所有点的x坐标和y坐标均会分别放大k1和k2倍，即</p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710517pb9W.gif" alt="translate_tips"></p>
+<p>缩放变换比较好理解，就不多说了。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710615riwr.gif" alt="translate_tips"></p>
+<h3 id="四、_错切变换">四、 错切变换</h3><hr>
+<p>错切变换(skew)在数学上又称为Shear mapping(可译为“剪切变换”)或者Transvection(缩并)，它是一种比较特殊的线性变换。错切变换的效果就是让所有点的x坐标(或者y坐标)保持不变，而对应的y坐标(或者x坐标)则按比例发生平移，且平移的大小和该点到x轴(或y轴)的垂直距离成正比。错切变换，属于等面积变换，即一个形状在错切变换的前后，其面积是相等的。</p>
+<p>比如下图，各点的y坐标保持不变，但其x坐标则按比例发生了平移。这种情况将水平错切。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710625smm5.gif" alt="translate_tips"></p>
+<p>下图各点的x坐标保持不变，但其y坐标则按比例发生了平移。这种情况叫垂直错切。<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710790633H.gif" alt="translate_tips"></p>
+<p>假定一个点经过错切变换后得到，对于水平错切而言，应该有如下关系：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321710798y5L6.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217108084B3T.gif" alt="translate_tips"></p>
+<p>扩展到3 x 3的矩阵就是下面这样的形式：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217108954sms.gif" alt="translate_tips"></p>
+<p>同理，对于垂直错切，可以有：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217109074Nv2.gif" alt="translate_tips"></p>
+<p>在数学上严格的错切变换就是上面这样的。在Android中除了有上面说到的情况外，还可以同时进行水平、垂直错切，那么形式上就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711018S31a.gif" alt="translate_tips"></p>
+<h3 id="五、_对称变换">五、 对称变换</h3><hr>
+<p>除了上面讲到的4中基本变换外，事实上，我们还可以利用Matrix，进行对称变换。所谓对称变换，就是经过变化后的图像和原图像是关于某个对称轴是对称的。比如，某点 经过对称变换后得到，</p>
+<p>如果对称轴是x轴，难么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711026LZ03.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711090fhGd.gif" alt="translate_tips"></p>
+<p>如果对称轴是y轴，那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711099Xhak.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711217oHNz.gif" alt="translate_tips"></p>
+<p>如果对称轴是y = x，如图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711240gEeT.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711240gEeT.gif" alt="translate_tips"></p>
+<p>很容易可以解得：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711261E6xG.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132171128473YK.gif" alt="translate_tips"></p>
+<p>同样的道理，如果对称轴是y = -x，那么用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711292jO01.gif" alt="translate_tips"></p>
+<p>特殊地，如果对称轴是y = kx，如下图：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217113506Hb8.gif" alt="translate_tips"></p>
+<p>那么，<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711502QQ7A.gif" alt="translate_tips"></p>
+<p>很容易可解得：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711521GZlt.gif" alt="translate_tips"></p>
+<p>用矩阵表示就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711541FJA1.gif" alt="translate_tips"></p>
+<p>当k = 0时，即y = 0，也就是对称轴为x轴的情况；当k趋于无穷大时，即x = 0，也就是对称轴为y轴的情况；当k =1时，即y = x，也就是对称轴为y = x的情况；当k = -1时，即y = -x，也就是对称轴为y = -x的情况。不难验证，这和我们前面说到的4中具体情况是相吻合的。</p>
+<p>如果对称轴是y = kx + b这样的情况，只需要在上面的基础上增加两次平移变换即可，即先将坐标原点移动到(0, b)，然后做上面的关于y = kx的对称变换，再然后将坐标原点移回到原来的坐标原点即可。用矩阵表示大致是这样的：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711616I9SJ.gif" alt="translate_tips"></p>
+<p>需要特别注意：在实际编程中，我们知道屏幕的y坐标的正向和数学中y坐标的正向刚好是相反的，所以在数学上y = x和屏幕上的y = -x才是真正的同一个东西，反之亦然。也就是说，如果要使图片在屏幕上看起来像按照数学意义上y = x对称，那么需使用这种转换：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321711292jO01.gif" alt="translate_tips"></p>
+<p>要使图片在屏幕上看起来像按照数学意义上y = -x对称，那么需使用这种转换：<br><img src="http://hi.csdn.net/attachment/201111/19/0_132171128473YK.gif" alt="translate_tips"></p>
+<p>关于对称轴为y = kx 或y = kx + b的情况，同样需要考虑这方面的问题。</p>
+<h2 id="第二部分_代码验证">第二部分 代码验证</h2><p>在第一部分中讲到的各种图像变换的验证代码如下，一共列出了10种情况。如果要验证其中的某一种情况，只需将相应的代码反注释即可。试验中用到的图片：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217122673338.gif" alt=""><br>其尺寸为162 x 251。</p>
+<p>每种变换的结果，请见代码之后的说明。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pat.testtransformmatrix;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> android.app.Activity;  </span><br><span class="line"><span class="keyword">import</span> android.content.Context;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Bitmap;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.BitmapFactory;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Canvas;  </span><br><span class="line"><span class="keyword">import</span> android.graphics.Matrix;  </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;  </span><br><span class="line"><span class="keyword">import</span> android.util.Log;  </span><br><span class="line"><span class="keyword">import</span> android.view.MotionEvent;  </span><br><span class="line"><span class="keyword">import</span> android.view.View;  </span><br><span class="line"><span class="keyword">import</span> android.view.Window;  </span><br><span class="line"><span class="keyword">import</span> android.view.WindowManager;  </span><br><span class="line"><span class="keyword">import</span> android.view.View.OnTouchListener;  </span><br><span class="line"><span class="keyword">import</span> android.widget.ImageView;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestTransformMatrixActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span>  </span><br><span class="line"><span class="keyword">implements</span>  </span><br><span class="line"><span class="title">OnTouchListener</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> TransformMatrixView view;  </span><br><span class="line">    <span class="annotation">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">        requestWindowFeature(Window.FEATURE_NO_TITLE);  </span><br><span class="line">        <span class="keyword">this</span>.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);  </span><br><span class="line">  </span><br><span class="line">        view = <span class="keyword">new</span> TransformMatrixView(<span class="keyword">this</span>);  </span><br><span class="line">        view.setScaleType(ImageView.ScaleType.MATRIX);  </span><br><span class="line">        view.setOnTouchListener(<span class="keyword">this</span>);  </span><br><span class="line">          </span><br><span class="line">        setContentView(view);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TransformMatrixView</span> <span class="keyword">extends</span> <span class="title">ImageView</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> Bitmap bitmap;  </span><br><span class="line">        <span class="keyword">private</span> Matrix matrix;  </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TransformMatrixView</span><span class="params">(Context context)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">super</span>(context);  </span><br><span class="line">            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sophie);  </span><br><span class="line">            matrix = <span class="keyword">new</span> Matrix();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="annotation">@Override</span>  </span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="comment">// 画出原图像  </span></span><br><span class="line">            canvas.drawBitmap(bitmap, <span class="number">0</span>, <span class="number">0</span>, <span class="keyword">null</span>);  </span><br><span class="line">            <span class="comment">// 画出变换后的图像  </span></span><br><span class="line">            canvas.drawBitmap(bitmap, matrix, <span class="keyword">null</span>);  </span><br><span class="line">            <span class="keyword">super</span>.onDraw(canvas);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="annotation">@Override</span>  </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImageMatrix</span><span class="params">(Matrix matrix)</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">this</span>.matrix.set(matrix);  </span><br><span class="line">            <span class="keyword">super</span>.setImageMatrix(matrix);  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        <span class="function"><span class="keyword">public</span> Bitmap <span class="title">getImageBitmap</span><span class="params">()</span>  </span><br><span class="line">        </span>&#123;  </span><br><span class="line">            <span class="keyword">return</span> bitmap;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent e)</span>  </span><br><span class="line">    </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span>(e.getAction() == MotionEvent.ACTION_UP)  </span><br><span class="line">        &#123;  </span><br><span class="line">            Matrix matrix = <span class="keyword">new</span> Matrix();  </span><br><span class="line">            <span class="comment">// 输出图像的宽度和高度(162 x 251)  </span></span><br><span class="line">            Log.e(<span class="string">"TestTransformMatrixActivity"</span>, <span class="string">"image size: width x height = "</span> +  view.getImageBitmap().getWidth() + <span class="string">" x "</span> + view.getImageBitmap().getHeight());  </span><br><span class="line">            <span class="comment">// 1. 平移  </span></span><br><span class="line">            matrix.postTranslate(view.getImageBitmap().getWidth(), view.getImageBitmap().getHeight());  </span><br><span class="line">            <span class="comment">// 在x方向平移view.getImageBitmap().getWidth()，在y轴方向view.getImageBitmap().getHeight()  </span></span><br><span class="line">            view.setImageMatrix(matrix);  </span><br><span class="line">              </span><br><span class="line">            <span class="comment">// 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line">            <span class="keyword">float</span>[] matrixValues = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">9</span>];  </span><br><span class="line">            matrix.getValues(matrixValues);  </span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)  </span><br><span class="line">            &#123;  </span><br><span class="line">                String temp = <span class="keyword">new</span> String();  </span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; ++j)  </span><br><span class="line">                &#123;  </span><br><span class="line">                    temp += matrixValues[<span class="number">3</span> * i + j ] + <span class="string">"\t"</span>;  </span><br><span class="line">                &#125;  </span><br><span class="line">                Log.e(<span class="string">"TestTransformMatrixActivity"</span>, temp);  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">  </span><br><span class="line"><span class="comment">//          // 2. 旋转(围绕图像的中心点)  </span></span><br><span class="line"><span class="comment">//          matrix.setRotate(45f, view.getImageBitmap().getWidth() / 2f, view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth() * 1.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 3. 旋转(围绕坐标原点) + 平移(效果同2)  </span></span><br><span class="line"><span class="comment">//          matrix.setRotate(45f);  </span></span><br><span class="line"><span class="comment">//          matrix.preTranslate(-1f * view.getImageBitmap().getWidth() / 2f, -1f * view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate((float)view.getImageBitmap().getWidth() / 2f, (float)view.getImageBitmap().getHeight() / 2f);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate((float)view.getImageBitmap().getWidth() * 1.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 4. 缩放  </span></span><br><span class="line"><span class="comment">//          matrix.setScale(2f, 2f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠  </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth(), view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">  </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 5. 错切 - 水平  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0.5f, 0f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠           </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth(), 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 6. 错切 - 垂直  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0f, 0.5f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          7. 错切 - 水平 + 垂直  </span></span><br><span class="line"><span class="comment">//          matrix.setSkew(0.5f, 0.5f);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 8. 对称 (水平对称)  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠   </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(0f, view.getImageBitmap().getHeight() * 2f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;             </span></span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 9. 对称 - 垂直  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;-1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;     </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠   </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getWidth() * 2f, 0f);  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">  </span><br><span class="line">              </span><br><span class="line"><span class="comment">//          // 10. 对称(对称轴为直线y = x)  </span></span><br><span class="line"><span class="comment">//          float matrix_values[] = &#123;0f, -1f, 0f, -1f, 0f, 0f, 0f, 0f, 1f&#125;;  </span></span><br><span class="line"><span class="comment">//          matrix.setValues(matrix_values);  </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          float[] matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 做下面的平移变换，纯粹是为了让变换后的图像和原图像不重叠               </span></span><br><span class="line"><span class="comment">//          matrix.postTranslate(view.getImageBitmap().getHeight() + view.getImageBitmap().getWidth(),   </span></span><br><span class="line"><span class="comment">//                  view.getImageBitmap().getHeight() + view.getImageBitmap().getWidth());  </span></span><br><span class="line"><span class="comment">//          view.setImageMatrix(matrix);  </span></span><br><span class="line"><span class="comment">//            </span></span><br><span class="line"><span class="comment">//          // 下面的代码是为了查看matrix中的元素  </span></span><br><span class="line"><span class="comment">//          matrixValues = new float[9];  </span></span><br><span class="line"><span class="comment">//          matrix.getValues(matrixValues);  </span></span><br><span class="line"><span class="comment">//          for(int i = 0; i &lt; 3; ++i)  </span></span><br><span class="line"><span class="comment">//          &#123;  </span></span><br><span class="line"><span class="comment">//              String temp = new String();  </span></span><br><span class="line"><span class="comment">//              for(int j = 0; j &lt; 3; ++j)  </span></span><br><span class="line"><span class="comment">//              &#123;  </span></span><br><span class="line"><span class="comment">//                  temp += matrixValues[3 * i + j ] + "\t";  </span></span><br><span class="line"><span class="comment">//              &#125;  </span></span><br><span class="line"><span class="comment">//              Log.e("TestTransformMatrixActivity", temp);  </span></span><br><span class="line"><span class="comment">//          &#125;  </span></span><br><span class="line">              </span><br><span class="line">            view.invalidate();  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面给出上述代码中，各种变换的具体结果及其对应的相关变换矩阵</p>
+<h3 id="1-平移">1.平移</h3><p><img src="http://hi.csdn.net/attachment/201111/19/0_1321712352qQRu.gif" alt=""></p>
+<p>输出的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217123565Wwz.gif" alt=""></p>
+<p>请对照第一部分中的“一、平移变换”所讲的情形，考察上述矩阵的正确性。</p>
+<h3 id="2-旋转(围绕图像的中心点)">2.旋转(围绕图像的中心点)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_132171250556xp.gif" alt=""></p>
+<p>输出的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712512Yj1i.gif" alt=""></p>
+<p>它实际上是<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>,view.getImageBitmap().getWidth() / <span class="number">2f</span>, view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate(view.getImageBitmap().getWidth()* <span class="number">1.5f</span>, <span class="number">0f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这两条语句综合作用的结果。根据第一部分中“二、旋转变换”里面关于围绕某点旋转的公式，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>,view.getImageBitmap().getWidth() / <span class="number">2f</span>, view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>所产生的转换矩阵就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712644I54M.gif" alt=""></p>
+<p>而<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">matrix.postTranslate(view.getImageBitmap().getWidth()* 1.5f, 0f);</span><br><span class="line">``` </span><br><span class="line">的意思就是在上述矩阵的左边再乘以下面的矩阵：</span><br><span class="line">![][204]</span><br><span class="line"></span><br><span class="line">关于post是左乘这一点，我们在前面的理论部分曾经提及过，后面我们还会专门讨论这个问题。</span><br><span class="line">所以它实际上就是：</span><br><span class="line">![][205]</span><br><span class="line"></span><br><span class="line">出去计算上的精度误差，我们可以看到我们计算出来的结果，和程序直接输出的结果是一致的。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">### 3.旋转(围绕坐标原点旋转，在加上两次平移，效果同2)</span><br><span class="line">---</span><br><span class="line">![][301]</span><br><span class="line"></span><br><span class="line">根据第一部分中“二、旋转变换”里面关于围绕某点旋转的解释，不难知道：</span><br><span class="line">``` java</span><br><span class="line">matrix.setRotate(45f,view.getImageBitmap().getWidth() / 2f, view.getImageBitmap().getHeight() / 2f);</span><br></pre></td></tr></table></figure></p>
+<p>等价于<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>);</span><br><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> *view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>matrix.setRotate(45f)</code>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712949GjN7.gif" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> * view.getImageBitmap().getHeight()/ <span class="number">2f</span>)</span><br></pre></td></tr></table></figure>
+<p>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712956BNj8.gif" alt=""></p>
+<p>由于是preTranslate，是先乘，也就是右乘，即它应该出现在<code>matrix.setRotate(45f)</code>所对应矩阵的右侧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>)</span><br></pre></td></tr></table></figure>
+<p>对应的矩阵是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321712963iNO1.gif" alt=""></p>
+<p>这次由于是postTranslate，是后乘，也就是左乘，即它应该出现在<code>matrix.setRotate(45f)</code>所对应矩阵的左侧。</p>
+<p>所以综合起来，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">matrix.setRotate(<span class="number">45f</span>);</span><br><span class="line">matrix.preTranslate(-<span class="number">1f</span>* view.getImageBitmap().getWidth() / <span class="number">2f</span>, -<span class="number">1f</span> *view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br><span class="line">matrix.postTranslate((<span class="keyword">float</span>)view.getImageBitmap().getWidth()/ <span class="number">2f</span>, (<span class="keyword">float</span>)view.getImageBitmap().getHeight() / <span class="number">2f</span>);</span><br></pre></td></tr></table></figure></p>
+<p>对应的矩阵就是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713055HOOt.gif" alt=""></p>
+<p>这和下面这个矩阵(围绕图像中心顺时针旋转45度)其实是一样的：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713100VIOz.gif" alt=""></p>
+<p>因此，此处变换后的图像和2中变换后的图像时一样的。<br>![][307]</p>
+<h3 id="4-缩放变换">4.缩放变换</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713185yKS7.gif" alt=""></p>
+<p>程序所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217131941R24.gif" alt=""></p>
+<p>其中第二个矩阵，其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713201VRxs.gif" alt=""></p>
+<p>大家可以对照第一部分中的“三、缩放变换”和“一、平移变换”说法，自行验证结果。</p>
+<h3 id="5-错切变换(水平错切)">5.错切变换(水平错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_132171330766G0.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713314Dk69.gif" alt=""></p>
+<p>其中，第二个矩阵其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713322PeML.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="6-错切变换(垂直错切)">6.错切变换(垂直错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713502Akg2.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713509Hz7p.gif" alt=""></p>
+<p>其中，第二个矩阵其实是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321713516TUvx.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="7-错切变换(水平+垂直错切)">7.错切变换(水平+垂直错切)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321713655Qsij.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217136824kKR.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217136931vl4.gif" alt=""></p>
+<p>大家可以对照第一部分中的“四、错切变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="8-对称变换(水平对称)">8.对称变换(水平对称)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_13217141232rJI.gif" alt=""></p>
+<p>代码所输出的两个各矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714133P0ha.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217141417Bi3.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="9-对称变换(垂直对称)">9.对称变换(垂直对称)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_1321714261NN3V.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714269Kqs4.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714276ai2f.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="10-对称变换(对称轴为直线y_=_x)">10.对称变换(对称轴为直线y = x)</h3><hr>
+<p><img src="http://hi.csdn.net/attachment/201111/19/0_13217144950030.gif" alt=""></p>
+<p>代码所输出的两个矩阵分别是：<br><img src="http://hi.csdn.net/attachment/201111/19/0_13217145038hN8.gif" alt=""></p>
+<p>其中，后者是下面两个矩阵相乘的结果：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714509sBN4.gif" alt=""></p>
+<p>大家可以对照第一部分中的“五、对称变换”和“一、平移变换”的相关说法，自行验证结果。</p>
+<h3 id="11-关于先乘和后乘的问题">11.关于先乘和后乘的问题</h3><hr>
+<p>由于矩阵的乘法运算不满足交换律，我们在前面曾经多次提及先乘、后乘的问题，即先乘就是矩阵运算中右乘，后乘就是矩阵运算中的左乘。其实先乘、后乘的概念是针对变换操作的时间先后而言的，左乘、右乘是针对矩阵运算的左右位置而言的。以第一部分“二、旋转变换”中围绕某点旋转的情况为例：<br><img src="http://hi.csdn.net/attachment/201111/19/0_1321714645396z.gif" alt=""></p>
+<p>越靠近原图像中像素的矩阵，越先乘，越远离原图像中像素的矩阵，越后乘。事实上，图像处理时，矩阵的运算是从右边往左边方向进行运算的。这就形成了越在右边的矩阵(右乘)，越先运算(先乘)，反之亦然。</p>
+<p>当然，在实际中，如果首先指定了一个matrix，比如我们先setRotate()，即指定了上面变换矩阵中，中间的那个矩阵，那么后续的矩阵到底是pre还是post运算，都是相对这个中间矩阵而言的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>原作者： Qiengo<br>源地址： <a href="http://www.cnblogs.com/qiengo/archive/2012/06/30/2570874.html" target="_blank" rel="external">点]]>
+    </summary>
+    
+      <category term="Matrix" scheme="http://xiaofeng.site/tags/Matrix/"/>
+    
+      <category term="Android" scheme="http://xiaofeng.site/categories/Android/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Android Material Design入门]]></title>
@@ -407,11 +1007,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[Android Studio Tips (二)]]></title>
-    <link href="http://xiaofeng.site/2015/12/23/Android-Studio-Tips-%E4%BA%8C/undefined/"/>
-    <id>http://xiaofeng.site/2015/12/23/Android-Studio-Tips-二/undefined/</id>
+    <title><![CDATA[Android Studio Tips of the Day(2)]]></title>
+    <link href="http://xiaofeng.site/2015/12/23/Android-Studio-Tips-of-the-Day(2)/undefined/"/>
+    <id>http://xiaofeng.site/2015/12/23/Android-Studio-Tips-of-the-Day(2)/undefined/</id>
     <published>2015-12-23T06:22:27.000Z</published>
-    <updated>2015-12-30T07:49:16.244Z</updated>
+    <updated>2016-03-01T03:25:55.330Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>原作者：Philippe Breault<br>原文地址：<a href="http://www.developerphil.com/android-studio-tips-of-the-day-roundup-2/" target="_blank" rel="external">http://www.developerphil.com/…the-day-roundup-2/</a></p>
 </blockquote>
@@ -607,6 +1207,8 @@
     
       <category term="Android Studio" scheme="http://xiaofeng.site/tags/Android-Studio/"/>
     
+      <category term="tips of the Day" scheme="http://xiaofeng.site/tags/tips-of-the-Day/"/>
+    
       <category term="快捷键" scheme="http://xiaofeng.site/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
     
       <category term="Android Studio" scheme="http://xiaofeng.site/categories/Android-Studio/"/>
@@ -614,11 +1216,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[Android Studio Tips (一)]]></title>
-    <link href="http://xiaofeng.site/2015/12/22/Android-Studio-Tips-%E4%B8%80/undefined/"/>
-    <id>http://xiaofeng.site/2015/12/22/Android-Studio-Tips-一/undefined/</id>
+    <title><![CDATA[Android Studio Tips of the Day(1)]]></title>
+    <link href="http://xiaofeng.site/2015/12/22/Android-Studio-Tips-of-the-Day(1)/undefined/"/>
+    <id>http://xiaofeng.site/2015/12/22/Android-Studio-Tips-of-the-Day(1)/undefined/</id>
     <published>2015-12-22T09:19:51.000Z</published>
-    <updated>2015-12-30T07:48:26.710Z</updated>
+    <updated>2016-03-01T03:26:11.329Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>原作者：Philippe Breault<br>原文地址：<a href="http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/" target="_blank" rel="external">http://www.developerphil.com/…day-roundup-1/</a></p>
 </blockquote>
@@ -842,6 +1444,8 @@
     </summary>
     
       <category term="Android Studio" scheme="http://xiaofeng.site/tags/Android-Studio/"/>
+    
+      <category term="tips of the Day" scheme="http://xiaofeng.site/tags/tips-of-the-Day/"/>
     
       <category term="快捷键" scheme="http://xiaofeng.site/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
     
@@ -1214,11 +1818,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[Java中静态绑定和动态绑定]]></title>
-    <link href="http://xiaofeng.site/2015/11/24/Java%E4%B8%AD%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A/undefined/"/>
-    <id>http://xiaofeng.site/2015/11/24/Java中静态绑定和动态绑定/undefined/</id>
+    <title><![CDATA[Java之静态绑定和动态绑定]]></title>
+    <link href="http://xiaofeng.site/2015/11/24/Java%E4%B9%8B%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E5%92%8C%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A/undefined/"/>
+    <id>http://xiaofeng.site/2015/11/24/Java之静态绑定和动态绑定/undefined/</id>
     <published>2015-11-24T02:07:20.000Z</published>
-    <updated>2015-11-24T10:35:54.095Z</updated>
+    <updated>2016-02-19T07:26:51.395Z</updated>
     <content type="html"><![CDATA[<h4 id="概念">概念</h4><ul>
 <li>程序绑定：绑定指的是一个方法的调用与方法所在的类(方法主体)关联起来，Java中绑定分为绑定分为 <strong>静态绑定</strong>和<strong>动态绑定</strong></li>
 <li>动态绑定：在面向过程中又称为<strong>后期绑定</strong>，在程序<strong>运行期</strong>进行了绑定，根据实际情况有选择的进行绑定</li>
@@ -1324,11 +1928,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[关于Android Log小记]]></title>
-    <link href="http://xiaofeng.site/2015/11/18/%E5%85%B3%E4%BA%8EAndroid-Log%E5%B0%8F%E8%AE%B0/undefined/"/>
-    <id>http://xiaofeng.site/2015/11/18/关于Android-Log小记/undefined/</id>
+    <title><![CDATA[Android之Log混淆]]></title>
+    <link href="http://xiaofeng.site/2015/11/18/Android%E4%B9%8BLog%E6%B7%B7%E6%B7%86/undefined/"/>
+    <id>http://xiaofeng.site/2015/11/18/Android之Log混淆/undefined/</id>
     <published>2015-11-18T08:38:59.000Z</published>
-    <updated>2015-11-19T02:03:24.660Z</updated>
+    <updated>2016-02-19T07:25:38.238Z</updated>
     <content type="html"><![CDATA[<p>作为Android开发工程师，项目开发的过程中，日志的打印是必不可少的，通过这些日志我们可以很好分析程序运行的状况与正确性，可以使用的日志输出有哪种形式呢？发布release版本应该怎么屏蔽掉这些日志呢？<br><a id="more"></a></p>
 <h3 id="日志形式">日志形式</h3><ul>
 <li><strong>Java形式</strong><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.<span class="keyword">out</span>.println(<span class="string">" log for test "</span>);</span><br></pre></td></tr></table></figure>
@@ -1401,36 +2005,6 @@
       <category term="Android Studio" scheme="http://xiaofeng.site/tags/Android-Studio/"/>
     
       <category term="Terminal" scheme="http://xiaofeng.site/tags/Terminal/"/>
-    
-      <category term="Android" scheme="http://xiaofeng.site/categories/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[简单实现ButterKnife中的injectView的方案]]></title>
-    <link href="http://xiaofeng.site/2015/11/13/%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0ButterKnife%E4%B8%AD%E7%9A%84injectView%E7%9A%84%E6%96%B9%E6%A1%88/undefined/"/>
-    <id>http://xiaofeng.site/2015/11/13/简单实现ButterKnife中的injectView的方案/undefined/</id>
-    <published>2015-11-13T01:37:14.000Z</published>
-    <updated>2015-11-18T07:03:27.728Z</updated>
-    <content type="html"><![CDATA[<p>首先说这里面用的知识点，注解、反射。</p>
-<p>Android中findViewById(int resId)接受一个int的id参数，即通过资源id就可以找到对应的View。通过注解(annotation),我们可以资源id声明在对应的field上面，通过Java的反射，遍历每个field，找到对应的id，就可以初始化这个field（即view）。</p>
-<a id="more"></a>
-<h2 id="1、注解声明">1、注解声明</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 表示用在字段上</span><br><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">// 表示在生命周期是运行时</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">//注解类，实现findViewById功能</span><br><span class="line">public @interface FindView &#123;</span><br><span class="line">	int findViewByResId() default <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="2、反射注入">2、反射注入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Class&lt;?&gt; clazz = this.getClass();</span><br><span class="line">// 获得Activity中声明的字段</span><br><span class="line">Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">//遍历所有字段</span><br><span class="line"><span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">// 是否有我们自定义的注解类标志</span><br><span class="line">  <span class="keyword">if</span> (field.isAnnotationPresent(FindView.class)) &#123;</span><br><span class="line">  	   FindView inject = field.getAnnotation(FindView.class);</span><br><span class="line">      int mId = inject.findViewByResId();</span><br><span class="line">      View view;</span><br><span class="line">      <span class="keyword">if</span> (mId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          view = findViewById(mId);</span><br><span class="line">          field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">          field.set(this, view);// 给我们要找的字段设置值</span><br><span class="line">      &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3、测试">3、测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@FindView(findViewByResId = R.id.id_text)</span><br><span class="line">private TextView mText;</span><br></pre></td></tr></table></figure>
-<p>总结：<br>是不是很简单，这算是一个入门，接下来大家可以好好利用这种原理，实现不一样的功能了。<br>个人觉得这个不是特别好，每次都要通过反射来初始化，大家还是结合自己的开发环境酌情使用。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>首先说这里面用的知识点，注解、反射。</p>
-<p>Android中findViewById(int resId)接受一个int的id参数，即通过资源id就可以找到对应的View。通过注解(annotation),我们可以资源id声明在对应的field上面，通过Java的反射，遍历每个field，找到对应的id，就可以初始化这个field（即view）。</p>]]>
-    
-    </summary>
-    
-      <category term="ButterKnife" scheme="http://xiaofeng.site/tags/ButterKnife/"/>
-    
-      <category term="InjectView" scheme="http://xiaofeng.site/tags/InjectView/"/>
-    
-      <category term="annotation" scheme="http://xiaofeng.site/tags/annotation/"/>
     
       <category term="Android" scheme="http://xiaofeng.site/categories/Android/"/>
     
