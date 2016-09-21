@@ -16,6 +16,7 @@ HashTable和HashMa的区别是面试题中经常被问到的问题。还有其�
 这是它们最重要的不同点。HashMap不是同步的，并且不是是线程安全的。相反，HashTable是线程安全和同步的。
 
 什么时候使用HashMap？答案是如果你的应用不需要任何多线程任务，就是说HashMap适用于没有线程的应用。HashTable应该在多线程应用中使用。
+<!-- more -->
 
 扩展：
 Java提供了ConcurrentHashMap，它是HashTable的替代品，比HashTable的扩展性更好。HashMap可以通过下面的语句进行同步：

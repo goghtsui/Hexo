@@ -8,8 +8,6 @@ categories: [Android]
 
 Android中findViewById(int resId)接受一个int的id参数，即通过资源id就可以找到对应的View。通过注解(annotation),我们可以资源id声明在对应的field上面，通过Java的反射，遍历每个field，找到对应的id，就可以初始化这个field（即view）。
 
-<!--more-->
-
 ## 1、注解声明
 ``` java
 
@@ -23,6 +21,7 @@ public @interface FindView {
 }
 
 ```
+<!--more-->
 
 ## 2、反射注入
 ``` java

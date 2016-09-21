@@ -4,7 +4,6 @@ categories: [Android]
 tags: [Log]
 ---
 作为Android开发工程师，项目开发的过程中，日志的打印是必不可少的，通过这些日志我们可以很好分析程序运行的状况与正确性，可以使用的日志输出有哪种形式呢？发布release版本应该怎么屏蔽掉这些日志呢？
-<!-- more -->
 
 ### 日志形式
 - **Java形式**
@@ -31,6 +30,7 @@ private static final String TAG = LogUtils.class.getSimpleName();
 Log.d(TAG, " log for test ");
 ```
 经过混淆的类，类名会改变为a、b这种形式，相应的TAG值也会改变，同样无法定位相关代码域。
+<!-- more -->
 
 ### TAG定义推荐
 那么哪种形式的TAG定义相对来说比较规范呢？给大家推荐一种相对规范的定义形式：

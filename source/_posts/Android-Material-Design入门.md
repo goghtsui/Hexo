@@ -11,7 +11,6 @@ tags: [Material Design]
 
 在这个教程中，我们将学习Material Design开发基础的步骤，比如编写自定义主题、使用RecyclerView实现导航抽屉。
 
-
 通过下面的链接获取更多的关于Material Design的知识：
 
 >[Material Design Specifications](http://www.google.com/design/spec/material-design/introduction.html#)
@@ -21,6 +20,8 @@ tags: [Material Design]
 
 >源码下载：[点击获取](http://download.androidhive.info/download?code=WPSkdrdZprHT0KLCZS3ClafgXBikGqM4r7FnNYdsdUTmlAkK6%2F2mkT0heOlNOq4U82rzqbod%2F14yU2uk5TWY4Zp%2FAYx6oiD7SKI%2FEgtUapzQUqkqcWEXX1bmw%3D%3DvqARiMEKqkqsXGbVf3vVUoffTqQcD2qfqZo)
 >视频演示地址：[Yutube](https://youtu.be/jDXX_wDvarM)
+<!-- more -->
+
 
 ## 1. 下载Android Studio
 

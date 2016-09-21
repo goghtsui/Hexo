@@ -30,6 +30,7 @@ Snackbar snackbar = Snackbar
 snackbar.show();
 ```
 ![example](http://www.androidhive.info/wp-content/uploads/2015/09/android-snackbar-example.png)
+<!-- more -->
 
 
 #### 2.Snackbar与动作回调

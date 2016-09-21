@@ -26,6 +26,7 @@ Android Studio 提供了不同的按键对应关系(在快捷键和动作之间�
 - 可以通过 _Escape_ 取消高亮
 
 ![ctrlshiftf7](http://www.developerphil.com/assets/01-highlight.gif)
+<!-- more -->
 
 #### 2.在方法和内部类之间移动
 

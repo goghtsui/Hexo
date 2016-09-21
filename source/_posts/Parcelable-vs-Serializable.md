@@ -30,6 +30,7 @@ public class SerializableDeveloper implements Serializable
 Serializable的美在于你只需要将类和他的子类实现Serializable接口，这是一个标记接口，意味着没有方法来实现，Java可以简单有效的实现它的序列化。
 
 这个方法的问题是，他使用到了反射，并且它是一个缓慢的进程。正是这个机制，创造了大量的临时对象，并且造成大量的gc。
+<!-- more -->
 
 #### **Parcelable**, 速度之王
 

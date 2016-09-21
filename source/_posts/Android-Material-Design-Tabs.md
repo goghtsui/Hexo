@@ -29,6 +29,8 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
 }
 ```
+<!-- more -->
+
 
 **3**.打开位于**res => values**下的**colors.xml**，并且添加以下颜色值：
 

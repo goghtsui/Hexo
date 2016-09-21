@@ -16,7 +16,6 @@ Android浮动标签在android设计支持库有介绍，在EditText上显示一�
 源码下载地址：[http://download.androidhive.info/...dfyJJ0xyaJTvXugo0HTV0LBnG9w](http://download.androidhive.info/download?code=J5TnQr8DLL52kPlAxeIk9Z3H21tlAtFcD74lW1gWZwyM6aEBkra49p%2FxpDDZz5ZfPieGEGoAopEZQOxyUGNRKuXhmSxB%2FW6QlimXGOiu8gWcH1pqtQKfO5AfA%3D%3DV7JclQNddfyJJ0xyaJTvXugo0HTV0LBnG9w)
 视频演示地址：[yutube-display](https://youtu.be/TYhpFJ58g6Y)
 
-
 ### TextInputLayout
 
 在Material Design支持库中一个新的元素，叫作[TextInputLayout][1]，用于在EditText上展示悬浮标签。为了显示悬浮标签，EditText被TextInputLayout
@@ -40,6 +39,7 @@ android:layout_height="wrap_content">
 ```
 
 ![android-design-support-library-floating-labels](http://www.androidhive.info/wp-content/uploads/2015/09/android-design-support-library-floating-labels.png)
+<!-- more -->
 
 
 ### 简单的表单验证示例

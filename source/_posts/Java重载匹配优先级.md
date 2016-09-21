@@ -58,6 +58,8 @@ public class OverloadPriority {
 	
 }
 ```
+<!-- more -->
+
 可以看到我们这里重载了print(xxx)这个方法，不同类型的参数，那么在调用上会出现什么问题呢？这里就以char类型为例来分析一下。
 
 main方法执行print('g')，输出结果毫无疑问就是：

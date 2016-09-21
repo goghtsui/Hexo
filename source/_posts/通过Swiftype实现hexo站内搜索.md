@@ -14,6 +14,8 @@ hexo默认提供的是google的搜索，但是国内很蛋疼，无意中了解�
 ![CREATEANENGINE](http://7xod2d.com1.z0.glb.clouddn.com/swiftype/swiftfirst.jpg)
 2、继续点击创建：
 ![create](http://7xod2d.com1.z0.glb.clouddn.com/swiftype/swiftcreate.png)
+<!-- more -->
+
 3、填写自己的域名，不带最后的反斜杠，点击VERIFY，4个验证项，通过之后会让你输入引擎的名字：
 ![enginename](http://7xod2d.com1.z0.glb.clouddn.com/swiftype/switysetname.png)
 4、接下来是让你配置sitemap（关于sitemap自行搜索教程），地址统一是：域名/sitemap.xml
