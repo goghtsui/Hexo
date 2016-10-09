@@ -1,0 +1,97 @@
+<div id="footer" >
+	<% if(theme.author_img_enable == true){ %>
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	<% } %>
+	<% if(theme.author.intro_line1&&theme.author.intro_line2){ %>
+	<section class="info">
+		<p> <%= theme.author.intro_line1 %> <br/>
+			<%= theme.author.intro_line2 %></p>
+	</section>
+	 <% } %>
+	<div class="social-font clearfix">
+		<% if(theme.author.weibo){ %>
+		<a href="http://weibo.com/<%= theme.author.weibo %>" target="_blank" title="weibo"></a>
+		<% } %>
+		<% if(theme.author.twitter){ %>
+		<a href="https://twitter.com/<%=theme.author.twitter %>" target="_blank" title="twitter"></a>
+		<% } %>
+		<% if(theme.author.github){ %>
+		<a href="https://github.com/<%=theme.author.github %>" target="_blank" title="github"></a>
+		<% } %>
+		<% if(theme.author.facebook){ %>
+		<a href="https://www.facebook.com/<%=theme.author.facebook %>" target="_blank" title="facebook"></a>
+		<% } %>
+		<% if(theme.author.linkedin){ %>
+        <a href="https://www.linkedin.com/<%=theme.author.linkedin %>" target="_blank" title="linkedin"></a>
+        <% } %>
+	</div>
+	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-70168817-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript">
+		(function(w,d,t,u,n,s,e){
+			w['SwiftypeObject']=n;w[n]=w[n]||function(){
+			(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+			e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+		})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+		_st('install','w7ca3xWstLkz2UvAeyAJ','2.0.0');
+	</script>
+
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<script language=JavaScript>
+		today=new Date();
+		function initArray(){
+			this.length=initArray.arguments.length
+			for(var i=0;i<this.length;i++)
+				this[i+1]=initArray.arguments[i] 
+			}
+		
+		var d=new initArray("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+		
+		document.write("<marquee scrollAmount=2 width=screen.width-200 onmouseover=stop() onmouseout=start()><font color=#ffffff style='font-size:14pt;font-family: 黑体'> ",
+			today.getFullYear(),"年",
+			today.getMonth()+1,"月",
+			today.getDate(),"日   ",
+			d[today.getDay()+1],
+			"</font></marquee>" ); 
+	</script>
+	
+	<div class="copyright">
+		Powered by 
+		<a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © <%= new Date().getFullYear() %> 
+		<% if (config.author) { %>
+			<a href="<%= config.url %>" target="_blank" title="<%= config.author %>"><%= config.author %></a>
+		<% } else {%>
+			<a href="<%= config.url %>" title="<%= config.title %>"><%= config.title %></a>
+		<% } %>
+		
+		<span id="busuanzi_container_site_pv" >
+			<font color="#ffffff" size="4" >| Wow，i got </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_pv"></span> </font >
+			<font color="#ffffff" size="4" > hits! </font >
+		</span>
+		
+		<span style="width:100px;"></span>
+		<span id="busuanzi_container_site_uv">
+			<font color="#ffffff" size="4" >  You are the </font >
+			<font color="#ff6600" size="4" > <span id="busuanzi_value_site_uv"></span>th </font >
+			<font color="#ffffff" size="4" > visitor！ </font >
+		</span>
+	</div>
+	
+</div>

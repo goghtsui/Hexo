@@ -1,0 +1,52 @@
+@import 'nib'
+global-reset()
+@import '_base/variable'
+@import '_base/font'
+@import '_base/public'
+@import '_partial/header'
+@import '_partial/index'
+@import '_partial/article'
+@import '_partial/helper'
+@import '_partial/aside'
+@import '_partial/footer'
+if highlight
+  @import '_base/code'
+if duoshuo
+  @import '_partial/duoshuo'
+if fancybox
+  @import '_partial/gallery'
+
+  .search
+  padding 1em 0 0 2.5em
+  input
+    line-height line-height+0.2
+    border 1px solid color-white
+    color color-white
+    background transparent
+    padding-left 4em
+    @media tablet
+      width 4em
+      transition .5s width
+      &:focus
+        width 8em
+  label
+    display none
+
+form input.st-search-input_my {
+	font-size: 12px;
+	padding: 4px 9px 4px 27px;
+	height: 20px;
+	width: 190px;
+	color: #666;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	-ms-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+	-webkit-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+	-moz-box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+	box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.17);
+	outline: none;
+	background: #fcfcfc url(/img/search.png) no-repeat 7px 7px;
+}
