@@ -7,7 +7,6 @@
 #    text: About       菜单显示的文字，如果省略即默认与图标一致，首字母会转大写
 #    url: /about       链接，绝对或相对路径，必须。
 #    target: _blank    是否跳出，省略则在当前页面打开
-
 menu:
   home:
     text: 主页
@@ -26,10 +25,6 @@ menu:
     text: About
     url: /about
 
-#link:
-#text: 测试
-#url: /404
-
 rss: /atom.xml
 
 #你的头像url
@@ -45,12 +40,21 @@ color: '#3F51B5'
 tags:
   title: 标签
 
-excerpt_link: more
+# 文章截断
+excerpt_render: false
+excerpt_length: 200
+excerpt_link: 阅读全文...
 mathjax: false
 archive_yearly: true
 
 #是否开启分享
 share: true
+
+#是否开启打赏，关闭 reward: false
+reward:
+  title: 谢谢大爷~
+  wechat: /img/wechat.png     #微信，关闭设为 false
+  alipay: /img/alipay.png     #支付宝，关闭设为 false
 
 #是否开启搜索
 search: true
@@ -59,7 +63,7 @@ search: true
 hideMenu: true
 
 #是否开启toc
-#toc: true
+#toc: false
 toc:
   list_number: true  # 是否显示数字排序
 
@@ -72,6 +76,7 @@ favicon: /favicon.ico
 
 # less
 less:
+  compress: true
   paths:
     - source/css/style.less
 

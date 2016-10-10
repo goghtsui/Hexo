@@ -25,8 +25,7 @@
 }
 
 .post-meta {
-    margin: 1.2em 0 2em;
-    height: 14px;
+    margin: 16px 0;
     line-height: 14px;
     font-size: 13px;
     overflow: hidden;
@@ -48,7 +47,7 @@
         width: 1px;
         background: @borderColor;
     }
-    
+
     li {
         display: inline;
     }
@@ -64,7 +63,7 @@
     overflow: hidden;
     margin: 0 5px 0 0;
     padding: 0;
-    
+
     li {
         display: inline-block;
         margin: 0 8px 5px 0;
@@ -91,20 +90,17 @@
 }
 
 .post-more {
-    float: right;
-    display: block;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 1.2em;
-    color: #fff !important;
-    background: @primaryColor;
-    .boxShadow();
+    display: inline-block;
+    padding: 0 6px;
+    font-weight: 500;
+    color: @primaryColor!important;
+    border: none!important;
+    border-radius: 3px;
 
     &:hover,
     &:active {
-        background: @primaryColor;
+        background:lighten(@lightPrimaryColor, 10%);
     }
-
 }
 
 #page-nav {
@@ -113,7 +109,6 @@
 
     .inner {
         display: inline-block;
-        white-space: nowrap;
     }
 
     a,
