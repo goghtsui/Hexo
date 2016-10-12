@@ -21,9 +21,10 @@ menu:
   weibo:
     url: http://www.weibo.com/xiaofeng117
     target: _blank
-  link:
-    text: About
-    url: /about
+	
+#link: // 自定义链接
+#text: About
+#url: /about
 
 rss: /atom.xml
 
