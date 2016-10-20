@@ -93,6 +93,11 @@ Plugins:
 #sitemap
 sitemap:
   path: sitemap.xml
+  
+#baidusitemap
+baidusitemap:
+  path: baidusitemap.xml
+
 
 #Feed Atom
 feed:
