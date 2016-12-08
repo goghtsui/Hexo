@@ -9,9 +9,9 @@ tags: [Retrofit]
 Retrofit库已经发布很久了，已经是主流的Http client库之一，使用简单、高效，但是随着版本的升级，也出现了一些疑难杂症，下面就详细给大家讲解一下，给大家填填坑：
 
 >官方描述：Type-safe HTTP client for Android and Java by Square.
-官网地址：[Square-Retrofit](http://square.github.io/retrofit/).
-Github地址：[Github-Retrofit](https://github.com/square/retrofit/).
-<!-- more -->
+>官网地址：[Square-Retrofit](http://square.github.io/retrofit/).
+>Github地址：[Github-Retrofit](https://github.com/square/retrofit/).
+><!-- more -->
 
 到现在已经经历了1.x到2.x的过程，这自然是一个越来越完善、越强大的趋势，但是Square还是坑了我们一把。在1.x到2.x的迭代过程中，并不是平滑升级的，而是发生了很大的转变，为了防止更多的人遇到这些坑，我就把我了解的一些不同给大家说一所，当然，哪里描述有问题，表述不正确的随时回复。
 
@@ -475,7 +475,15 @@ observable
 
 ### 默认没有日志记录
 
-这个内容相对独立，就单独拿出来说吧，请查看另外一篇文章。
+这个内容相对独立，就单独拿出来说吧，请查看另外两篇文章：
+
+- Retrofit 1 日志使用
+
+  > [Retrofit-1-之-log得请求与响应](http://xiaofeng.site/2016/12/08/Retrofit-1-%E4%B9%8B-log%E5%BE%97%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/undefined/)
+
+- Retrofit 2 日志使用
+
+  > [Retrofit-2-之-log得请求与响应](http://xiaofeng.site/2016/12/08/Retrofit-2-%E4%B9%8B-log%E5%BE%97%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/undefined/)
 
 ## 总结
 
