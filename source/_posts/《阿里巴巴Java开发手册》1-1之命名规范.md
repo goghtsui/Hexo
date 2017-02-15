@@ -1,4 +1,4 @@
-title: 《阿里巴巴Java开发手册》之命名规范
+title: 《阿里巴巴Java开发手册》1-1之命名规范
 date: 2017-02-10 15:31:56
 categories: [Java]
 tags: [阿里巴巴Java开发手册, 命名规约]
@@ -128,3 +128,5 @@ tags: [阿里巴巴Java开发手册, 命名规约]
    2 ） 数据传输对象： xxxDTO ， xxx 为业务领域相关的名称。
    3 ） 展示对象： xxxVO ， xxx 一般为网页名称。
    4 ） POJO 是 DO / DTO / BO / VO 的统称，禁止命名成 xxxPOJO 。
+
+**以上内容均整理自《阿里巴巴Java开发手册》**
