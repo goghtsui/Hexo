@@ -70,8 +70,6 @@ tags: [阿里巴巴Java开发手册, 命名规约]
 
 7. 【强制】中括号是数组类型的一部分，数组定义如下： String[] args;
    反例：请勿使用 String args[] 的方式来定义。
-   阿里巴巴 Java 开发手册
-   ——禁止用于商业用途，违者必究—— 2 / 34
 
 8. 【强制】 POJO 类中布尔类型的变量，都不要加 is ，否则部分框架解析会引起序列化错误。
    反例：定义为基本数据类型 boolean isSuccess； 的属性，它的方法也是 isSuccess() ， RPC
@@ -89,17 +87,41 @@ tags: [阿里巴巴Java开发手册, 命名规约]
 
 11. 【推荐】如果使用到了设计模式，建议在类名中体现出具体模式。
    说明：将设计模式体现在名字中，有利于阅读者快速理解架构设计思想。
-   正例： public class OrderFactory;
+   正例： 
+
+   ```java
+   public class OrderFactory;
    public class LoginProxy;
    public class ResourceObserver;
+   ```
 
 12. 【推荐】接口类中的方法和属性不要加任何修饰符号 （public 也不要加 ） ，保持代码的简洁
    性，并加上有效的 Javadoc 注释。尽量不要在接口里定义变量，如果一定要定义变量，肯定是
    与接口方法相关，并且是整个应用的基础常量。
-   正例：接口方法签名： void f();
-   接口基础常量表示： String COMPANY = " alibaba " ;
-   反例：接口方法定义： public abstract void f();
-   说明： JDK 8 中接口允许有默认实现，那么这个 default 方法，是对所有实现类都有价值的默
+   正例：
+
+   - 接口方法签名：
+
+   ```java
+   void f();
+   ```
+
+   - 接口基础常量表示：
+
+   ```java
+   String COMPANY = " alibaba " ;
+   ```
+
+   反例：
+
+   - 接口方法定义： 
+
+     ```java
+     public abstract void f();
+     ```
+
+   - 说明： JDK 8 中接口允许有默认实现，那么这个 default 方法，是对所有实现类都有价值的默
+
    认实现。
 
 13. 接口和实现类的命名有两套规则：
@@ -112,8 +134,6 @@ tags: [阿里巴巴Java开发手册, 命名规约]
 14. 【参考】枚举类名建议带上 Enum 后缀，枚举成员名称需要全大写，单词间用下划线隔开。
    说明：枚举其实就是特殊的常量类，且构造方法被默认强制是私有。
    正例：枚举名字： DealStatusEnum， 成员名称： SUCCESS /  UNKOWN _ REASON 。
-   阿里巴巴 Java 开发手册
-   ——禁止用于商业用途，违者必究—— 3 / 34
 
 15. 【参考】各层命名规约：
    A) Service / DAO 层方法命名规约
