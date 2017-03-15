@@ -53,3 +53,7 @@ tags: [阿里巴巴Java开发手册, 应用分层]
    - VO（View Object） ：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

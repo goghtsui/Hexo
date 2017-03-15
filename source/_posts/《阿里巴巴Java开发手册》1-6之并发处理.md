@@ -107,3 +107,7 @@ tags: [阿里巴巴Java开发手册, 并发处理]
     要是这个线程内定义的 ) 都可以操控这个变量。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

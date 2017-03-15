@@ -47,3 +47,7 @@ tags: [阿里巴巴Java开发手册, 二方库规约]
    方便查到。除非用户主动升级版本，否则公共二方库的行为不应该发生变化。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

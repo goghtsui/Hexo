@@ -109,11 +109,11 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    说明： ArrayList 尽量使用 ArrayList(int initialCapacity) 初始化。
 
 10. 【推荐】使用 entrySet 遍历 Map 类集合 KV ，而不是 keySet 方式进行遍历。
-    说明： keySet 其实是遍历了 2 次，一次是转为 Iterator 对象，另一次是从 hashMap 中取出
-    key 所对应的 value 。而 entrySet 只是遍历了一次就把 key 和 value 都放到了 entry 中，效
-    率更高。如果是 JDK 8，使用 Map . foreach 方法。
-    正例： values() 返回的是 V 值集合，是一个 list 集合对象 ；keySet() 返回的是 K 值集合，是
-    一个 Set 集合对象 ；entrySet() 返回的是 K - V 值组合集合。
+   说明： keySet 其实是遍历了 2 次，一次是转为 Iterator 对象，另一次是从 hashMap 中取出
+   key 所对应的 value 。而 entrySet 只是遍历了一次就把 key 和 value 都放到了 entry 中，效
+   率更高。如果是 JDK 8，使用 Map . foreach 方法。
+   正例： values() 返回的是 V 值集合，是一个 list 集合对象 ；keySet() 返回的是 K 值集合，是
+   一个 Set 集合对象 ；entrySet() 返回的是 K - V 值组合集合。
 
 11. 【推荐】高度注意 Map 类集合 K / V 能不能存储 null 值的情况，如下表格：
 
@@ -136,3 +136,7 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    contains 方法进行遍历、对比、去重操作。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

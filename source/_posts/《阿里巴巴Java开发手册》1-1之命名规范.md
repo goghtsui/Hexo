@@ -89,64 +89,68 @@ tags: [阿里巴巴Java开发手册, 命名规约]
    说明：将设计模式体现在名字中，有利于阅读者快速理解架构设计思想。
    正例： 
 
-   ```java
+```java
    public class OrderFactory;
    public class LoginProxy;
    public class ResourceObserver;
-   ```
+```
 
 12. 【推荐】接口类中的方法和属性不要加任何修饰符号 （public 也不要加 ） ，保持代码的简洁
-   性，并加上有效的 Javadoc 注释。尽量不要在接口里定义变量，如果一定要定义变量，肯定是
-   与接口方法相关，并且是整个应用的基础常量。
-   正例：
+    性，并加上有效的 Javadoc 注释。尽量不要在接口里定义变量，如果一定要定义变量，肯定是
+    与接口方法相关，并且是整个应用的基础常量。
+    正例：
 
-   - 接口方法签名：
+- 接口方法签名：
 
-   ```java
+```java
    void f();
-   ```
+```
 
-   - 接口基础常量表示：
+- 接口基础常量表示：
 
-   ```java
+```java
    String COMPANY = " alibaba " ;
-   ```
+```
 
    反例：
 
-   - 接口方法定义： 
+-    接口方法定义： 
 
      ```java
      public abstract void f();
      ```
 
-   - 说明： JDK 8 中接口允许有默认实现，那么这个 default 方法，是对所有实现类都有价值的默
+-    说明： JDK 8 中接口允许有默认实现，那么这个 default 方法，是对所有实现类都有价值的默
 
-   认实现。
+      认实现。
 
 13. 接口和实现类的命名有两套规则：
-   1 ） 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部
-   的实现类用 Impl 的后缀与接口区别。
-   正例： CacheServiceImpl 实现 CacheService 接口。
-   2 ）  【推荐】 如果是形容能力的接口名称，取对应的形容词做接口名 （ 通常是– able 的形式 ） 。
-   正例： AbstractTranslator 实现  Translatable 。
+    1 ） 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部
+    的实现类用 Impl 的后缀与接口区别。
+    正例： CacheServiceImpl 实现 CacheService 接口。
+    2 ）  【推荐】 如果是形容能力的接口名称，取对应的形容词做接口名 （ 通常是– able 的形式 ） 。
+    正例： AbstractTranslator 实现  Translatable 。
 
 14. 【参考】枚举类名建议带上 Enum 后缀，枚举成员名称需要全大写，单词间用下划线隔开。
-   说明：枚举其实就是特殊的常量类，且构造方法被默认强制是私有。
-   正例：枚举名字： DealStatusEnum， 成员名称： SUCCESS /  UNKOWN _ REASON 。
+    说明：枚举其实就是特殊的常量类，且构造方法被默认强制是私有。
+    正例：枚举名字： DealStatusEnum， 成员名称： SUCCESS /  UNKOWN _ REASON 。
 
 15. 【参考】各层命名规约：
-   A) Service / DAO 层方法命名规约
-   1 ） 获取单个对象的方法用 get 做前缀。
-   2 ） 获取多个对象的方法用 list 做前缀。
-   3 ） 获取统计值的方法用 count 做前缀。
-   4 ） 插入的方法用 save（ 推荐 ） 或 insert 做前缀。
-   5 ） 删除的方法用 remove（ 推荐 ） 或 delete 做前缀。
-   6 ） 修改的方法用 update 做前缀。
-   B) 领域模型命名规约
-   1 ） 数据对象： xxxDO ， xxx 即为数据表名。
-   2 ） 数据传输对象： xxxDTO ， xxx 为业务领域相关的名称。
-   3 ） 展示对象： xxxVO ， xxx 一般为网页名称。
-   4 ） POJO 是 DO / DTO / BO / VO 的统称，禁止命名成 xxxPOJO 。
+    A) Service / DAO 层方法命名规约
+    1 ） 获取单个对象的方法用 get 做前缀。
+    2 ） 获取多个对象的方法用 list 做前缀。
+    3 ） 获取统计值的方法用 count 做前缀。
+    4 ） 插入的方法用 save（ 推荐 ） 或 insert 做前缀。
+    5 ） 删除的方法用 remove（ 推荐 ） 或 delete 做前缀。
+    6 ） 修改的方法用 update 做前缀。
+    B) 领域模型命名规约
+    1 ） 数据对象： xxxDO ， xxx 即为数据表名。
+    2 ） 数据传输对象： xxxDTO ， xxx 为业务领域相关的名称。
+    3 ） 展示对象： xxxVO ， xxx 一般为网页名称。
+    4 ） POJO 是 DO / DTO / BO / VO 的统称，禁止命名成 xxxPOJO 。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

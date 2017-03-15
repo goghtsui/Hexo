@@ -27,3 +27,7 @@ tags: [阿里巴巴Java开发手册]
    等要坚决从程序中清理出去，避免造成过多垃圾。 
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)

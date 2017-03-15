@@ -42,3 +42,7 @@ tags: [阿里巴巴Java开发手册, SQL规约]
    说明： TRUNCATE TABLE 在功能上与不带  WHERE 子句的  DELETE 语句相同。
 
 **以上内容均整理自《阿里巴巴Java开发手册》**
+
+## 下载
+
+> 提供Gitbook在线阅读和pdf下载：[查看福利](https://www.gitbook.com/book/goghtsui/-java/details)
