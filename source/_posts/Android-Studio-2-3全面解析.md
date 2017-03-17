@@ -6,7 +6,7 @@ tags: [Android Studio 2.3]
 
 ## 序
 
-![img](http://mmbiz.qpic.cn/mmbiz_jpg/rFWVXwibLGtym7MN6ZrPapaQNneCcToStScYTdJuGicmk0ic8VAnooxehsToV0Tib94uMicen0T5riahAOXNCpia2OayA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://developer.android.google.cn/images/develop/hero_image_studio5.png)
 
 Android Studio 2.3 已提供下载了，下面让我们来看看官方的描述：
 
@@ -23,7 +23,7 @@ Android Studio 2.3 中最令人激动的是质量上的改进，但此版本也�
 
 ### 1. Instant Run 改进和 UI 变化
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToSt8cy7ohYvKKv2nKSxiaZeROLuIyHtNSUHqArrpXzictTPUeeoK6y5YWZA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/XShGH9kwwEqJTnNBk1OR.png)
 
 新增的 Instant Run 按钮操作
 
@@ -45,19 +45,19 @@ Android Studio 2.3 加入了稳定版 ConstraintLayout 在此版本的 Const
 
 [了解详情](developer.android.google.cn/training/constraint-layout/index.html#constrain-chain)
 
-![img](http://mmbiz.qpic.cn/mmbiz_gif/rFWVXwibLGtym7MN6ZrPapaQNneCcToStasKNrBbApeVqO1Amvf7jMmKib1FSMmEl1LzePGicbS7hwleddslhfklQ/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/dFGfmPLZFugn3WOT2U-h.gif)
 
 约束布局链接
 
 ConstraintLayout 还支持比例，如果您想在包含布局展开和收缩时保持小部件的纵横比，比例会很有帮助。详细了解有关比例的信息。此外，ConstraintLayout 中的链接和比例还能支持通过 ConstraintSet API 进行编程创建。
 
-![img](http://mmbiz.qpic.cn/mmbiz_gif/rFWVXwibLGtym7MN6ZrPapaQNneCcToStJlLdS80k1X6HGAdBe1oeu1NNicwIZ6zDGIZfjWZ6icamta57tDt9lqvg/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/6x8flT1GTfNTzpyBJYJy.gif)
 
 约束布局比例
 
 ### 2. 布局编辑器选项板
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToSt3BSvcOpy7WVZFBkBmj8tJI2se3YLDGsjxMHNpsvXThjBDO2uq6AdFA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/Cc9xclVGBUH2bO5-wHnG.jpg)
 
 布局编辑器小部件选项板  
 
@@ -67,7 +67,7 @@ ConstraintLayout 还支持比例，如果您想在包含布局展开和收缩�
 
 ### 3. 布局收藏夹
 
-![img](http://mmbiz.qpic.cn/mmbiz_gif/rFWVXwibLGtym7MN6ZrPapaQNneCcToStp3Yan8YDibWgJMD1NbOSINEBI2HNrySTwPhW5H20O70ib9oZG3GS2hYg/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/7TzNkL1gYCL8tFvsIHA5.gif)
 
 布局编辑器 Properties 面板上的 Favorites Attributes    
 
@@ -77,7 +77,7 @@ ConstraintLayout 还支持比例，如果您想在包含布局展开和收缩�
 
 ### 4. WebP 支持
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToStGNpr6xmardzucODa64cEDQddEic5X56SkGhNzCYCS1c7Cvv50ylu7Ew/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/nqggzN4Boly6qjWMdvUf.jpg)
 
 WebP 图像转换向导
 
@@ -89,7 +89,7 @@ Android Studio 2.3 新增了一个向导，可通过它将 PNG 转换成无损 W
 
 ### 5. 材料图标向导更新
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToStlTqGobHH5oll1HnzibvMePlLUyUf0yVOCxUg1GDiajqwYlvwQv2g5QQw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/UOvdSihvuRJjRJTkkNCj.jpg)
 
 矢量资源向导    
 
@@ -101,7 +101,7 @@ Android Studio 2.3 新增了一个向导，可通过它将 PNG 转换成无损 W
 
 ### 1. Lint 基线
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToStrbaRt9mvK6MqQPD3GY8iak9Ygl6CxNjFr4BM8561hnRicyicGgMZHOj7A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/Pa-WCqOO9ydG4huXIByM.jpg)
 
 Lint 基线支持
 
@@ -111,7 +111,7 @@ Lint 基线支持
 
 ### 2. 应用链接助手
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToStW7TTZEyrcfLjiaMiapvWEia4J7UbfIxia0SIsNaUcqMWxDI0YbtNJc0U0g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/lyqZFbrup2YQSFdBBEAk.jpg)
 
 应用链接助手    
 
@@ -121,7 +121,7 @@ Android Studio 现在进一步简化了应用内 Android 应用链接支持。�
 
 ### 3. 模板更新
 
-![img](http://mmbiz.qpic.cn/mmbiz_png/rFWVXwibLGtym7MN6ZrPapaQNneCcToStiaic8dta7Pg0TPZxib1icgnvPOyw8rZ6nKtibrBYZWrhh2VAO38a3rBuugA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/cJz4HsqwR4EfVhxJFAyG.jpg)
 
 新增的项目向导模板    
 
@@ -137,7 +137,7 @@ Android Studio 2.3 加入了 IntelliJ 2016.2 版，其中包含更新版检查�
 
 ### 1. Android Emulator 复制与粘贴
 
-![img](http://mmbiz.qpic.cn/mmbiz_gif/rFWVXwibLGtym7MN6ZrPapaQNneCcToStxkcwDnHx4SSjeaicubn2tjCH2I43XjKnUAicp9iabU9agNdwkMsJ6JbXg/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![img](https://dn-sdkcnssl.qbox.me/editor/FNljRl5nEY6Wt6FFfQXq.gif)
 
 Android Emulator 中的复制与粘贴支持   
 
