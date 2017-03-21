@@ -19,9 +19,9 @@ menu:
 #url: https://github.com/goghtsui
 #target: _blank
 
-#weibo:
-#url: http://www.weibo.com/xiaofeng117
-#target: _blank
+  weibo:
+    url: http://www.weibo.com/xiaofeng117
+    target: _blank
 	
 #link: // 自定义链接
 #text: About
