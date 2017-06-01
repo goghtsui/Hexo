@@ -15,6 +15,7 @@ Retrofit 1集成了用于基本请求和响应调试的日志功能，但是在R
 ## Retrofit 2
 
 Retrofit 2完全依赖于OkHttp进行任何网络操作。OkHttp的开发者已经发布了一个日志拦截器集成的版本，你可以通过以下方式添加依赖：
+<!-- more -->
 
 ``` xml
 compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'  

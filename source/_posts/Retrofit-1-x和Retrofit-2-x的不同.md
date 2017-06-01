@@ -11,7 +11,8 @@ Retrofit库已经发布很久了，已经是主流的Http client库之一，使�
 >官方描述：Type-safe HTTP client for Android and Java by Square.
 >官网地址：[Square-Retrofit](http://square.github.io/retrofit/).
 >Github地址：[Github-Retrofit](https://github.com/square/retrofit/).
-><!-- more -->
+
+<!-- more -->
 
 到现在已经经历了1.x到2.x的过程，这自然是一个越来越完善、越强大的趋势，但是Square还是坑了我们一把。在1.x到2.x的迭代过程中，并不是平滑升级的，而是发生了很大的转变，为了防止更多的人遇到这些坑，我就把我了解的一些不同给大家说一所，当然，哪里描述有问题，表述不正确的随时回复。
 

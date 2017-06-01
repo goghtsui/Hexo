@@ -19,7 +19,7 @@ RestAdapter.Builder builder = new RestAdapter.Builder()
     .setClient(new OkClient(new OkHttpClient()));
 ```
 
-
+<!-- more -->
 
 如您所见，日志包括整个请求和响应正文。虽然这可能是有用的和必要的，但信息可能太多，反而影响了日志的可读性及应用的性能。
 

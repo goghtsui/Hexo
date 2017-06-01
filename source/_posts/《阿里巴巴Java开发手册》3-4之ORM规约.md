@@ -20,6 +20,8 @@ tags: [阿里巴巴Java开发手册, ORM规约]
 4. 【强制】 xml 配置中参数注意使用：#{}，# param # 不要使用${} 此种方式容易出现 SQL 注
    入。
 
+<!-- more -->
+
 5. 【强制】 iBATIS 自带的 queryForList(String statementName , int start , int size) 不推
    荐使用。
    说明：其实现方式是在数据库取到 statementName 对应的 SQL 语句的所有记录，再通过 subList

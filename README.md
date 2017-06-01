@@ -18,4 +18,4 @@
 
 - QQ: [发起会话](http://wpa.qq.com/msgrd?v=3&uin=531154487&site=qq&menu=yes)
 
-- Sina-Weibo: [Android微博客](http://weibo.com/xiaofeng117)
+- Sina-Weibo: [Android_tech](http://weibo.com/xiaofeng117)

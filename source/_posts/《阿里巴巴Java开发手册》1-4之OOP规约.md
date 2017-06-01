@@ -22,6 +22,8 @@ tags: [阿里巴巴Java开发手册, OOP规约]
    public User getUsers(String type, Integer... ids)
    ```
 
+<!-- more -->
+
 4. 【强制】对外暴露的接口签名，原则上不允许修改方法签名，避免对接口调用方产生影响。接
    口过时必须加`@ Deprecated` 注解，并清晰地说明采用的新接口或者新服务是什么。
 

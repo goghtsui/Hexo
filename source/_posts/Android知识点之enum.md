@@ -25,6 +25,8 @@ tags: [enum, Annotations, IntDef, StringDef]
 
 第一种没什么说的，下面就重点说一说第二种，就是通过注解的形式来代替，注解是由 support 包提供的功能，如果使用，需要添加 support 包到module。
 
+<!-- more -->
+
 直接上代码吧：
 
 ``` java

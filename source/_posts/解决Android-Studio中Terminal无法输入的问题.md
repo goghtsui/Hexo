@@ -13,6 +13,8 @@ Windows系统下Android Studio中的Terminal无法获取焦点，不能输入文
 C:\Windows\System32\目录下的cmd.exe。Win10下的cmd相对于早期版本的cmd做了一些改进，导
 致了这里描述的问题。
 
+<!-- more -->
+
 ### 解决方案：
 下面给出具体的操作步骤，有图有真相：
 

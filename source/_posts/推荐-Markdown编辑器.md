@@ -12,12 +12,13 @@ tags: [Markdown, 马克飞象, MarkdownPad, MarkdownX]
 官方地址：[点我跳转](http://tool.oschina.net/markdown/)
 这是oschina提供的一个在线的编辑器，可以实时预览、Html效果预览
 
+<!-- more -->
+
 ### Windows - MarkdownPad
 官网地址：[点我跳转](http://markdownpad.com/)
 官方描述：**MarkdownPad is a full-featured Markdown editor for Windows.**
 这是我现在使用的PC端的Markdown编辑器，这是一款标准的Markdown编辑器，即时预览，谁用谁知道，有图有真相。
 ![markdownpad](http://7xod2d.com1.z0.glb.clouddn.com/markdownpad.png)
-<!-- more -->
 
 ### Gmail - Markdown Here
 这是一个Chrome的插件，它是用来在编写gmail时提供markdown的语法支持，还可以即时预览，以后你就可以打造属于自己炫酷的邮件了

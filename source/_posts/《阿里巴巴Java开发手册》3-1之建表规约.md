@@ -17,6 +17,9 @@ tags: [阿里巴巴Java开发手册, 建表规约]
    说明：表名应该仅仅表示表里面的实体内容，不应该表示实体数量，对应于 DO 类名也是单数
    形式，符合表达习惯。
 4. 【强制】禁用保留字，如 desc 、 range 、 match 、 delayed 等，请参考 MySQL 官方保留字。
+
+<!-- more -->
+
 5. 【强制】唯一索引名为 uk _字段名 ； 普通索引名则为 idx _字段名。
    说明： uk _ 即  unique key；idx _ 即 index 的简称。
 6. 【强制】小数类型为 decimal ，禁止使用 float 和 double 。

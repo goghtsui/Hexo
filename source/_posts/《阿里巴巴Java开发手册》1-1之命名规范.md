@@ -29,6 +29,8 @@ tags: [阿里巴巴Java开发手册, 命名规约]
     alibaba /  taobao /  youku /  hangzhou 等国际通用的名称，可视同英文。
    ```
 
+<!-- more -->
+   
 3. 【强制】类名使用 UpperCamelCase 风格，必须遵从驼峰形式，但以下情形例外： （ 领域模型
    的相关命名 ）DO /  BO  /  DTO /  VO 等。
    正例： 

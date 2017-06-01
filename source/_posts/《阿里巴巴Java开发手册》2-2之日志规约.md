@@ -17,6 +17,8 @@ tags: [阿里巴巴Java开发手册, 日志规约]
 
 2. 【强制】日志文件推荐至少保存 15 天，因为有些异常具备以“周”为频次发生的特点。
 
+<!-- more -->
+
 3. 【强制】应用中的扩展日志 （ 如打点、临时监控、访问日志等 ） 命名方式：
    appName _ logType _ logName . log 。 logType :日志类型，推荐分类有
    stats / desc / monitor / visit 等 ；logName :日志描述。这种命名的好处：通过文件名就可知

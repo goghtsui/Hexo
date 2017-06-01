@@ -22,6 +22,7 @@ Android浮动标签在android设计支持库有介绍，在EditText上显示一�
 所包裹。你也可以给EditText设置一个错误的信息，通过使用`setErrorEnabled()`和`setError()`方法。
 
 TextInputLayout采用了EditText**android:hint**属性的值来作为悬浮标签显示。
+<!-- more -->
 
 ``` xml
 <android.support.design.widget.TextInputLayout
@@ -39,8 +40,6 @@ android:layout_height="wrap_content">
 ```
 
 ![android-design-support-library-floating-labels](http://www.androidhive.info/wp-content/uploads/2015/09/android-design-support-library-floating-labels.png)
-<!-- more -->
-
 
 ### 简单的表单验证示例
 

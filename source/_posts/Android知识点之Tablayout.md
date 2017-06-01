@@ -24,6 +24,8 @@ tablayout + viewpager + fragment的分页模式很常见了（这只是其中一
 
 最终的解决方案是，你可以为tablayout自定义一个style，设置textAllCaps属性为false：
 
+<!-- more -->
+
 ``` xml
  <style name="TabLayout.LowerCase" parent="Widget.Design.TabLayout">
       <item name="tabTextAppearance">@style/TabTextAppearance</item>

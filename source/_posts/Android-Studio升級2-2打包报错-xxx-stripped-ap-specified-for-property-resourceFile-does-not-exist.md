@@ -18,6 +18,8 @@ tags: [Android Studio2.2, xxx-stripped.ap_]
  \build\intermediates\res\xxx-stripped.ap_' specified for property 'resourceFile' does not exist
 ```
 
+<!-- more -->
+
 ## 解决方案
 
 Files -> Settings -> Build, Execution, Development -> Instant Run -- 把第一个勾选去掉

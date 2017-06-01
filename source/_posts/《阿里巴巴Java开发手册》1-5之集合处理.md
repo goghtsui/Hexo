@@ -22,6 +22,8 @@ tags: [阿里巴巴Java开发手册, 集合处理]
 3. 【强制】 在 subList 场景中，高度注意对原集合元素个数的修改，会导致子列表的遍历、增
    加、删除均产生 ConcurrentModificationException 异常。
 
+<!-- more -->
+
 4. 【强制】使用集合转数组的方法，必须使用集合的 toArray(T[] array) ，传入的是类型完全
    一样的数组，大小就是 list . size() 。
    反例：直接使用 toArray 无参方法存在问题，此方法返回值只能是 Object[] 类，若强转其它

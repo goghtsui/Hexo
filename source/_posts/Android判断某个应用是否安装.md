@@ -30,6 +30,8 @@ public static boolean isInstalled(Context context, String packageName) {
 }
 ```
 
+<!-- more -->
+
 ### ACTION检查
 
 - 方案一

@@ -17,6 +17,9 @@ tags: [阿里巴巴Java开发手册]
 4. 【强制】注意  Math . random() 这个方法返回是 double 类型，注意取值的范围 0≤ x <1 （ 能够
    取到零值，注意除零异常 ） ，如果想获取整数类型的随机数，不要将 x 放大 10 的若干倍然后
    取整，直接使用 Random 对象的 nextInt 或者 nextLong 方法。
+
+<!-- more -->
+
 5. 【强制】获取当前毫秒数 System . currentTimeMillis(); 而不是 new Date() . getTime();
    说明：如果想获取更加精确的纳秒级时间值，用 System . nanoTime() 。在 JDK 8 中，针对统计
    时间等场景，推荐使用 Instant 类。

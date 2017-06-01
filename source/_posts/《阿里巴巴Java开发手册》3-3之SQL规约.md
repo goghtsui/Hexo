@@ -15,6 +15,9 @@ tags: [阿里巴巴Java开发手册, SQL规约]
    NULL ，因此使用 sum() 时需注意 NPE 问题。
    正例：可以使用如下方式来避免 sum 的 NPE 问题： SELECT IF(ISNULL(SUM(g)) ,0, SUM(g))
    FROM table;
+   
+<!-- more -->
+
 4. 【强制】使用 ISNULL() 来判断是否为 NULL 值。注意： NULL 与任何值的直接比较都为 NULL。
    说明：
    1 ） NULL<>NULL 的返回结果是 NULL ，而不是 false 。
