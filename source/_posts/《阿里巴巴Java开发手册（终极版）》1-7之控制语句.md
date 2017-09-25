@@ -1,12 +1,13 @@
-title: 《阿里巴巴Java开发手册》1-7之控制语句
+title: 《阿里巴巴Java开发手册（终极版）》1-7之控制语句
 date: 2017-02-23 14:25:19
 categories: [Java]
-tags: [阿里巴巴Java开发手册, 控制语句]
+tags: [阿里巴巴Java开发手册（终极版）, 控制语句]
 ---
-
 
 编程规约 - 控制语句
 ---
+
+> 修改项：第 3 项
 
 1. 【强制】在一个 switch 块内，每个 case 要么通过 break / return 等来终止，要么注释说明程
    序将继续执行到哪一个 case 为止 ； 在一个 switch 块内，都必须包含一个 default 语句并且
@@ -25,9 +26,25 @@ tags: [阿里巴巴Java开发手册, 控制语句]
    ```
 
    // 接着写 else 的业务逻辑代码;
-   说明：如果非得使用 if()...else if()...else... 方式表达逻辑，【强制】请勿超过 3 层，
-   超过请使用状态设计模式。
-   正例：逻辑上超过 3 层的 if-else 代码可以使用卫语句，或者状态模式来实现。
+
+   说明：如果非得使用 if()...else if()...else... 方式表达逻辑，【强制】避免后续代码维
+   护困难，请勿超过 3 层。
+   正例：超过 3 层的 if-else 的逻辑判断代码可以使用卫语句、策略模式、状态模式等来实现，其中卫语句示例如下：
+
+   ``` java
+   public void today() {
+       if (isBusy()) {
+           System.out.println(“change time.”);
+           return;
+       }
+       if (isFree()) {
+           System.out.println(“go to travel.”); 
+           return;
+       }
+       System.out.println(“stay at home to learn Alibaba Java Coding Guidelines.”);
+       return;
+   }
+   ```
 
 <!-- more -->
 

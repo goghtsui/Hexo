@@ -1,18 +1,22 @@
 
 
-title: 《阿里巴巴Java开发手册》2-1之异常处理
+title: 《阿里巴巴Java开发手册（终极版）》2-1之异常处理
 date: 2017-02-27 11:08:57
 categories: [Java]
 
 
-tags: [阿里巴巴Java开发手册, 异常处理]
+tags: [阿里巴巴Java开发手册（终极版）, 异常处理]
 ---
 
 ## 异常日志 - 异常处理
 
-1. 【强制】不要捕获 Java 类库中定义的继承自 RuntimeException 的运行时异常类，如：
-   IndexOutOfBoundsException / NullPointerException，这类异常由程序员预检查
-   来规避，保证程序健壮性。
+> 第 1 项、第 9 项、 第 10 项、第 12 项
+
+1. 【强制】 Java 类库中定义的一类 RuntimeException 可以通过预先检查进行规避，而不应该
+   通过 catch 来处理，比如： IndexOutOfBoundsException ， NullPointerException 等等。
+   说明：无法通过预检查的异常除外，如在解析一个外部传来的字符串形式数字时，通过 catch
+   NumberFormatException 来实现。
+
    正例：
 
    ``` java
@@ -51,30 +55,33 @@ tags: [阿里巴巴Java开发手册, 异常处理]
 
 9. 【推荐】方法的返回值可以为 null ，不强制返回空集合，或者空对象等，必须添加注释充分
    说明什么情况下会返回 null 值。调用方需要进行 null 判断防止 NPE 问题。
-   说明：本规约明确防止 NPE 是调用者的责任。即使被调用方法返回空集合或者空对象，对调用
-   者来说，也并非高枕无忧，必须考虑到远程调用失败，运行时异常等场景返回 null 的情况。
+   说明：本手册明确防止 NPE 是调用者的责任。即使被调用方法返回空集合或者空对象，对调用
+   者来说，也并非高枕无忧，必须考虑到远程调用失败、序列化失败、运行时异常等场景返回
+   null 的情况。
 
 10. 【推荐】防止 NPE ，是程序员的基本修养，注意 NPE 产生的场景：
-   1 ） 返回类型为包装数据类型，有可能是 null ，返回 int 值时注意判空。
-   反例： public int f() {  return Integer 对象}; 如果为 null ，自动解箱抛 NPE 。
-   2 ） 数据库的查询结果可能为 null 。
-   3 ） 集合里的元素即使 isNotEmpty ，取出的数据元素也可能为 null 。
-   4 ） 远程调用返回对象，一律要求进行 NPE 判断。
-   5 ） 对于 Session 中获取的数据，建议 NPE 检查，避免空指针。
-   6 ） 级联调用 obj . getA() . getB() . getC()； 一连串调用，易产生 NPE 。
+  1 ） 返回类型为包装数据类型，有可能是 null ，返回 int 值时注意判空。
+  反例： public int f() {  return Integer 对象}; 如果为 null ，自动解箱抛 NPE 。
+  2 ） 数据库的查询结果可能为 null 。
+  3 ） 集合里的元素即使 isNotEmpty ，取出的数据元素也可能为 null 。
+  4 ） 远程调用返回对象，一律要求进行 NPE 判断。
+  5 ） 对于 Session 中获取的数据，建议 NPE 检查，避免空指针。
+  6 ） 级联调用 obj . getA() . getB() . getC()； 一连串调用，易产生 NPE 。
 
-11. 【推荐】在代码中使用“抛异常”还是“返回错误码”，对于公司外的 http / api 开放接口必须
+  正例：使用 JDK8 的 Optional 类来防止 NPE 问题。
+
+11. 【推荐】定义时区分 unchecked /  checked 异常，避免直接使用 RuntimeException 抛出，
+   更不允许抛出 Exception 或者 Throwable ，应使用有业务含义的自定义异常。推荐业界已定义
+   过的自定义异常，如： DAOException /  ServiceException 等。
+
+12. 【参考】在代码中使用“抛异常”还是“返回错误码”，对于公司外的 http / api 开放接口必须
    使用“错误码” ； 而应用内部推荐异常抛出 ； 跨应用间 RPC 调用优先考虑使用 Result 方式，封
-   装 isSuccess 、“错误码”、“错误简短信息”。
+   装 isSuccess()方法 、“错误码”、“错误简短信息”。
    说明：关于 RPC 方法返回方式使用 Result 方式的理由：
    1 ） 使用抛异常返回方式，调用方如果没有捕获到就会产生运行时错误。
    2 ） 如果不加栈信息，只是 new 自定义异常，加入自己的理解的 error message ，对于调用
    端解决问题的帮助不会太多。如果加了栈信息，在频繁调用出错的情况下，数据序列化和传输
    的性能损耗也是问题。
-
-12. 【推荐】定义时区分 unchecked /  checked 异常，避免直接使用 RuntimeException 抛出，
-   更不允许抛出 Exception 或者 Throwable ，应使用有业务含义的自定义异常。推荐业界已定义
-   过的自定义异常，如： DAOException /  ServiceException 等。
 
 13. 【参考】避免出现重复的代码 （Don ’ t Repeat Yourself） ，即 DRY 原则。
    说明：随意复制和粘贴代码，必然会导致代码的重复，在以后需要修改时，需要修改所有的副
@@ -85,7 +92,7 @@ tags: [阿里巴巴Java开发手册, 异常处理]
    private boolean checkParam(DTO dto){...}
 ```
 
-**以上内容均整理自《阿里巴巴Java开发手册》**
+**以上内容均整理自《阿里巴巴Java开发手册（终极版）》**
 
 ## 下载
 

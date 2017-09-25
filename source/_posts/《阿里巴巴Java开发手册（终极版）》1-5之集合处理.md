@@ -1,17 +1,19 @@
-title: 《阿里巴巴Java开发手册》1-5之集合处理
+title: 《阿里巴巴Java开发手册（终极版）》1-5之集合处理
 date: 2017-02-21 15:16:28
 categories: [Java]
-tags: [阿里巴巴Java开发手册, 集合处理]
+tags: [阿里巴巴Java开发手册（终极版）, 集合处理]
 ---
 
 ## 编程规约 - 集合处理
+
+> 修改项：第 9 项
 
 1. 【强制】关于 hashCode 和 equals 的处理，遵循如下规则：
    1） 只要重写 equals ，就必须重写 hashCode 。
    2） 因为 Set 存储的是不重复的对象，依据 hashCode 和 equals 进行判断，所以 Set 存储的
    对象必须重写这两个方法。
    3） 如果自定义对象做为 Map 的键，那么必须重写 hashCode 和 equals 。
-   正例： String 重写了 hashCode 和 equals 方法，所以我们可以非常愉快地使用 String 对象
+   说明： String 重写了 hashCode 和 equals 方法，所以我们可以非常愉快地使用 String 对象
    作为 key 来使用。
 
 2. 【强制】  ArrayList 的 subList 结果不可强转成 ArrayList ，否则会抛出 ClassCastException
@@ -26,8 +28,12 @@ tags: [阿里巴巴Java开发手册, 集合处理]
 
 4. 【强制】使用集合转数组的方法，必须使用集合的 toArray(T[] array) ，传入的是类型完全
    一样的数组，大小就是 list . size() 。
-   反例：直接使用 toArray 无参方法存在问题，此方法返回值只能是 Object[] 类，若强转其它
-   类型数组将出现 ClassCastException 错误。
+
+   说明：使用 toArray 带参方法，入参分配的数组空间不够大时， toArray 方法内部将重新分配
+   内存空间，并返回新数组地址 ； 如果数组元素大于实际所需，下标为 [ list . size() ] 的数组
+   元素将被置为 null ，其它数组元素保持原值，因此最好将方法入参数组大小定义与集合元素
+   个数一致。
+
    正例：
 
    ```java
@@ -38,10 +44,8 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    array = list.toArray(array);
    ```
 
-   说明：使用 toArray 带参方法，入参分配的数组空间不够大时， toArray 方法内部将重新分配
-   内存空间，并返回新数组地址 ； 如果数组元素大于实际所需，下标为 [ list . size() ] 的数组
-   元素将被置为 null ，其它数组元素保持原值，因此最好将方法入参数组大小定义与集合元素
-   个数一致。
+   反例：直接使用 toArray 无参方法存在问题，此方法返回值只能是 Object[] 类，若强转其它
+   类型数组将出现 ClassCastException 错误。
 
 5. 【强制】使用工具类 Arrays . asList() 把数组转换成集合时，不能使用其修改集合相关的方
    法，它的 add / remove / clear 方法会抛出 UnsupportedOperationException 异常。
@@ -56,10 +60,10 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    第一种情况： list.add("c");  运行时异常。
    第二种情况： str[0]= "gujin"; 那么 list.get(0) 也会随之修改。
 
-6. 【强制】泛型通配符<?  extends T >来接收返回的数据，此写法的泛型集合不能使用 add 方
-   法。
-   说明：苹果装箱后返回一个<?  extends Fruits >对象，此对象就不能往里加任何水果，包括
-   苹果。
+6.  【强制】泛型通配符<?  extends T >来接收返回的数据，此写法的泛型集合不能使用 add 方
+   法，而 <? super T> 不能使用 get 方法，做为接口调用赋值时易出错。
+   说明：扩展说一下 PECS(Producer Extends Consumer Super) 原则：第一、频繁往外读取内
+   容的，适合用<?  extends T >。第二、经常往里插入的，适合用 <? super T> 。
 
 7. 【强制】不要在 foreach 循环里进行元素的 remove / add 操作。 remove 元素请使用 Iterator
    方式，如果并发操作，需要对 Iterator 对象加锁。
@@ -76,8 +80,6 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    }
    ```
 
-   说明：以上代码的执行结果肯定会出乎大家的意料，那么试一下把“1”换成“2”，会是同样的
-   结果吗？
    正例：
 
    ```java
@@ -89,6 +91,8 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    	}
    }
    ```
+   说明：以上代码的执行结果肯定会出乎大家的意料，那么试一下把“1”换成“2”，会是同样的
+   结果吗？
 
 8. 【强制】 在 JDK 7 版本以上， Comparator 要满足自反性，传递性，对称性，不然 Arrays . sort ，
    Collections . sort 会报 IllegalArgumentException 异常。
@@ -107,15 +111,19 @@ tags: [阿里巴巴Java开发手册, 集合处理]
    }
    ```
 
-9. 【推荐】集合初始化时，尽量指定集合初始值大小。
-   说明： ArrayList 尽量使用 ArrayList(int initialCapacity) 初始化。
+9. 【推荐】集合初始化时，指定集合初始值大小。
+   说明： HashMap 使用 HashMap(int initialCapacity) 初始化，
+   正例： initialCapacity = (需要存储的元素个数 / 负载因子) + 1。注意负载因子（即loader
+   factor）默认为 0.75， 如果暂时无法确定初始值大小，请设置为 16（即默认值）。
+   反例： HashMap 需要放置 1024 个元素，由于没有设置容量初始大小，随着元素不断增加，容
+   量 7 次被迫扩大， resize 需要重建 hash 表，严重影响性能。
 
 10. 【推荐】使用 entrySet 遍历 Map 类集合 KV ，而不是 keySet 方式进行遍历。
-   说明： keySet 其实是遍历了 2 次，一次是转为 Iterator 对象，另一次是从 hashMap 中取出
-   key 所对应的 value 。而 entrySet 只是遍历了一次就把 key 和 value 都放到了 entry 中，效
-   率更高。如果是 JDK 8，使用 Map . foreach 方法。
-   正例： values() 返回的是 V 值集合，是一个 list 集合对象 ；keySet() 返回的是 K 值集合，是
-   一个 Set 集合对象 ；entrySet() 返回的是 K - V 值组合集合。
+  说明： keySet 其实是遍历了 2 次，一次是转为 Iterator 对象，另一次是从 hashMap 中取出
+  key 所对应的 value 。而 entrySet 只是遍历了一次就把 key 和 value 都放到了 entry 中，效
+  率更高。如果是 JDK 8，使用 Map . foreach 方法。
+  正例： values() 返回的是 V 值集合，是一个 list 集合对象 ；keySet() 返回的是 K 值集合，是
+  一个 Set 集合对象 ；entrySet() 返回的是 K - V 值组合集合。
 
 11. 【推荐】高度注意 Map 类集合 K / V 能不能存储 null 值的情况，如下表格：
 
