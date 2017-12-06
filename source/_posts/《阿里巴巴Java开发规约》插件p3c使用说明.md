@@ -7,7 +7,7 @@ tags: [阿里巴巴Java开发规约, p3c]
 
 ## 
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/Z6bicxIx5naLibqDOwrwSxhNPBaGVAwtsxFCsP3mtGSNnbJtzw6kiamibXoARJfxDnos4jaUvzTTSDjwXhR5jia0klQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](http://7xod2d.com1.z0.glb.clouddn.com//p3c/ali_java_olugin.jpg)
 
 ## 官方发布说明
 
@@ -15,11 +15,11 @@ tags: [阿里巴巴Java开发规约, p3c]
 
 **插件全球首发仪式，大牛云集**
 
-![img](https://mmbiz.qpic.cn/mmbiz_jpg/Z6bicxIx5naLibqDOwrwSxhNPBaGVAwtsx27oI1Tz93kzspoAY3murJrqCZd85eTKV45AhY3ZKfUbA1enk8PkWtw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1)
+![img](http://7xod2d.com1.z0.glb.clouddn.com//p3c/ali_plugin_second.jpg)
 
 阿里巴巴大牛天团倾力助阵：毕玄、玄难、索尼、叶渡，淘宝代码第一人多隆、代码规约作者孤尽携手规约项目组成员，以及业界规约生态代表等重磅大咖联合发布阿里巴巴代码规约插件！
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/H5HV2IYhp7zwn61iaHSicmFqmE8FS0z0pdDqTX7URKKUgv0n9hqO98NfcQLMJ2Lz0K6vJsw1sBVhNug41Vv3yhfw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](http://7xod2d.com1.z0.glb.clouddn.com//p3c/ali_plugin_third.jpg)
 
 平日低调的大神们，为了这次盛会都来了～
 
@@ -30,6 +30,8 @@ tags: [阿里巴巴Java开发规约, p3c]
 > https://github.com/alibaba/p3c 
 
  或者在Github直接搜索p3c
+
+<!-- more -->
 
 ## 插件安装
 
