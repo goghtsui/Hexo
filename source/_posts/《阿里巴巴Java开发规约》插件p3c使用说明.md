@@ -137,5 +137,5 @@ tags: [阿里巴巴Java开发规约, p3c]
 
 如果你还没有看过或者了解《阿里巴巴Java开发规约》你可以从这里开始：
 
-[阿里巴巴Java开发手册》之终极版](http://xiaofeng.site/2017/02/10/%E3%80%8A%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E3%80%8B%E4%B9%8B%E7%BB%88%E6%9E%81%E7%89%88%E4%BF%AE%E8%AE%A2%EF%BC%81/undefined/#more)
+[阿里巴巴Java开发手册》之终极版](https://goghtsui.github.io/2017/02/10/%E3%80%8A%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E3%80%8B%E4%B9%8B%E7%BB%88%E6%9E%81%E7%89%88%E4%BF%AE%E8%AE%A2%EF%BC%81/undefined/#more)
 

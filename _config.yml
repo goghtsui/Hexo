@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Xiaofeng's Blog | Beyond Compare
+title: Shawn's Blog | Beyond Compare
 subtitle: Learning programming, i enjoy it.
-description: xiaofeng.site, hexo static blog with github for me to write some coding issues.
-keywords: xiaofeng‘s blog
+description: A personal website, for sharing and communication.
+keywords: Shawn blog
 author: xiaofeng
 email: xiaofeng355@gmail.com
 language:
@@ -14,7 +14,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://xiaofeng.site
+url: https://goghtsui.github.io
 root: /
 permalink: :year/:month/:day/:title/:author/
 permalink_defaults:
@@ -30,12 +30,13 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md 
+new_post_name: :title.md
 # File name of new posts
 default_layout: post
-titlecase: false 
+titlecase: false
 # Transform title into titlecase
-external_link: true 
+external_link:
+  enable: true
 # Open external links in new tab
 filename_case: 0
 render_drafts: false
@@ -85,7 +86,7 @@ deploy:
   type: git
   repository: git@github.com:goghtsui/goghtsui.github.io.git
   branch: master
-  
+
 # Extensions
 Plugins:
 - hexo-generator-feed
@@ -94,7 +95,7 @@ Plugins:
 #sitemap
 sitemap:
   path: sitemap.xml
-  
+
 #baidusitemap
 baidusitemap:
   path: baidusitemap.xml
@@ -105,14 +106,14 @@ feed:
   type: atom
   path: atom.xml
   limit: 0
-  
-  
+
+
 search:
   path: search.xml
   field: post
-  
-  
-#jsonContent 
+
+
+#jsonContent
 jsonContent:
   meta: false
   pages: false

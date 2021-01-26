@@ -10,7 +10,7 @@ Retrofit 1集成了用于基本请求和响应调试的日志功能，但是在R
 
 ## Retrofit 1
 
-请看另外一篇博客：[Retrofit 1 之 log得请求与响应](http://xiaofeng.site/2016/12/08/Retrofit-1-%E4%B9%8B-log%E5%BE%97%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/undefined/)
+请看另外一篇博客：[Retrofit 1 之 log得请求与响应](https://goghtsui.github.io/2016/12/08/Retrofit-1-%E4%B9%8B-log%E5%BE%97%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/undefined/)
 
 ## Retrofit 2
 
